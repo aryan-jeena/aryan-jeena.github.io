@@ -47,10 +47,17 @@ p, li {
     margin-bottom: 10px;
 }
 
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
 footer {
     text-align: center;
-    margin-top: 20px;
-    padding: 20px;
-    background: #333;
+    background-color: #333;
     color: #fff;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

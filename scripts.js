@@ -1,25 +1,23 @@
-// Dark Mode Toggle
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
-
-themeToggle.addEventListener('change', () => {
-    body.classList.toggle('dark-mode');
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
 });
 
-// Typewriter Effect for the Intro Section
+// Typewriter Effect
 const introText = "Hello! I'm Aryan Jeena, a Computer Science major at UPenn with a passion for AI, healthcare, and data science.";
 let index = 0;
-const speed = 100;  // Speed of typing effect
 
 function typeWriter() {
     if (index < introText.length) {
-        document.getElementById('intro-typed').innerHTML += introText.charAt(index);
+        document.querySelector('.hero p').innerHTML += introText.charAt(index);
         index++;
-        setTimeout(typeWriter, speed);
+        setTimeout(typeWriter, 100);
     }
 }
 
-// Initiate the typewriter effect when the page loads
-window.onload = function() {
-    typeWriter();
-};
+window.onload = typeWriter;

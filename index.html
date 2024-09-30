@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aryan Jeena | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -14,8 +14,10 @@
             <div class="logo">AJ</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
-                <li><a href="#resume">Resume</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#awards">Awards</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <button id="darkModeToggle" aria-label="Toggle dark mode">
@@ -26,49 +28,85 @@
 
     <header class="hero">
         <div class="hero-overlay">
-            <h1 id="hero-title">Hello, I'm Aryan Jeena</h1>
+            <h1 id="hero-title">Aryan Jeena</h1>
             <p id="intro-text"></p>
         </div>
     </header>
 
     <main>
         <section id="about" class="section">
-            <h2>About Me</h2>
-            <p>I am a Computer Science major at UPenn with a deep passion for AI, healthcare, and consulting. My experience spans AI/ML, healthcare technology, and business consulting. I'm actively involved in various campus organizations, always seeking to expand my knowledge and skills.</p>
+            <h2><i class="fas fa-user"></i> About Me</h2>
+            <p>I am a Computer Science major at the University of Pennsylvania with a deep passion for AI, healthcare, and consulting. My experience spans AI/ML, healthcare technology, and business consulting. I'm actively involved in various academic and extracurricular activities, always seeking to expand my knowledge and skills.</p>
         </section>
 
-        <section id="resume" class="section">
-            <h2>Resume</h2>
-            <div class="experience">
-                <h3>Work Experience</h3>
-                <div class="job">
-                    <h4>Chief Marketing Officer - IYDA</h4>
-                    <p class="job-description">Led marketing campaigns, organized the UN Innovation Expo, and managed a global team of interns.</p>
-                </div>
-                <!-- Add more job experiences here -->
+        <section id="education" class="section">
+            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+            <div class="education-item">
+                <h3>University of Pennsylvania</h3>
+                <p>B.S.E in Computer Science (Expected May 2028)</p>
+                <p>Concentrations: Artificial Intelligence and Statistics</p>
+                <p>GPA: 4.00/4.00</p>
             </div>
-            <div class="education">
-                <h3>Education</h3>
-                <p>B.S. in Computer Science, University of Pennsylvania, Expected 2026</p>
+            <div class="education-item">
+                <h3>Saint Joseph's High School</h3>
+                <p>High School Diploma (Graduated 2024)</p>
+                <p>GPA: UW: 4.0/4, W: 4.881/4</p>
+                <p>SAT: 1560/1600, PSAT/NMSQT: 1510/1520</p>
             </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2><i class="fas fa-briefcase"></i> Experience</h2>
+            <div class="experience-item">
+                <h3>Co-Founder - IvyRise College Consulting</h3>
+                <p>Jun 2024 - Present · Remote</p>
+                <ul>
+                    <li>Delivered tailored college consulting services to over 50 high school students.</li>
+                    <li>Developed strategies for college essays, interview coaching, and college list creation.</li>
+                    <li>Utilized AI/ML tools for data-driven analysis and forecasting.</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>Yale Center for Clinical Investigation - Research Intern</h3>
+                <p>Jul 2023 - Sep 2023</p>
+                <ul>
+                    <li>Attended daily seminars on Clinical Research.</li>
+                    <li>Proposed enhancements to the myChart messaging system.</li>
+                    <li>Tested strategy effectiveness through user engagement.</li>
+                </ul>
+            </div>
+            <!-- Add more experience items -->
         </section>
 
         <section id="projects" class="section">
-            <h2>Projects</h2>
+            <h2><i class="fas fa-code"></i> Projects</h2>
             <div class="project-grid">
                 <div class="project-card">
                     <h3>AI Business Analysis Tool</h3>
                     <p>Developed an AI tool to predict market trends for consulting firms.</p>
-                    <a href="https://github.com/aryan-jeena/project-link" class="btn">View on GitHub</a>
+                    <a href="#" class="btn">View Project</a>
                 </div>
-                <!-- Add more project cards here -->
+                <!-- Add more project cards -->
             </div>
         </section>
 
+        <section id="awards" class="section">
+            <h2><i class="fas fa-trophy"></i> Awards & Honors</h2>
+            <ul>
+                <li>National Merit Scholarship Semi-Finalist</li>
+                <li>ACTFL English and Spanish Global Seal of Biliteracy</li>
+                <li>Catholic Math League Top Scorer 2022-2023 (#1 out of 719 Students Nationally)</li>
+                <li>United Nations U.S.A National Community Service Awards</li>
+                <li>International Bebras Computing Challenge - Distinction Roll & Best of School Awards</li>
+                <!-- Add more awards -->
+            </ul>
+        </section>
+
         <section id="contact" class="section">
-            <h2>Contact Me</h2>
-            <p>Email: <a href="mailto:ajeena24@stjoes.org">ajeena24@stjoes.org</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/">linkedin.com/in/aryan-jeena/</a></p>
+            <h2><i class="fas fa-envelope"></i> Contact Me</h2>
+            <p>Email: <a href="mailto:aryanj@sas.upenn.edu">aryanj@sas.upenn.edu</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena-b55a33263/">linkedin.com/in/aryan-jeena</a></p>
+            <p>GitHub: <a href="https://github.com/jeenaboy05">github.com/jeenaboy05</a></p>
         </section>
     </main>
 

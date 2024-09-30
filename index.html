@@ -3,145 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aryan Jeena's Full Portfolio">
+    <meta name="description" content="Aryan Jeena's Portfolio">
     <title>Aryan Jeena - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#awards">Awards & Honors</a></li>
-                <li><a href="#extracurricular">Extracurricular</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Dark/Light Mode Toggle -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
 
-    <section id="home">
-        <h1>Welcome to Aryan Jeena's Portfolio</h1>
-        <p>Hello! I'm Aryan Jeena, currently studying Computer Science at the University of Pennsylvania, with a deep passion for AI, healthcare, and data science.</p>
-    </section>
-
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I am pursuing a B.S.E in Computer Science at the University of Pennsylvania, focusing on Artificial Intelligence and Statistics. With a passion for innovation, I have gained significant experience in data science, consulting, and healthcare technology.</p>
-        <p>Feel free to connect: <a href="https://www.linkedin.com/in/aryan-jeena-b55a33263/">LinkedIn</a> | <a href="https://github.com/jeenaboy05">GitHub</a></p>
-    </section>
-
-    <section id="education">
-        <h2>Education</h2>
+    <!-- Side Navigation -->
+    <nav class="side-nav">
         <ul>
-            <li>
-                <strong>University of Pennsylvania</strong> <br>
-                B.S.E in Computer Science (AI & Statistics) <br>
-                GPA: 4.0/4.0 <br>
-                Expected Graduation: May 2028 <br>
-                Relevant Coursework: Programming Languages, Data Structures, Business Ethics, Statistics
-            </li>
-            <li>
-                <strong>Saint Joseph's High School</strong> <br>
-                GPA: UW 4.0/4.0, W 4.881/4.0 <br>
-                SAT: 1560/1600 (Math: 800, Reading: 760) <br>
-                PSAT/NMSQT: 1510/1520 (99th percentile) <br>
-                National Merit Scholarship Semi-Finalist <br>
-                Graduation: 2024
-            </li>
-            <li>
-                <strong>Stanford Pre-Collegiate Studies</strong> <br>
-                Multivariable Differential Calculus (Ongoing) <br>
-                Duration: August 2023 - December 2023
-            </li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="full-screen-section">
+        <div class="container">
+            <img src="your-photo.jpg" alt="Aryan Jeena" class="profile-img">
+            <h1>
+                <span id="intro-typed"></span>
+            </h1>
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/aryan-jeena-b55a33263/" class="fab fa-linkedin"></a>
+                <a href="https://github.com/jeenaboy05" class="fab fa-github"></a>
+                <a href="mailto:ajeena24@stjoes.org" class="fas fa-envelope"></a>
+            </div>
+        </div>
     </section>
 
-    <section id="experience">
-        <h2>Experience</h2>
-        <ul>
-            <li>
-                <strong>Yale Center for Clinical Investigation - Research Intern</strong> (July 2023 - September 2023) <br>
-                Enhanced accessibility and proposed technological advancements for the MyChart patient portal to optimize patient experience.
-            </li>
-            <li>
-                <strong>Johnson & Johnson - CBT Data Science Intern</strong> (August 2023 - October 2023) <br>
-                Assisted in the development of Natural Language Processing (NLP) models for anomaly detection and automation within company operations.
-            </li>
-            <li>
-                <strong>International Youth Developers Association - Chief Marketing Officer</strong> (September 2023 - Present) <br>
-                Led a global team to organize the IYDA United Nations Sustainable Development Goals Innovation Expo. Managed social media marketing campaigns and mentored interns.
-            </li>
-            <li>
-                <strong>IvyRise College Consulting - Consultant</strong> (March 2023 - Present) <br>
-                Provided personalized college consulting services to over 50 high school students. Utilized AI and machine learning tools for data analysis and forecasting admissions outcomes.
-            </li>
-            <li>
-                <strong>South Asian Society - Board Applicant</strong> (2024) <br>
-                Active participant in university cultural and social events, contributing to community engagement and outreach.
-            </li>
-        </ul>
+    <!-- About Section -->
+    <section id="about" class="content-section">
+        <div class="container">
+            <div class="about-content">
+                <h2>About Me</h2>
+                <p>I’m a Computer Science major at UPenn focusing on AI and statistics, passionate about leveraging data science for real-world impact...</p>
+            </div>
+        </div>
     </section>
 
-    <section id="awards">
-        <h2>Awards & Honors</h2>
-        <ul>
-            <li>National Merit Scholarship Semi-Finalist</li>
-            <li>AP Scholar with Distinction</li>
-            <li>Rensselaer Medal Award for Excellence in Mathematics and Science (2022)</li>
-            <li>Catholic Math League - 1st Place (2023)</li>
-            <li>United Nations USA National Community Service Award</li>
-            <li>Harvard University CS50x Certification: A+ </li>
-            <li>Mu Alpha Theta Math Honor Society</li>
-            <li>Varsity Math League - President and Top Scorer</li>
-            <li>American Computer Science League National Finals Qualifier</li>
-        </ul>
+    <!-- Experience & Projects Section -->
+    <section id="experience" class="content-section">
+        <div class="container">
+            <h2>Experience</h2>
+            <!-- Add interactive hover cards for experiences -->
+            <div class="experience-cards">
+                <!-- Each card can expand to show more details -->
+                <div class="card">
+                    <h3>Yale Center for Clinical Investigation</h3>
+                    <p>Research Intern (July 2023 - Sept 2023)</p>
+                </div>
+                <!-- Add more experience cards here -->
+            </div>
+        </div>
     </section>
 
-    <section id="extracurricular">
-        <h2>Extracurricular Activities</h2>
-        <ul>
-            <li>President of Computer Science Club (Organized coding competitions, taught Python, and increased membership)</li>
-            <li>President of Math League Club (Led team to multiple competition victories and hosted problem-solving workshops)</li>
-            <li>South Asian Society at UPenn (Attended cultural events like Back to School Night and Freshman Dinner)</li>
-            <li>Varsity Swim Team - Captain</li>
-            <li>Varsity Soccer Team - Player</li>
-            <li>Theatre and Choir (Acted in musicals and performed in school choir)</li>
-            <li>Penn Undergraduate Math Society (Applying for Freshman Liaison)</li>
-            <li>Penn Undergraduate FinTech Club (Applying for membership)</li>
-            <li>Wharton Undergraduate Finance Club - Quantitative Finance Committee (Applying for membership)</li>
-            <li>Penn AI Business Club - Consulting Committee (Applying for membership)</li>
-            <li>Wharton Undergraduate Investment and Trading Group (Healthcare team applicant)</li>
-            <li>Penn Microfinance (Interested in joining)</li>
-            <li>Organized and hosted a quantum computing workshop as part of the IYDA</li>
-        </ul>
-    </section>
-
-    <section id="certifications">
-        <h2>Certifications</h2>
-        <ul>
-            <li>Harvard CS50x Certification: A+</li>
-            <li>Credly Cisco Cybersecurity Essentials Certification</li>
-            <li>Credly Cisco IoT Certification</li>
-            <li>Credly Cisco JavaScript Certification</li>
-            <li>Lifeguard and CPR/AED Certification</li>
-            <li>Basic Life Support (BLS) Certification</li>
-        </ul>
-    </section>
-
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:ajeena24@stjoes.org">ajeena24@stjoes.org</a></p>
-        <p>Phone: (908) 636-5723</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena-b55a33263/">Aryan Jeena</a></p>
-        <p>GitHub: <a href="https://github.com/jeenaboy05">jeenaboy05</a></p>
-    </section>
-
+    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 Aryan Jeena</p>
+        <p>&copy; 2024 Aryan Jeena | All Rights Reserved</p>
     </footer>
+
+    <!-- External Scripts -->
+    <script src="scripts.js"></script>
 </body>
 </html>

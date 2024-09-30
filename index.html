@@ -3,79 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aryan Jeena's Portfolio">
-    <title>Aryan Jeena - Portfolio</title>
+    <title>Aryan Jeena | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <!-- Dark/Light Mode Toggle -->
-    <div class="theme-switch-wrapper">
-        <label class="theme-switch">
-            <input type="checkbox" id="theme-toggle">
-            <span class="slider round"></span>
-        </label>
-    </div>
-
-    <!-- Side Navigation -->
-    <nav class="side-nav">
+    <!-- Navigation Bar -->
+    <nav>
         <ul>
-            <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
+            <li><a href="#resume">Resume</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#awards">Awards</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Home Section -->
-    <section id="home" class="full-screen-section">
-        <div class="container">
-            <img src="your-photo.jpg" alt="Aryan Jeena" class="profile-img">
-            <h1>
-                <span id="intro-typed"></span>
-            </h1>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/aryan-jeena-b55a33263/" class="fab fa-linkedin"></a>
-                <a href="https://github.com/jeenaboy05" class="fab fa-github"></a>
-                <a href="mailto:ajeena24@stjoes.org" class="fas fa-envelope"></a>
-            </div>
-        </div>
-    </section>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Hello, I'm Aryan Jeena</h1>
+        <p>A Computer Science major at UPenn with a passion for AI, healthcare, and data science.</p>
+    </header>
 
     <!-- About Section -->
-    <section id="about" class="content-section">
-        <div class="container">
-            <div class="about-content">
-                <h2>About Me</h2>
-                <p>I’m a Computer Science major at UPenn focusing on AI and statistics, passionate about leveraging data science for real-world impact...</p>
-            </div>
-        </div>
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I'm Aryan Jeena, pursuing a B.S.E in Computer Science with concentrations in AI and Statistics at the University of Pennsylvania.</p>
+        <!-- Add more info here from your LinkedIn -->
     </section>
 
-    <!-- Experience & Projects Section -->
-    <section id="experience" class="content-section">
-        <div class="container">
-            <h2>Experience</h2>
-            <!-- Add interactive hover cards for experiences -->
-            <div class="experience-cards">
-                <!-- Each card can expand to show more details -->
-                <div class="card">
-                    <h3>Yale Center for Clinical Investigation</h3>
-                    <p>Research Intern (July 2023 - Sept 2023)</p>
-                </div>
-                <!-- Add more experience cards here -->
-            </div>
-        </div>
+    <!-- Resume Section -->
+    <section id="resume">
+        <h2>Resume</h2>
+        <p>High School Diploma | Saint Joseph’s High School | GPA - UW: 4.0/4 | W: 4.881/4</p>
+        <p>National Merit Scholarship Semi-Finalist, ACTFL English and Spanish Global Seal of Biliteracy, etc.</p>
+        <!-- Add every detail here from your resume -->
     </section>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 Aryan Jeena | All Rights Reserved</p>
-    </footer>
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <p>Details of key projects you have worked on.</p>
+    </section>
 
-    <!-- External Scripts -->
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: ajeena24@stjoes.org</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/">https://www.linkedin.com/in/aryan-jeena/</a></p>
+        <!-- Add GitHub link here as well -->
+    </section>
+
     <script src="scripts.js"></script>
 </body>
 </html>

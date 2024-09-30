@@ -1,44 +1,70 @@
-/* General styles */
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: #f4f4f4;
     color: #333;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: space-around;
+.navbar {
+    position: sticky;
+    top: 0;
     background: #333;
     padding: 10px;
+    z-index: 1000;
 }
 
-nav ul li {
-    margin: 0;
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
 }
 
-nav ul li a {
+.navbar ul li a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .hero {
-    background: #333;
-    color: white;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 100px 20px;
 }
 
-section {
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.5);
     padding: 20px;
-    margin: 20px 0;
+    color: white;
 }
 
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
+.section {
+    padding: 50px 20px;
+    margin: 20px 0;
+    background: #fff;
+}
+
+.project-card {
+    background: #f9f9f9;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #f4f4f4;
 }

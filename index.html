@@ -7,50 +7,65 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#resume">Resume</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><button id="darkModeToggle">Dark Mode</button></li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Typewriter Effect -->
     <header class="hero">
-        <h1>Hello, I'm Aryan Jeena</h1>
-        <p>A Computer Science major at UPenn with a passion for AI, healthcare, and data science.</p>
+        <div class="hero-overlay">
+            <h1 id="hero-title">Hello, I'm Aryan Jeena</h1>
+            <p id="intro-text"></p>
+        </div>
     </header>
 
     <!-- About Section -->
-    <section id="about">
+    <section id="about" class="section about-section">
         <h2>About Me</h2>
-        <p>I'm Aryan Jeena, pursuing a B.S.E in Computer Science with concentrations in AI and Statistics at the University of Pennsylvania.</p>
-        <!-- Add more info here from your LinkedIn -->
+        <p>I am Aryan Jeena, a Computer Science major at UPenn with a deep passion for AI, healthcare, and consulting.</p>
+        <p>I have experience in AI/ML, healthcare technology, and business consulting, and I’m actively involved in various campus organizations.</p>
     </section>
 
-    <!-- Resume Section -->
-    <section id="resume">
+    <!-- Resume Section with Expandable Experience -->
+    <section id="resume" class="section resume-section">
         <h2>Resume</h2>
-        <p>High School Diploma | Saint Joseph’s High School | GPA - UW: 4.0/4 | W: 4.881/4</p>
-        <p>National Merit Scholarship Semi-Finalist, ACTFL English and Spanish Global Seal of Biliteracy, etc.</p>
-        <!-- Add every detail here from your resume -->
+        <div class="experience">
+            <h3>Work Experience</h3>
+            <p>Chief Marketing Officer - IYDA (Click to expand)</p>
+            <div class="experience-details hidden">
+                <p>Lead marketing campaigns, organized the UN Innovation Expo, and managed a global team of interns.</p>
+            </div>
+        </div>
+        <!-- More experiences... -->
     </section>
 
     <!-- Projects Section -->
-    <section id="projects">
+    <section id="projects" class="section projects-section">
         <h2>Projects</h2>
-        <p>Details of key projects you have worked on.</p>
+        <div class="project-card">
+            <h3>AI Business Analysis Tool</h3>
+            <p>Developed an AI tool to predict market trends for consulting firms.</p>
+            <a href="https://github.com/aryan-jeena/project-link">View on GitHub</a>
+        </div>
+        <!-- Add more projects... -->
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
-        <h2>Contact</h2>
+    <section id="contact" class="section contact-section">
+        <h2>Contact Me</h2>
         <p>Email: ajeena24@stjoes.org</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/">https://www.linkedin.com/in/aryan-jeena/</a></p>
-        <!-- Add GitHub link here as well -->
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/">linkedin.com/in/aryan-jeena/</a></p>
     </section>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop">Top</button>
 
     <script src="scripts.js"></script>
 </body>

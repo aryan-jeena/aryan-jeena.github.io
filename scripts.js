@@ -3,7 +3,9 @@ const typewriterElement = document.getElementById('intro-text');
 const phrases = [
     "Computer Science @ UPenn",
     "AI & Healthcare Enthusiast",
-    "Passionate Problem Solver"
+    "Passionate Problem Solver",
+    "Data Science Intern @ J&J",
+    "Yale YCCI Research Intern"
 ];
 let phraseIndex = 0;
 let charIndex = 0;
@@ -83,4 +85,33 @@ const revealElements = document.querySelectorAll('.section');
 const revealOnScroll = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('reveale
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+        }
+    });
+};
+
+const observer = new IntersectionObserver(revealOnScroll, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+revealElements.forEach(element => {
+    observer.observe(element);
+});
+
+// Initialize
+window.addEventListener('load', () => {
+    typeWriter();
+    toggleBackToTopButton();
+});
+
+// Expandable sections (for mobile view)
+const sectionHeadings = document.querySelectorAll('.section h2');
+
+sectionHeadings.forEach(heading => {
+    heading.addEventListener('click', () => {
+        const section = heading.parentElement;
+        section.classList.toggle('expanded');
+    });
+});

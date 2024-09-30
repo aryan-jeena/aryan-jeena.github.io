@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aryan Jeena | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Sticky Navigation -->
     <nav class="navbar">
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#resume">Resume</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><button id="darkModeToggle">Dark Mode</button></li>
-        </ul>
+        <div class="nav-content">
+            <div class="logo">AJ</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button id="darkModeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </nav>
 
-    <!-- Hero Section with Typewriter Effect -->
     <header class="hero">
         <div class="hero-overlay">
             <h1 id="hero-title">Hello, I'm Aryan Jeena</h1>
@@ -26,46 +31,50 @@
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-        <h2>About Me</h2>
-        <p>I am Aryan Jeena, a Computer Science major at UPenn with a deep passion for AI, healthcare, and consulting.</p>
-        <p>I have experience in AI/ML, healthcare technology, and business consulting, and I’m actively involved in various campus organizations.</p>
-    </section>
+    <main>
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <p>I am a Computer Science major at UPenn with a deep passion for AI, healthcare, and consulting. My experience spans AI/ML, healthcare technology, and business consulting. I'm actively involved in various campus organizations, always seeking to expand my knowledge and skills.</p>
+        </section>
 
-    <!-- Resume Section with Expandable Experience -->
-    <section id="resume" class="section resume-section">
-        <h2>Resume</h2>
-        <div class="experience">
-            <h3>Work Experience</h3>
-            <p>Chief Marketing Officer - IYDA (Click to expand)</p>
-            <div class="experience-details hidden">
-                <p>Lead marketing campaigns, organized the UN Innovation Expo, and managed a global team of interns.</p>
+        <section id="resume" class="section">
+            <h2>Resume</h2>
+            <div class="experience">
+                <h3>Work Experience</h3>
+                <div class="job">
+                    <h4>Chief Marketing Officer - IYDA</h4>
+                    <p class="job-description">Led marketing campaigns, organized the UN Innovation Expo, and managed a global team of interns.</p>
+                </div>
+                <!-- Add more job experiences here -->
             </div>
-        </div>
-        <!-- More experiences... -->
-    </section>
+            <div class="education">
+                <h3>Education</h3>
+                <p>B.S. in Computer Science, University of Pennsylvania, Expected 2026</p>
+            </div>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section projects-section">
-        <h2>Projects</h2>
-        <div class="project-card">
-            <h3>AI Business Analysis Tool</h3>
-            <p>Developed an AI tool to predict market trends for consulting firms.</p>
-            <a href="https://github.com/aryan-jeena/project-link">View on GitHub</a>
-        </div>
-        <!-- Add more projects... -->
-    </section>
+        <section id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>AI Business Analysis Tool</h3>
+                    <p>Developed an AI tool to predict market trends for consulting firms.</p>
+                    <a href="https://github.com/aryan-jeena/project-link" class="btn">View on GitHub</a>
+                </div>
+                <!-- Add more project cards here -->
+            </div>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-        <h2>Contact Me</h2>
-        <p>Email: ajeena24@stjoes.org</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/">linkedin.com/in/aryan-jeena/</a></p>
-    </section>
+        <section id="contact" class="section">
+            <h2>Contact Me</h2>
+            <p>Email: <a href="mailto:ajeena24@stjoes.org">ajeena24@stjoes.org</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/">linkedin.com/in/aryan-jeena/</a></p>
+        </section>
+    </main>
 
-    <!-- Back to Top Button -->
-    <button id="backToTop">Top</button>
+    <button id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <script src="scripts.js"></script>
 </body>

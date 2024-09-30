@@ -1,8 +1,9 @@
 // Typewriter Effect
 const typewriterElement = document.getElementById('intro-text');
 const phrases = [
-    "I am a Computer Science student at UPenn.",
-    "I'm passionate about AI, consulting, and data science."
+    "Computer Science @ UPenn",
+    "AI & Healthcare Enthusiast",
+    "Passionate Problem Solver"
 ];
 let phraseIndex = 0;
 let charIndex = 0;
@@ -76,31 +77,10 @@ backToTopButton.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Initialize
-window.addEventListener('load', () => {
-    typeWriter();
-    toggleBackToTopButton();
-});
-
 // Scroll Reveal Animation
 const revealElements = document.querySelectorAll('.section');
 
 const revealOnScroll = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
-        }
-    });
-};
-
-const options = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver(revealOnScroll, options);
-
-revealElements.forEach(element => {
-    observer.observe(element);
-});
+            entry.target.classList.add('reveale

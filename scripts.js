@@ -105,13 +105,3 @@ window.addEventListener('load', () => {
     typeWriter();
     toggleBackToTopButton();
 });
-
-// Expandable sections (for mobile view)
-const sectionHeadings = document.querySelectorAll('.section h2');
-
-sectionHeadings.forEach(heading => {
-    heading.addEventListener('click', () => {
-        const section = heading.parentElement;
-        section.classList.toggle('expanded');
-    });
-});

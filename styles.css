@@ -1,10 +1,12 @@
 :root {
-    --primary-color: #61DAFB;
-    --secondary-color: #282C34;
-    --background-light: #F4F4F4;
-    --background-dark: #1A1A1A;
+    --primary-color: #4a90e2;
+    --secondary-color: #f39c12;
+    --background-light: #f9f9f9;
+    --background-dark: #1a1a1a;
     --text-light: #333;
-    --text-dark: #F4F4F4;
+    --text-dark: #f4f4f4;
+    --card-light: #ffffff;
+    --card-dark: #2c2c2c;
     --transition-speed: 0.3s;
 }
 
@@ -22,8 +24,8 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     z-index: 1000;
     transition: background-color var(--transition-speed);
 }
@@ -39,9 +41,10 @@ body {
 
 .logo {
     font-family: 'Roboto Mono', monospace;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     color: var(--primary-color);
+    text-decoration: none;
 }
 
 .nav-links {
@@ -55,6 +58,7 @@ body {
     text-decoration: none;
     transition: color var(--transition-speed);
     font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
 }
 
 .nav-links a:hover {
@@ -75,7 +79,7 @@ body {
 }
 
 .hero {
-    background-image: url('background.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -83,29 +87,30 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.hero-overlay {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 2rem;
-    border-radius: 10px;
     color: white;
 }
 
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
 .hero h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 1rem;
     font-family: 'Roboto Mono', monospace;
 }
 
 #intro-text {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     min-height: 3em;
     font-family: 'Roboto Mono', monospace;
 }
 
 .section {
-    padding: 4rem 2rem;
+    padding: 5rem 2rem;
     max-width: 1000px;
     margin: 0 auto;
     opacity: 0;
@@ -118,14 +123,106 @@ body {
     transform: translateY(0);
 }
 
-/* Add styles for other sections (experience, education, projects, etc.) here */
+.section h2 {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2.2rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.section ul li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.section ul li::before {
+    content: '▹';
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+}
+
+.experience-item, .education-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--card-light);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.experience-item:hover, .education-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.experience-item h3, .education-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.experience-item p, .education-item p {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--card-light);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color var(--transition-speed);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+}
+
+#certifications ul, #awards ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
 
 #backToTop {
     position: fixed;
     bottom: 20px;
     right: 20px;
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: white;
     border: none;
     border-radius: 50%;
     width: 50px;
@@ -134,7 +231,11 @@ body {
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-speed), visibility var(--transition-speed);
+    transition: opacity var(--transition-speed), visibility var(--transition-speed), background-color var(--transition-speed);
+}
+
+#backToTop:hover {
+    background-color: var(--secondary-color);
 }
 
 body.dark-mode {
@@ -143,12 +244,23 @@ body.dark-mode {
 }
 
 body.dark-mode .navbar {
-    background: rgba(26, 26, 26, 0.9);
+    background: rgba(26, 26, 26, 0.95);
 }
 
 body.dark-mode .nav-links a,
 body.dark-mode #darkModeToggle {
     color: var(--text-dark);
+}
+
+body.dark-mode .experience-item, 
+body.dark-mode .education-item,
+body.dark-mode .project-card {
+    background-color: var(--card-dark);
+    box-shadow: 0 4px 6px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .section h2 {
+    border-bottom-color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {
@@ -164,10 +276,20 @@ body.dark-mode #darkModeToggle {
     }
 
     .hero h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     #intro-text {
-        font-size: 1rem;
+        font-size: 1.2rem;
+    }
+
+    #certifications ul, #awards ul {
+        columns: 1;
+        -webkit-columns: 1;
+        -moz-columns: 1;
+    }
+
+    .section {
+        padding: 3rem 1rem;
     }
 }

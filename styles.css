@@ -1,120 +1,9 @@
-:root {
-    --primary-color: #4a90e2;
-    --secondary-color: #f39c12;
-    --background-light: #f9f9f9;
-    --background-dark: #1a1a1a;
-    --text-light: #333;
-    --text-dark: #f4f4f4;
-    --card-light: #ffffff;
-    --card-dark: #2c2c2c;
-    --transition-speed: 0.3s;
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--background-light);
-    color: var(--text-light);
-    line-height: 1.6;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
-    transition: background-color var(--transition-speed);
-}
-
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.logo {
-    font-family: 'Roboto Mono', monospace;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    color: var(--text-light);
-    text-decoration: none;
-    transition: color var(--transition-speed);
-    font-family: 'Roboto Mono', monospace;
-    font-size: 1rem;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-}
-
-#darkModeToggle {
-    background: none;
-    border: none;
-    color: var(--text-light);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: color var(--transition-speed);
-}
-
-#darkModeToggle:hover {
-    color: var(--primary-color);
-}
-
-.hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-}
-
-.hero-overlay {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 2rem;
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    font-family: 'Roboto Mono', monospace;
-}
-
-#intro-text {
-    font-size: 1.4rem;
-    min-height: 3em;
-    font-family: 'Roboto Mono', monospace;
-}
-
 .section {
     padding: 5rem 2rem;
     max-width: 1000px;
     margin: 0 auto;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
@@ -292,4 +181,13 @@ body.dark-mode .section h2 {
     .section {
         padding: 3rem 1rem;
     }
+}
+
+/* Ensure text is visible in all color schemes */
+body, body.dark-mode {
+    color: var(--text-light);
+}
+
+body.dark-mode {
+    color: var(--text-dark);
 }

@@ -28,3 +28,9 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
         setDarkMode(e.matches);
     }
 });
+
+// Reveal sections on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => section.classList.add('revealed'));
+});

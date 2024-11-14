@@ -146,6 +146,20 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
+.experience-item h3, .education-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.experience-item p, .education-item p {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.experience-item ul, .education-item ul {
+    padding-left: 20px;
+}
+
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -165,6 +179,59 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
+#awards ul, #certifications ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#awards li, #certifications li {
+    background-color: var(--card-light);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#awards li:hover, #certifications li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.skills-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.skills-category {
+    background-color: var(--card-light);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.skills-category h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.skills-category ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.skills-category li {
+    margin-bottom: 0.5rem;
+}
+
+#skillsChart {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .btn {
     display: inline-block;
     background-color: var(--primary-color);
@@ -182,19 +249,22 @@ body {
     background-color: var(--secondary-color);
 }
 
+footer {
+    background-color: var(--background-light);
+    padding: 1rem;
+    text-align: center;
+}
+
 .social-links {
     display: flex;
     gap: 1.5rem;
-    list-style: none;
-    padding: 0;
     justify-content: center;
     margin-top: 1.5rem;
 }
 
 .social-links a {
-    font-size: 1.2rem;
     color: var(--primary-color);
-    text-decoration: none;
+    font-size: 1.5rem;
     transition: color 0.3s ease;
 }
 
@@ -240,13 +310,20 @@ body.dark-mode #darkModeToggle {
 body.dark-mode .experience-item, 
 body.dark-mode .education-item,
 body.dark-mode .project-card,
-body.dark-mode .repo-item {
+body.dark-mode .repo-item,
+body.dark-mode #awards li,
+body.dark-mode #certifications li,
+body.dark-mode .skills-category {
     background-color: var(--card-dark);
     box-shadow: 0 4px 6px rgba(255,255,255,0.1);
 }
 
 body.dark-mode .section h2 {
     border-bottom-color: var(--secondary-color);
+}
+
+body.dark-mode footer {
+    background-color: var(--background-dark);
 }
 
 @media (max-width: 768px) {
@@ -272,5 +349,12 @@ body.dark-mode .section h2 {
     .section {
         padding: 3rem 1rem;
     }
-}
 
+    .skills-container {
+        flex-direction: column;
+    }
+
+    .skills-category {
+        margin: 1rem 0;
+    }
+}

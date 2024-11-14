@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
@@ -19,7 +20,7 @@
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#awards">Awards</a></li>
-                <li><a href="#extracurricular">Activities</a></li>
+                <li><a href="#skills">Skills</a></li>
                 <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -37,25 +38,25 @@
     </header>
 
     <main>
-        <section id="about" class="section">
+        <section id="about" class="section" data-aos="fade-up">
             <h2><i class="fas fa-user"></i> About Me</h2>
             <p>I am a Computer Science major at the University of Pennsylvania with a deep passion for AI, healthcare, and consulting. My experience spans AI/ML, healthcare technology, and business consulting. I'm actively involved in various academic and extracurricular activities, always seeking to expand my knowledge and skills.</p>
         </section>
 
-        <section id="education" class="section">
+        <section id="education" class="section" data-aos="fade-up">
             <h2><i class="fas fa-graduation-cap"></i> Education</h2>
             <div class="education-item">
                 <h3>University of Pennsylvania</h3>
-                <p>B.S.E in Computer Science (Expected May 2028)</p>
-                <p>Concentrations: Artificial Intelligence and Statistics</p>
-                <p>GPA: 4.00/4.00</p>
+                <p>Bachelor of Engineering (BE) in Computer Science and Mathematics, Minor in Statistics (Expected May 2028)</p>
                 <p>Related Coursework: Programming Languages and Techniques, Honors Multivariable Calculus 3, Intro to Microeconomics, Business Ethics and Social Responsibility</p>
+                <p><strong>Clubs and Activities:</strong> Wharton Investment and Trading Group, Wharton Undergraduate Finance Club, AI in Business Club (Marketing Committee), Wharton Undergraduate Data Analytics Club, Wharton Undergraduate Statistics Society, Penn Undergraduate Math Society, South Asian Society - Board Member (Cultural Committee)</p>
             </div>
             <div class="education-item">
                 <h3>Saint Joseph's High School</h3>
                 <p>High School Diploma (Graduated 2024)</p>
                 <p>GPA: UW: 4.0/4, W: 4.881/4</p>
                 <p>SAT: 1560/1600, PSAT/NMSQT: 1510/1520</p>
+                <p><strong>Clubs and Activities:</strong> Varsity Swimming Captain, Varsity Math League Captain, Computer Club President, Science League Founder/Captain, Spanish Club President, Astronomy Club President, Investment Club Vice-President, Theater Company Main Cast, Choir Cantor, Honors Diploma, National Honors Society - Cohort Leader (1/7), National Technical Honors Society, Science Honors Society, Spanish Honors Society, History Honors Society, International Thespian Honors Society, Choir Honors Society</p>
             </div>
             <div class="education-item">
                 <h3>Stanford Pre-Collegiate University-Level Online Math & Physics</h3>
@@ -64,114 +65,47 @@
             </div>
         </section>
 
-        <section id="experience" class="section">
+        <section id="experience" class="section" data-aos="fade-up">
             <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            <div class="experience-item">
-                <h3>Co-Founder - IvyRise College Consulting</h3>
-                <p>Jun 2024 - Present · Remote</p>
-                <ul>
-                    <li>Delivered tailored college consulting services to over 50 high school students throughout the Tri-State Area.</li>
-                    <li>Developed individualized strategies for college essays, interview coaching, and customized college list creation.</li>
-                    <li>Utilized AI/ML tools for data-driven analysis and forecasting to identify ideal college options based on admissions trends and unique student success indicators.</li>
-                </ul>
-            </div>
-            <div class="experience-item">
-                <h3>Yale Center for Clinical Investigation Summer Exposures Program + Research Intern</h3>
-                <p>Jul 2023 - Sep 2023</p>
-                <ul>
-                    <li>Attended daily seminar / informational sessions on Clinical Research.</li>
-                    <li>Researched and proposed a plan to incorporate technological and accessibility enhancements to the myChart messaging system.</li>
-                    <li>Tested the effectiveness of strategies and additions through user engagement.</li>
-                    <li>Approx. 2.6% acceptance rate (40/1500)</li>
-                </ul>
-            </div>
-            <div class="experience-item">
-                <h3>Johnson and Johnson (CBT Data Science Intern)</h3>
-                <p>Aug 2023 - Oct 2023</p>
-                <ul>
-                    <li>Worked with Alex Selem, Director and CBT Data Science Leader.</li>
-                    <li>Helped provide ML platforms, build models and research methodologies in NLP, detect anomalies, automation, etc. across functions such as Finance, Procurement, and Legal.</li>
-                </ul>
-            </div>
-            <div class="experience-item">
-                <h3>International Youth Developers Association</h3>
-                <p>Sept 2023 - Present</p>
-                <ul>
-                    <li>Chief Marketing Officer for a global alliance of students and professionals dedicated to bridging the digital divide and empowering students from all backgrounds to succeed in computer science.</li>
-                    <li>Organized the IYDA United Nations Sustainable Development Goals Innovation Expo.</li>
-                    <li>Held free workshop on Quantum Computing, "Quantum Computing Unleashed".</li>
-                    <li>Promoted and marketed for multiple campaigns and interviewed potential candidates and interns.</li>
-                    <li>Managed multiple other marketing interns for the organization.</li>
-                </ul>
-            </div>
+            <!-- Experience items -->
         </section>
 
-        <section id="projects" class="section">
+        <section id="projects" class="section" data-aos="fade-up">
             <h2><i class="fas fa-code"></i> Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>AI Business Analysis Tool</h3>
-                    <p>Developed an AI tool to predict market trends for consulting firms.</p>
-                    <a href="#" class="btn">View Project</a>
-                </div>
-                <!-- Add more project cards as needed -->
+            <div class="project-grid" id="github-repos">
+                <!-- GitHub repos will load here -->
             </div>
         </section>
 
-        <section id="awards" class="section">
+        <section id="awards" class="section" data-aos="fade-up">
             <h2><i class="fas fa-trophy"></i> Awards & Honors</h2>
-            <ul>
-                <li>National Merit Scholarship Semi-Finalist</li>
-                <li>ACTFL English and Spanish Global Seal of Biliteracy - Professional Working Fluency (A1 in all 4 Categories)</li>
-                <li>Catholic Math League Top Scorer 2022-2023 - #1 out of 719 Students Nationally</li>
-                <li>2023 United Nations U.S.A National Community Service Awards: Gold Ambassador Award, Zero Hunger Award, Zero Waste Award</li>
-                <li>International Bebras Computing Challenge - Distinction Roll & Best of School Awards (100th Percentile)</li>
-                <li>American Computer Science League - Qualified for National Finals and Leading Scorer For My Team</li>
-                <li>New Jersey Math League - 1st in the State Individually</li>
-                <li>Hispanic Scholarship Fund Finalist</li>
-                <li>The Rensselaer Medal Award for Mathematics and Science</li>
-                <li>The University of Rochester Xerox Award for Innovation and Information Technology</li>
-                <li>Harvard University's CS50x Course A+</li>
-                <li>AP Scholar With Distinction Award</li>
-                <li>CyberStart America Bronze Award 2022-23</li>
-            </ul>
+            <!-- Awards list -->
         </section>
 
-        <section id="extracurricular" class="section">
-            <h2><i class="fas fa-users"></i> Extracurricular Activities</h2>
-            <ul>
-                <li>American Computer Science League - National Finals Qualifier, Leading Scorer</li>
-                <li>Varsity Math League President/Captain - Multiple First Place Awards</li>
-                <li>Computer Science Club - President & ACSL Team Founder</li>
-                <li>Spanish Club - President</li>
-                <li>Astronomy Club - President</li>
-                <li>Investment Club - Vice President</li>
-                <li>Theatre (Saint Joseph High School Theatre Co.) - Part of Main Cast for Godspell: The Musical</li>
-                <li>Choir (ACDA, NJMEA, CJMEA, High School)</li>
-                <li>Piano (ABRSM Level 1 and 2) Distinction</li>
-                <li>Varsity Swimmer: Captain, 4 years of High School Team (Ranked Top 10 in State & 42 Consecutive Conference Titles) & 5 years of Scarlet Aquatics Swim Team (Rank 16th Nationally)</li>
-                <li>Soccer: 3 years of High School Team & Edison United Soccer Association Cosmos (Ranked Top 100 in the State)</li>
-            </ul>
+        <section id="skills" class="section" data-aos="fade-up">
+            <h2><i class="fas fa-chart-bar"></i> Skills</h2>
+            <canvas id="skillsChart" width="400" height="400"></canvas>
         </section>
 
-        <section id="certifications" class="section">
+        <section id="certifications" class="section" data-aos="fade-up">
             <h2><i class="fas fa-certificate"></i> Certifications</h2>
-            <ul>
-                <li>Harvard University's CS50x Course: A+</li>
-                <li>Credly Cisco Courses: Various IT and Cybersecurity Certifications</li>
-                <li>YCCI - Annual Security Attestation and HIPAA Refresher</li>
-                <li>YCCI - Foundational HIPAA Privacy and Security Training for Researchers</li>
-                <li>US Grassroots Soccer Referee</li>
-                <li>Lifeguarding with CPR/AED for Professional Rescuers and First Aid</li>
-                <li>Basic Life Support (BLS)</li>
-            </ul>
+            <!-- Certifications list -->
         </section>
 
-        <section id="contact" class="section">
+        <section id="contact" class="section" data-aos="fade-up">
             <h2><i class="fas fa-envelope"></i> Contact Me</h2>
             <p>Email: <a href="mailto:aryanj@sas.upenn.edu">aryanj@sas.upenn.edu</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena-b55a33263/">linkedin.com/in/aryan-jeena</a></p>
-            <p>GitHub: <a href="https://github.com/jeenaboy05">github.com/jeenaboy05</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-jeena/" target="_blank">linkedin.com/in/aryan-jeena</a></p>
+            <p>GitHub: <a href="https://github.com/aryan-jeena" target="_blank">github.com/aryan-jeena</a></p>
+        </section>
+
+        <section id="social-media" class="section" data-aos="fade-up">
+            <h2>Connect with Me</h2>
+            <ul class="social-links">
+                <li><a href="https://www.linkedin.com/in/aryan-jeena/" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com/aryan-jeena" target="_blank">GitHub</a></li>
+                <li><a href="mailto:aryanj@sas.upenn.edu">Email</a></li>
+            </ul>
         </section>
     </main>
 
@@ -180,5 +114,9 @@
     </button>
 
     <script src="scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>

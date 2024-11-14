@@ -34,3 +34,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => section.classList.add('revealed'));
 });
+
+// Load GitHub Repositories
+async function loadGitHubRepos() {
+    const response = await fetch('https://api.github.com/users/aryan-jeena/repos');
+    const repos = await response.json();
+    const reposContainer = document.getElementById('github-repos');
+
+    repos.forEach(repo => {
+        const repoItem = document.createElement('div');
+        repoItem.className = 'repo-item';
+        repoItem.innerHTML = `
+            <h3>${repo.name}</h3>
+            <p>${repo.description || 'No description available'}</p>
+            <a href="${repo.html_url}" target="_blank">View on GitHub</a>
+        `;
+        reposContainer.appendChild(repoItem);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadGitHubRepos);
+
+// Skill Visualization Chart
+document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['JavaScript', 'Python', 'Java', 'HTML/CSS', 'OCaml'],
+            datasets: [{
+                label: 'Proficiency',
+                data: [85, 90, 80, 75, 70],
+                backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                borderColor: 'rgba(74, 144, 226, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});

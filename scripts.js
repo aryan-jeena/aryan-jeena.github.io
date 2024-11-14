@@ -37,20 +37,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load GitHub Repositories
 async function loadGitHubRepos() {
-    const response = await fetch('https://api.github.com/users/aryan-jeena/repos');
-    const repos = await response.json();
-    const reposContainer = document.getElementById('github-repos');
+    try {
+        const response = await fetch('https://api.github.com/users/aryan-jeena/repos');
+        if (!response.ok) {
+            throw new Error('Failed to fetch GitHub repositories');
+        }
+        const repos = await response.json();
+        const reposContainer = document.getElementById('github-repos');
+        reposContainer.innerHTML = ''; // Clear existing content
 
-    repos.forEach(repo => {
-        const repoItem = document.createElement('div');
-        repoItem.className = 'repo-item';
-        repoItem.innerHTML = `
-            <h3>${repo.name}</h3>
-            <p>${repo.description || 'No description available'}</p>
-            <a href="${repo.html_url}" target="_blank">View on GitHub</a>
-        `;
-        reposContainer.appendChild(repoItem);
-    });
+        repos.forEach(repo => {
+            const repoItem = document.createElement('div');
+            repoItem.className = 'repo-item';
+            repoItem.innerHTML = `
+                <h3>${repo.name}</h3>
+                <p>${repo.description || 'No description available'}</p>
+                <a href="${repo.html_url}" target="_blank" class="btn">View on GitHub</a>
+            `;
+            reposContainer.appendChild(repoItem);
+        });
+    } catch (error) {
+        console.error('Error loading GitHub repositories:', error);
+        const reposContainer = document.getElementById('github-repos');
+        reposContainer.innerHTML = '<p>Failed to load GitHub repositories. Please try again later.</p>';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', loadGitHubRepos);
@@ -61,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
     new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: ['JavaScript', 'Python', 'Java', 'HTML/CSS', 'OCaml'],
+            labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
             datasets: [{
                 label: 'Proficiency',
-                data: [85, 90, 80, 75, 70],
+                data: [90, 85, 80, 75, 75, 70], // Adjust these values based on your proficiency levels
                 backgroundColor: 'rgba(74, 144, 226, 0.2)',
                 borderColor: 'rgba(74, 144, 226, 1)',
                 borderWidth: 1,
@@ -74,9 +84,43 @@ document.addEventListener('DOMContentLoaded', () => {
             responsive: true,
             scales: {
                 r: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        stepSize: 20
+                    }
                 }
             }
         }
+    });
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Back to Top button functionality
+const backToTopButton = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTopButton.style.opacity = '1';
+        backToTopButton.style.visibility = 'visible';
+    } else {
+        backToTopButton.style.opacity = '0';
+        backToTopButton.style.visibility = 'hidden';
+    }
+});
+
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 });

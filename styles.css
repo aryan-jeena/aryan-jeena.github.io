@@ -199,54 +199,39 @@ body {
 }
 
 .skills-container {
-    display: flex;
-    justify-content: space-around;
     margin-bottom: 2rem;
 }
 
-.skills-category {
-    background-color: var(--card-light);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    flex: 1;
-    margin: 0 1rem;
-}
-
-.skills-category h3 {
+.skills-container h3 {
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-.skills-category ul {
+.skills-container canvas {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.skills-container ul {
     list-style-type: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
-.skills-category li {
-    margin-bottom: 0.5rem;
-}
-
-#skillsChart {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.btn {
-    display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.7rem 1.5rem;
-    text-decoration: none;
+.skills-container ul li {
+    background-color: var(--card-light);
+    padding: 0.5rem 1rem;
     border-radius: 5px;
-    transition: background-color var(--transition-speed);
-    font-family: 'Roboto Mono', monospace;
-    font-size: 0.9rem;
-    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.btn:hover {
-    background-color: var(--secondary-color);
+.skills-container ul li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 footer {
@@ -313,7 +298,7 @@ body.dark-mode .project-card,
 body.dark-mode .repo-item,
 body.dark-mode #awards li,
 body.dark-mode #certifications li,
-body.dark-mode .skills-category {
+body.dark-mode .skills-container ul li {
     background-color: var(--card-dark);
     box-shadow: 0 4px 6px rgba(255,255,255,0.1);
 }
@@ -350,11 +335,7 @@ body.dark-mode footer {
         padding: 3rem 1rem;
     }
 
-    .skills-container {
-        flex-direction: column;
-    }
-
-    .skills-category {
-        margin: 1rem 0;
+    .skills-container ul {
+        grid-template-columns: 1fr;
     }
 }

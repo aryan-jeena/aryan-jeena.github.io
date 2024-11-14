@@ -135,30 +135,20 @@
         <section id="skills" class="section" data-aos="fade-up">
             <h2><i class="fas fa-chart-bar"></i> Skills</h2>
             <div class="skills-container">
-                <div class="skills-category">
-                    <h3>Programming</h3>
-                    <ul>
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>OCaml</li>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>JavaScript</li>
-                    </ul>
-                </div>
-                <div class="skills-category">
-                    <h3>Tools</h3>
-                    <ul>
-                        <li>Eclipse</li>
-                        <li>Jupyter Notebooks</li>
-                        <li>Git</li>
-                        <li>Codio</li>
-                        <li>IntelliJ</li>
-                        <li>Visual Studio Code</li>
-                    </ul>
-                </div>
+                <h3>Programming Skills</h3>
+                <canvas id="programmingSkillsChart" width="400" height="200"></canvas>
             </div>
-            <canvas id="skillsChart" width="400" height="400"></canvas>
+            <div class="skills-container">
+                <h3>Tools</h3>
+                <ul>
+                    <li>Eclipse</li>
+                    <li>Jupyter Notebooks</li>
+                    <li>Git</li>
+                    <li>Codio</li>
+                    <li>IntelliJ</li>
+                    <li>Visual Studio Code</li>
+                </ul>
+            </div>
         </section>
 
         <section id="certifications" class="section" data-aos="fade-up">
@@ -187,6 +177,7 @@
         <i class="fas fa-chevron-up"></i>
     </button>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>

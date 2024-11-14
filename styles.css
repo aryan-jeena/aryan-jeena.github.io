@@ -132,24 +132,6 @@ body {
     padding-bottom: 0.5rem;
 }
 
-.section ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.section ul li {
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-    position: relative;
-}
-
-.section ul li::before {
-    content: '▹';
-    color: var(--secondary-color);
-    position: absolute;
-    left: 0;
-}
-
 .experience-item, .education-item {
     margin-bottom: 2rem;
     padding: 1.5rem;
@@ -164,23 +146,13 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-.experience-item h3, .education-item h3 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    font-size: 1.4rem;
-}
-
-.experience-item p, .education-item p {
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
 }
 
-.project-card {
+.project-card, .repo-item {
     background: var(--card-light);
     padding: 1.5rem;
     border-radius: 10px;
@@ -188,7 +160,7 @@ body {
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
-.project-card:hover {
+.project-card:hover, .repo-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
@@ -210,10 +182,24 @@ body {
     background-color: var(--secondary-color);
 }
 
-#certifications ul, #awards ul {
-    columns: 2;
-    -webkit-columns: 2;
-    -moz-columns: 2;
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--secondary-color);
 }
 
 #backToTop {
@@ -253,7 +239,8 @@ body.dark-mode #darkModeToggle {
 
 body.dark-mode .experience-item, 
 body.dark-mode .education-item,
-body.dark-mode .project-card {
+body.dark-mode .project-card,
+body.dark-mode .repo-item {
     background-color: var(--card-dark);
     box-shadow: 0 4px 6px rgba(255,255,255,0.1);
 }
@@ -280,12 +267,6 @@ body.dark-mode .section h2 {
 
     #intro-text {
         font-size: 1.2rem;
-    }
-
-    #certifications ul, #awards ul {
-        columns: 1;
-        -webkit-columns: 1;
-        -moz-columns: 1;
     }
 
     .section {

@@ -47,6 +47,7 @@ async function loadGitHubRepos() {
         if (!response.ok) {
             throw new Error('Failed to fetch GitHub repositories');
         }
+
         const repos = await response.json();
         const reposContainer = document.getElementById('github-repos');
         reposContainer.innerHTML = ''; // Clear existing content
@@ -77,7 +78,7 @@ async function loadGitHubRepos() {
 function createProgrammingSkillsChart() {
     const ctx = document.getElementById('programmingSkillsChart');
     if (!ctx) {
-        console.error('Canvas element for programming skills chart not found');
+        console.error('Canvas element for programming skills chart not found.');
         return;
     }
 
@@ -104,6 +105,11 @@ function createProgrammingSkillsChart() {
                         callback: function(value) {
                             return value + '%';
                         }
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: body.classList.contains('dark-mode') ? '#f4f4f4' : '#333'
                     }
                 }
             },

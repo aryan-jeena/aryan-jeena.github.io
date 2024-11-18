@@ -6,7 +6,7 @@ function setDarkMode(isDark) {
     body.classList.toggle('dark-mode', isDark);
     localStorage.setItem('darkMode', isDark);
     darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    
+
     // Update chart colors if it exists
     if (window.programmingSkillsChart) {
         updateChartColors(window.programmingSkillsChart);
@@ -51,6 +51,11 @@ async function loadGitHubRepos() {
         const reposContainer = document.getElementById('github-repos');
         reposContainer.innerHTML = ''; // Clear existing content
 
+        if (repos.length === 0) {
+            reposContainer.innerHTML = '<p>No projects available on GitHub.</p>';
+            return;
+        }
+
         repos.forEach(repo => {
             const repoItem = document.createElement('div');
             repoItem.className = 'repo-item';
@@ -70,8 +75,14 @@ async function loadGitHubRepos() {
 
 // Programming Skills Chart
 function createProgrammingSkillsChart() {
-    const ctx = document.getElementById('programmingSkillsChart').getContext('2d');
-    window.programmingSkillsChart = new Chart(ctx, {
+    const ctx = document.getElementById('programmingSkillsChart');
+    if (!ctx) {
+        console.error('Canvas element for programming skills chart not found');
+        return;
+    }
+
+    const context = ctx.getContext('2d');
+    window.programmingSkillsChart = new Chart(context, {
         type: 'bar',
         data: {
             labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
@@ -158,7 +169,7 @@ backToTopButton.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     loadGitHubRepos();
     createProgrammingSkillsChart();
-    
+
     // Check dark mode on initial load
     if (body.classList.contains('dark-mode') && window.programmingSkillsChart) {
         updateChartColors(window.programmingSkillsChart);

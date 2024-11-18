@@ -25,7 +25,7 @@ body {
     top: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     transition: background-color var(--transition-speed);
 }
@@ -137,13 +137,13 @@ body {
     padding: 1.5rem;
     background-color: var(--card-light);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .experience-item:hover, .education-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .experience-item h3, .education-item h3 {
@@ -166,17 +166,17 @@ body {
     gap: 2rem;
 }
 
-.project-card, .repo-item {
-    background: var(--card-light);
+.repo-item {
+    background-color: var(--card-light);
     padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.project-card:hover, .repo-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+.repo-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 #awards ul, #certifications ul {
@@ -189,13 +189,13 @@ body {
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #awards li:hover, #certifications li:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .skills-container {
@@ -207,10 +207,11 @@ body {
     margin-bottom: 1rem;
 }
 
-.skills-container canvas {
+#programmingSkillsChart {
     max-width: 100%;
     height: auto;
-    margin-bottom: 2rem;
+    margin: 0 auto;
+    display: block;
 }
 
 .skills-container ul {
@@ -225,13 +226,13 @@ body {
     background-color: var(--card-light);
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .skills-container ul li:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 footer {
@@ -300,7 +301,7 @@ body.dark-mode #awards li,
 body.dark-mode #certifications li,
 body.dark-mode .skills-container ul li {
     background-color: var(--card-dark);
-    box-shadow: 0 4px 6px rgba(255,255,255,0.1);
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .section h2 {

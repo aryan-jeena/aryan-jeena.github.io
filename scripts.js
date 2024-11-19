@@ -6,11 +6,6 @@ function setDarkMode(isDark) {
     body.classList.toggle('dark-mode', isDark);
     localStorage.setItem('darkMode', isDark);
     darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-
-    // Update chart colors if it exists
-    if (window.programmingSkillsChart) {
-        updateChartColors(window.programmingSkillsChart);
-    }
 }
 
 darkModeToggle.addEventListener('click', () => {
@@ -47,15 +42,9 @@ async function loadGitHubRepos() {
         if (!response.ok) {
             throw new Error('Failed to fetch GitHub repositories');
         }
-
         const repos = await response.json();
         const reposContainer = document.getElementById('github-repos');
         reposContainer.innerHTML = ''; // Clear existing content
-
-        if (repos.length === 0) {
-            reposContainer.innerHTML = '<p>No projects available on GitHub.</p>';
-            return;
-        }
 
         repos.forEach(repo => {
             const repoItem = document.createElement('div');
@@ -74,72 +63,37 @@ async function loadGitHubRepos() {
     }
 }
 
-// Programming Skills Chart
-function createProgrammingSkillsChart() {
-    const ctx = document.getElementById('programmingSkillsChart');
-    if (!ctx) {
-        console.error('Canvas element for programming skills chart not found.');
-        return;
-    }
+document.addEventListener('DOMContentLoaded', loadGitHubRepos);
 
-    const context = ctx.getContext('2d');
-    window.programmingSkillsChart = new Chart(context, {
-        type: 'bar',
+// Skill Visualization Chart
+document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'radar',
         data: {
             labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
             datasets: [{
-                label: 'Skill Level',
-                data: [90, 85, 70, 80, 75, 75],
-                backgroundColor: 'rgba(74, 144, 226, 0.7)',
+                label: 'Proficiency',
+                data: [90, 85, 80, 75, 75, 70], // Adjust these values based on your proficiency levels
+                backgroundColor: 'rgba(74, 144, 226, 0.2)',
                 borderColor: 'rgba(74, 144, 226, 1)',
-                borderWidth: 1
+                borderWidth: 1,
             }]
         },
         options: {
             responsive: true,
             scales: {
-                y: {
+                r: {
                     beginAtZero: true,
                     max: 100,
                     ticks: {
-                        callback: function(value) {
-                            return value + '%';
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        color: body.classList.contains('dark-mode') ? '#f4f4f4' : '#333'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.parsed.y + '%';
-                        }
+                        stepSize: 20
                     }
                 }
             }
         }
     });
-}
-
-function updateChartColors(chart) {
-    const isDarkMode = body.classList.contains('dark-mode');
-    const backgroundColor = isDarkMode ? 'rgba(243, 156, 18, 0.7)' : 'rgba(74, 144, 226, 0.7)';
-    const borderColor = isDarkMode ? 'rgba(243, 156, 18, 1)' : 'rgba(74, 144, 226, 1)';
-
-    chart.data.datasets[0].backgroundColor = backgroundColor;
-    chart.data.datasets[0].borderColor = borderColor;
-    chart.options.scales.y.ticks.color = isDarkMode ? '#f4f4f4' : '#333';
-    chart.options.scales.x.ticks.color = isDarkMode ? '#f4f4f4' : '#333';
-    chart.update();
-}
+});
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -169,15 +123,4 @@ backToTopButton.addEventListener('click', () => {
         top: 0,
         behavior: 'smooth'
     });
-});
-
-// Initialize everything when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    loadGitHubRepos();
-    createProgrammingSkillsChart();
-
-    // Check dark mode on initial load
-    if (body.classList.contains('dark-mode') && window.programmingSkillsChart) {
-        updateChartColors(window.programmingSkillsChart);
-    }
 });

@@ -1,3 +1,4 @@
+/* === BASE COLORS === */
 :root {
     --primary-color: #4a90e2;
     --secondary-color: #f39c12;
@@ -10,6 +11,7 @@
     --transition-speed: 0.3s;
 }
 
+/* === GLOBAL === */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -20,6 +22,7 @@ body {
     transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
+/* === NAVBAR === */
 .navbar {
     position: fixed;
     top: 0;
@@ -78,9 +81,9 @@ body {
     color: var(--primary-color);
 }
 
-/* --- HERO --- */
+/* === HERO SECTION === */
 .hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -121,7 +124,7 @@ body {
     50% { opacity: 0; }
 }
 
-/* --- SECTIONS --- */
+/* === SECTIONS === */
 .section {
     padding: 5rem 2rem;
     max-width: 1000px;
@@ -129,6 +132,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    scroll-margin-top: 100px;
 }
 
 .section.revealed {
@@ -145,11 +149,12 @@ body {
     padding-bottom: 0.5rem;
 }
 
-/* --- EXPERIENCE & EDUCATION --- */
+/* === EXPERIENCE & EDUCATION === */
 .experience-item, .education-item {
     margin-bottom: 2rem;
     padding: 1.5rem;
     background-color: var(--card-light);
+    color: inherit;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -160,18 +165,7 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-/* --- PROJECTS --- */
-.featured-projects {
-    margin-bottom: 3rem;
-}
-
-.featured-projects h3, .github-projects h3 {
-    color: var(--secondary-color);
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    font-family: 'Roboto Mono', monospace;
-}
-
+/* === PROJECTS === */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -189,27 +183,18 @@ body {
     height: 100%;
 }
 
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
 .project-card.featured {
     border-left: 4px solid var(--secondary-color);
 }
 
-.project-image {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
+.project-card img {
     object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.05);
+    background-color: #222;
 }
 
 .project-description {
@@ -233,23 +218,7 @@ body {
     font-family: 'Roboto Mono', monospace;
 }
 
-.project-links {
-    display: flex;
-    gap: 0.8rem;
-}
-
-.project-links .btn {
-    font-size: 0.8rem;
-    padding: 0.5rem 1rem;
-}
-
-.loading-indicator {
-    text-align: center;
-    padding: 2rem;
-    color: var(--primary-color);
-}
-
-/* --- SKILLS --- */
+/* === SKILLS === */
 .skills-visualization {
     margin-bottom: 3rem;
 }
@@ -258,15 +227,6 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-}
-
-.skill {
-    margin-bottom: 1rem;
-}
-
-.skill-name {
-    margin-bottom: 0.3rem;
-    font-weight: 500;
 }
 
 .skill-bar {
@@ -307,70 +267,13 @@ body {
     transform: scale(1.2);
 }
 
-/* --- AWARDS / CERTIFICATIONS --- */
-#awards ul, #certifications ul {
-    list-style-type: none;
-    padding: 0;
+/* === GITHUB PROJECT STYLING === */
+.repo-item h3,
+.repo-item p {
+    color: inherit;
 }
 
-#awards li, #certifications li {
-    background-color: var(--card-light);
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#awards li:hover, #certifications li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-/* --- DARK MODE --- */
-body.dark-mode {
-    background-color: var(--background-dark);
-    color: var(--text-dark);
-}
-
-body.dark-mode .navbar {
-    background: rgba(26, 26, 26, 0.95);
-}
-
-body.dark-mode .nav-links a,
-body.dark-mode #darkModeToggle {
-    color: var(--text-dark);
-}
-
-body.dark-mode .experience-item, 
-body.dark-mode .education-item,
-body.dark-mode .project-card,
-body.dark-mode .repo-item,
-body.dark-mode #awards li,
-body.dark-mode #certifications li,
-body.dark-mode .skills-category {
-    background-color: var(--card-dark);
-    box-shadow: 0 4px 6px rgba(255,255,255,0.1);
-}
-
-body.dark-mode .section h2 {
-    border-bottom-color: var(--secondary-color);
-}
-
-body.dark-mode footer {
-    background-color: var(--background-dark);
-}
-
-body.dark-mode .skill-bar {
-    background-color: rgba(255,255,255,0.1);
-}
-
-body.dark-mode .tech-stack span {
-    background-color: rgba(243, 156, 18, 0.1);
-    color: var(--secondary-color);
-}
-
-/* --- FOOTER --- */
+/* === FOOTER === */
 footer {
     background-color: var(--background-light);
     padding: 1rem;
@@ -394,6 +297,14 @@ footer {
     color: var(--secondary-color);
 }
 
+@media (max-width: 500px) {
+    .social-links {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* === BACK TO TOP === */
 #backToTop {
     position: fixed;
     bottom: 20px;
@@ -415,41 +326,46 @@ footer {
     background-color: var(--secondary-color);
 }
 
-/* --- MEDIA QUERIES --- */
-@media (max-width: 768px) {
-    .nav-content {
-        flex-direction: column;
-        padding: 1rem;
-    }
+/* === DARK MODE === */
+body.dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
 
-    .nav-links {
-        margin-top: 1rem;
-        flex-direction: column;
-        gap: 1rem;
-    }
+body.dark-mode .navbar {
+    background: rgba(26, 26, 26, 0.95);
+}
 
-    .hero h1 {
-        font-size: 2.5rem;
-    }
+body.dark-mode .nav-links a,
+body.dark-mode #darkModeToggle {
+    color: var(--text-dark);
+}
 
-    #intro-text {
-        font-size: 1.2rem;
-    }
+body.dark-mode .experience-item,
+body.dark-mode .education-item,
+body.dark-mode .project-card,
+body.dark-mode .repo-item,
+body.dark-mode #awards li,
+body.dark-mode #certifications li,
+body.dark-mode .skills-category {
+    background-color: var(--card-dark);
+    color: var(--text-dark);
+    box-shadow: 0 4px 6px rgba(255,255,255,0.1);
+}
 
-    .section {
-        padding: 3rem 1rem;
-    }
+body.dark-mode .section h2 {
+    border-bottom-color: var(--secondary-color);
+}
 
-    .skills-container,
-    .tech-icons {
-        flex-direction: column;
-    }
+body.dark-mode footer {
+    background-color: var(--background-dark);
+}
 
-    .project-links {
-        flex-direction: column;
-    }
+body.dark-mode .skill-bar {
+    background-color: rgba(255,255,255,0.1);
+}
 
-    .tech-icons {
-        justify-content: center;
-    }
+body.dark-mode .tech-stack span {
+    background-color: rgba(243, 156, 18, 0.1);
+    color: var(--secondary-color);
 }

@@ -12,7 +12,7 @@ darkModeToggle.addEventListener('click', () => {
     setDarkMode(!body.classList.contains('dark-mode'));
 });
 
-// Check user's saved preference
+// Initial theme check
 if (localStorage.getItem('darkMode') === 'true') {
     setDarkMode(true);
 } else if (localStorage.getItem('darkMode') === null) {
@@ -21,20 +21,20 @@ if (localStorage.getItem('darkMode') === 'true') {
     }
 }
 
-// Listen for system theme changes
+// System theme changes
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (localStorage.getItem('darkMode') === null) {
         setDarkMode(e.matches);
     }
 });
 
-// Reveal sections on page load
+// Reveal sections on scroll
 document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => section.classList.add('revealed'));
 });
 
-// Typewriter effect for the intro text
+// Typewriter effect for intro text
 document.addEventListener('DOMContentLoaded', () => {
     const introText = document.getElementById('intro-text');
     const phrases = [
@@ -81,9 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadGitHubRepos() {
     try {
         const response = await fetch('https://api.github.com/users/aryan-jeena/repos');
-        if (!response.ok) {
-            throw new Error('Failed to fetch GitHub repositories');
-        }
+        if (!response.ok) throw new Error('Failed to fetch GitHub repositories');
         const repos = await response.json();
         const reposContainer = document.getElementById('github-repos');
         reposContainer.innerHTML = '';
@@ -104,10 +102,9 @@ async function loadGitHubRepos() {
         reposContainer.innerHTML = '<p>Failed to load GitHub repositories. Please try again later.</p>';
     }
 }
-
 document.addEventListener('DOMContentLoaded', loadGitHubRepos);
 
-// Skill Visualization Chart (Radar)
+// Radar Chart with dark mode fixes
 document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('skillsChart').getContext('2d');
     new Chart(ctx, {
@@ -119,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data: [90, 85, 80, 75, 75, 70],
                 backgroundColor: 'rgba(74, 144, 226, 0.2)',
                 borderColor: 'rgba(74, 144, 226, 1)',
-                borderWidth: 1,
+                borderWidth: 1
             }]
         },
         options: {
@@ -129,7 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     beginAtZero: true,
                     max: 100,
                     ticks: {
-                        stepSize: 20
+                        stepSize: 20,
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.1)'
+                    },
+                    angleLines: {
+                        color: 'rgba(255,255,255,0.2)'
+                    },
+                    pointLabels: {
+                        color: 'white'
                     }
                 }
             }
@@ -137,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Smooth scrolling for navigation links
+// Smooth scrolling for navbar links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -147,9 +154,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Back to Top button functionality
+// Back to Top button
 const backToTopButton = document.getElementById('backToTop');
-
 window.addEventListener('scroll', () => {
     if (window.pageYOffset > 300) {
         backToTopButton.style.opacity = '1';
@@ -159,7 +165,6 @@ window.addEventListener('scroll', () => {
         backToTopButton.style.visibility = 'hidden';
     }
 });
-
 backToTopButton.addEventListener('click', () => {
     window.scrollTo({
         top: 0,

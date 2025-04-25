@@ -1,28 +1,33 @@
-/* === FONTS & COLORS === */
+/* === VARIABLES === */
 :root {
-  --primary-color: #6366F1;
-  --accent-color: #22D3EE;
-
-  --background-light: #F9FAFB;
-  --background-dark: #121212;
-
+  --primary-light: #3B82F6;
+  --accent-light: #22D3EE;
+  --bg-light: #F9FAFB;
   --card-light: #FFFFFF;
-  --card-dark: #1F1F1F;
-
   --text-light: #111827;
-  --text-dark: #F3F4F6;
+
+  --primary-dark: #60A5FA;
+  --accent-dark: #67E8F9;
+  --bg-dark: #0F172A;
+  --card-dark: #1E293B;
+  --text-dark: #F1F5F9;
 
   --transition-speed: 0.3s;
 }
 
+/* === GLOBAL === */
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--background-light);
+  background-color: var(--bg-light);
   color: var(--text-light);
   margin: 0;
-  padding: 0;
   transition: background-color var(--transition-speed), color var(--transition-speed);
   line-height: 1.6;
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
 }
 
 /* === NAVBAR === */
@@ -32,8 +37,13 @@ body {
   top: 0;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   z-index: 1000;
+  transition: background-color var(--transition-speed);
+}
+
+body.dark-mode .navbar {
+  background-color: rgba(15, 23, 42, 0.9);
 }
 
 .nav-content {
@@ -49,8 +59,12 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 2rem;
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--primary-light);
   text-decoration: none;
+}
+
+body.dark-mode .logo {
+  color: var(--primary-dark);
 }
 
 .nav-links {
@@ -60,14 +74,22 @@ body {
 }
 
 .nav-links a {
-  font-weight: 500;
-  text-decoration: none;
   color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
   transition: color var(--transition-speed);
 }
 
+body.dark-mode .nav-links a {
+  color: var(--text-dark);
+}
+
 .nav-links a:hover {
-  color: var(--primary-color);
+  color: var(--primary-light);
+}
+
+body.dark-mode .nav-links a:hover {
+  color: var(--primary-dark);
 }
 
 #darkModeToggle {
@@ -76,6 +98,11 @@ body {
   color: var(--text-light);
   font-size: 1.3rem;
   cursor: pointer;
+  transition: color var(--transition-speed);
+}
+
+body.dark-mode #darkModeToggle {
+  color: var(--text-dark);
 }
 
 /* === HERO === */
@@ -109,11 +136,11 @@ body {
   backdrop-filter: blur(10px);
 }
 
-/* === TYPEWRITER + GLITCH === */
 #intro-text {
   font-size: 1.4rem;
   font-family: 'Space Grotesk', sans-serif;
   min-height: 3em;
+  margin-top: 1rem;
 }
 
 #intro-text::after {
@@ -125,66 +152,41 @@ body {
   50% { opacity: 0; }
 }
 
-.glitch-text {
+/* === HERO GLITCH / BOUNCE === */
+.animated-name {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 3rem;
-  position: relative;
-  color: white;
-  animation: glitch 2s infinite;
+  font-size: 3.5rem;
+  color: var(--primary-light);
+  animation: bounceGlow 2s infinite ease-in-out;
+  text-shadow: 0 0 5px var(--accent-light), 0 0 10px var(--accent-light), 0 0 20px var(--accent-light);
 }
 
-.glitch-text::before,
-.glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  width: 100%;
-  background: transparent;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+body.dark-mode .animated-name {
+  color: var(--primary-dark);
+  text-shadow: 0 0 5px var(--accent-dark), 0 0 10px var(--accent-dark), 0 0 20px var(--accent-dark);
 }
 
-.glitch-text::before {
-  animation: glitchTop 2s infinite;
-  color: #ff00c1;
-}
-
-.glitch-text::after {
-  animation: glitchBottom 2s infinite;
-  color: #00fff9;
-}
-
-@keyframes glitch {
-  0%, 100% { transform: none; }
-  20% { transform: skew(-5deg); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: skew(5deg); }
-}
-
-@keyframes glitchTop {
-  0%, 100% { clip: rect(0, 9999px, 0, 0); }
-  10% { clip: rect(0, 9999px, 10px, 0); transform: translate(-2px, -2px); }
-  20% { clip: rect(10px, 9999px, 20px, 0); transform: translate(2px, -2px); }
-}
-
-@keyframes glitchBottom {
-  0%, 100% { clip: rect(0, 9999px, 0, 0); }
-  10% { clip: rect(20px, 9999px, 30px, 0); transform: translate(2px, 2px); }
-  20% { clip: rect(30px, 9999px, 40px, 0); transform: translate(-2px, 2px); }
-}
-
-/* === SCROLL ARROW === */
-.scroll-down {
-  font-size: 1.6rem;
-  margin-top: 2rem;
-  animation: bounce 2s infinite;
-  color: var(--accent-color);
-}
-
-@keyframes bounce {
+@keyframes bounceGlow {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+  50% { transform: translateY(-10px); }
+}
+
+.glitch-typing {
+  animation: glitchTextActive 1s infinite;
+  color: var(--primary-light);
+}
+
+body.dark-mode .glitch-typing {
+  color: var(--primary-dark);
+}
+
+@keyframes glitchTextActive {
+  0% { text-shadow: 1px 0 red, -1px 0 cyan; transform: skew(0.5deg); }
+  20% { text-shadow: -1px 0 magenta, 1px 0 cyan; transform: skew(-0.5deg); }
+  40% { text-shadow: 1px 1px red, -1px -1px cyan; transform: translate(0.5px, -0.5px); }
+  60% { text-shadow: 0 0 3px #60A5FA; transform: none; }
+  80% { text-shadow: -1px 0 #22D3EE, 1px 0 #FF00FF; transform: translate(-0.5px, 0.5px); }
+  100% { text-shadow: 1px 0 #22D3EE, -1px 0 #FF00FF; transform: skew(0.3deg); }
 }
 
 /* === SECTIONS === */
@@ -206,10 +208,15 @@ body {
 .section h2 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 2rem;
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color);
+  color: var(--primary-light);
+  border-bottom: 2px solid var(--primary-light);
   padding-bottom: 0.5rem;
   margin-bottom: 2rem;
+}
+
+body.dark-mode .section h2 {
+  color: var(--primary-dark);
+  border-bottom-color: var(--primary-dark);
 }
 
 /* === CARDS === */
@@ -222,12 +229,17 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.experience-item:hover, .education-item:hover, .project-card:hover {
+body.dark-mode .experience-item, body.dark-mode .education-item, body.dark-mode .project-card, body.dark-mode .repo-item, body.dark-mode .skills-category {
+  background-color: var(--card-dark);
+  color: var(--text-dark);
+}
+
+.experience-item:hover, .education-item:hover, .project-card:hover, .repo-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
 
-/* === SKILLS === */
+/* === SKILLS BAR === */
 .skill-bar {
   height: 8px;
   background-color: rgba(0,0,0,0.1);
@@ -237,16 +249,28 @@ body {
 
 .skill-level {
   height: 100%;
-  background-color: var(--primary-color);
+  background-color: var(--primary-light);
   border-radius: 4px;
   transition: width 1s ease;
 }
 
+body.dark-mode .skill-bar {
+  background-color: rgba(255,255,255,0.1);
+}
+
+body.dark-mode .skill-level {
+  background-color: var(--primary-dark);
+}
+
 /* === FOOTER === */
 footer {
-  background-color: var(--background-light);
+  background-color: var(--bg-light);
   padding: 2rem 1rem;
   text-align: center;
+}
+
+body.dark-mode footer {
+  background-color: var(--bg-dark);
 }
 
 .social-links {
@@ -257,13 +281,21 @@ footer {
 }
 
 .social-links a {
-  color: var(--primary-color);
+  color: var(--primary-light);
   font-size: 1.5rem;
   transition: color 0.3s ease;
 }
 
 .social-links a:hover {
-  color: var(--accent-color);
+  color: var(--accent-light);
+}
+
+body.dark-mode .social-links a {
+  color: var(--primary-dark);
+}
+
+body.dark-mode .social-links a:hover {
+  color: var(--accent-dark);
 }
 
 /* === BACK TO TOP === */
@@ -271,7 +303,7 @@ footer {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: var(--primary-color);
+  background-color: var(--primary-light);
   color: white;
   border: none;
   border-radius: 50%;
@@ -285,39 +317,15 @@ footer {
 }
 
 #backToTop:hover {
-  background-color: var(--accent-color);
+  background-color: var(--accent-light);
 }
 
-/* === DARK MODE === */
-body.dark-mode {
-  background-color: var(--background-dark);
-  color: var(--text-dark);
+body.dark-mode #backToTop {
+  background-color: var(--primary-dark);
 }
 
-body.dark-mode .navbar {
-  background-color: rgba(18, 18, 18, 0.9);
-}
-
-body.dark-mode .nav-links a,
-body.dark-mode #darkModeToggle {
-  color: var(--text-dark);
-}
-
-body.dark-mode .experience-item,
-body.dark-mode .education-item,
-body.dark-mode .project-card,
-body.dark-mode .repo-item,
-body.dark-mode .skills-category {
-  background-color: var(--card-dark);
-  color: var(--text-dark);
-}
-
-body.dark-mode .section h2 {
-  border-bottom-color: var(--accent-color);
-}
-
-body.dark-mode footer {
-  background-color: var(--background-dark);
+body.dark-mode #backToTop:hover {
+  background-color: var(--accent-dark);
 }
 
 /* === MEDIA QUERIES === */
@@ -326,24 +334,19 @@ body.dark-mode footer {
     flex-direction: column;
     gap: 1rem;
   }
-
   .nav-links {
     flex-direction: column;
     gap: 1rem;
   }
-
   .hero h1 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
-
   #intro-text {
     font-size: 1.2rem;
   }
-
   .skills-categories {
     grid-template-columns: 1fr;
   }
-
   .social-links {
     flex-direction: column;
   }

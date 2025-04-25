@@ -16,7 +16,6 @@ darkModeToggle.addEventListener('click', () => {
 if (localStorage.getItem('darkMode') === 'true') {
     setDarkMode(true);
 } else if (localStorage.getItem('darkMode') === null) {
-    // If no preference is set, use system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         setDarkMode(true);
     }
@@ -35,6 +34,49 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => section.classList.add('revealed'));
 });
 
+// Typewriter effect for the intro text
+document.addEventListener('DOMContentLoaded', () => {
+    const introText = document.getElementById('intro-text');
+    const phrases = [
+        "Computer Science & Mathematics @ UPenn",
+        "Software Engineer",
+        "AI/ML Enthusiast",
+        "Quantitative Analyst"
+    ];
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    
+    function typeEffect() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+            introText.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 50;
+        } else {
+            introText.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 100;
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            isDeleting = true;
+            typingSpeed = 1500;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typingSpeed = 500;
+        }
+
+        setTimeout(typeEffect, typingSpeed);
+    }
+
+    typeEffect();
+});
+
 // Load GitHub Repositories
 async function loadGitHubRepos() {
     try {
@@ -44,7 +86,7 @@ async function loadGitHubRepos() {
         }
         const repos = await response.json();
         const reposContainer = document.getElementById('github-repos');
-        reposContainer.innerHTML = ''; // Clear existing content
+        reposContainer.innerHTML = '';
 
         repos.forEach(repo => {
             const repoItem = document.createElement('div');
@@ -65,7 +107,7 @@ async function loadGitHubRepos() {
 
 document.addEventListener('DOMContentLoaded', loadGitHubRepos);
 
-// Skill Visualization Chart
+// Skill Visualization Chart (Radar)
 document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('skillsChart').getContext('2d');
     new Chart(ctx, {
@@ -74,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
             datasets: [{
                 label: 'Proficiency',
-                data: [90, 85, 80, 75, 75, 70], // Adjust these values based on your proficiency levels
+                data: [90, 85, 80, 75, 75, 70],
                 backgroundColor: 'rgba(74, 144, 226, 0.2)',
                 borderColor: 'rgba(74, 144, 226, 1)',
                 borderWidth: 1,

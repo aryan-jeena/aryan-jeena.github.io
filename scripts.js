@@ -1,12 +1,12 @@
-// ==== DARK MODE TOGGLE ====
+// === DARK MODE TOGGLE ===
 const darkModeToggle = document.getElementById('darkModeToggle');
 const body = document.body;
 
 function setDarkMode(isDark) {
   body.classList.toggle('dark-mode', isDark);
   localStorage.setItem('darkMode', isDark);
-  darkModeToggle.innerHTML = isDark
-    ? '<i class="fas fa-sun"></i>'
+  darkModeToggle.innerHTML = isDark 
+    ? '<i class="fas fa-sun"></i>' 
     : '<i class="fas fa-moon"></i>';
 }
 
@@ -29,14 +29,14 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
   }
 });
 
-// ==== SECTION REVEAL ON LOAD ====
+// === SECTION REVEAL ON LOAD ===
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.section').forEach(section => {
     section.classList.add('revealed');
   });
 });
 
-// ==== TYPEWRITER + GLITCH EFFECT ====
+// === TYPEWRITER + GLITCH ANIMATION ===
 document.addEventListener('DOMContentLoaded', () => {
   const introText = document.getElementById('intro-text');
   const phrases = [
@@ -53,7 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function typeEffect() {
     const currentPhrase = phrases[phraseIndex];
-    
+
+    if (!introText.classList.contains('glitch-typing')) {
+      introText.classList.add('glitch-typing');
+    }
+
     if (isDeleting) {
       introText.textContent = currentPhrase.substring(0, charIndex - 1);
       charIndex--;
@@ -67,10 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isDeleting && charIndex === currentPhrase.length) {
       isDeleting = true;
       typingSpeed = 1500;
+      introText.classList.remove('glitch-typing');
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       phraseIndex = (phraseIndex + 1) % phrases.length;
       typingSpeed = 500;
+      introText.classList.add('glitch-typing');
     }
 
     setTimeout(typeEffect, typingSpeed);
@@ -79,23 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
   typeEffect();
 });
 
-// ==== PARTICLES.JS (Hero Background) ====
+// === PARTICLES BACKGROUND ===
 document.addEventListener('DOMContentLoaded', () => {
   tsParticles.load("hero-bg", {
-    background: {
-      color: { value: "transparent" }
-    },
+    background: { color: { value: "transparent" } },
     fullScreen: { enable: false },
     particles: {
-      number: { value: 60 },
+      number: { value: 80 },
       color: { value: "#ffffff" },
-      links: {
-        enable: true,
-        color: "#ffffff",
-        distance: 150,
-        opacity: 0.4,
-        width: 1
-      },
+      links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.4, width: 1 },
       move: { enable: true, speed: 1 },
       size: { value: { min: 1, max: 3 } },
       opacity: { value: { min: 0.3, max: 0.7 } }
@@ -103,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ==== GITHUB PROJECT LOADER ====
+// === GITHUB PROJECTS LOADER ===
 async function loadGitHubRepos() {
   try {
     const response = await fetch('https://api.github.com/users/aryan-jeena/repos');
@@ -124,12 +122,12 @@ async function loadGitHubRepos() {
     });
   } catch (err) {
     console.error(err);
-    document.getElementById('github-repos').innerHTML = '<p>Error loading repos.</p>';
+    document.getElementById('github-repos').innerHTML = '<p>Error loading projects.</p>';
   }
 }
 document.addEventListener('DOMContentLoaded', loadGitHubRepos);
 
-// ==== RADAR CHART (SKILLS) ====
+// === RADAR SKILLS CHART ===
 document.addEventListener('DOMContentLoaded', () => {
   const ctx = document.getElementById('skillsChart')?.getContext('2d');
   if (!ctx) return;
@@ -162,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ==== SMOOTH SCROLL FOR NAV ====
+// === SMOOTH SCROLL NAVIGATION ===
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
     e.preventDefault();
@@ -171,7 +169,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ==== BACK TO TOP BUTTON ====
+// === BACK TO TOP BUTTON ===
 const backToTopButton = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 300) {

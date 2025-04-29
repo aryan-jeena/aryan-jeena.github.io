@@ -14,7 +14,6 @@ darkModeToggle.addEventListener('click', () => {
   setDarkMode(!body.classList.contains('dark-mode'));
 });
 
-// Initialize based on saved or system preference
 if (localStorage.getItem('darkMode') === 'true') {
   setDarkMode(true);
 } else if (localStorage.getItem('darkMode') === null) {
@@ -36,23 +35,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// === TYPEWRITER + GLITCH ANIMATION ===
+// === TYPEWRITER + SCRAMBLE EFFECT ===
 document.addEventListener('DOMContentLoaded', () => {
   const introText = document.getElementById('intro-text');
-  const phrases = [
+  const normalPhrases = [
     "Computer Science & Mathematics @ UPenn",
     "Software Engineer",
     "AI/ML Enthusiast",
     "Quantitative Analyst"
   ];
-
+  const finalPhrase = "Soccer Player";
+  const scrambleChars = "!<>-_\\/[]{}—=+*^?#________";
+  let loopCount = 0;
   let phraseIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
   let typingSpeed = 100;
+  let scrambled = false;
 
-  function typeEffect() {
-    const currentPhrase = phrases[phraseIndex];
+  function randomChar() {
+    return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+  }
+
+  function typeNormal() {
+    const currentPhrase = normalPhrases[phraseIndex];
 
     if (!introText.classList.contains('glitch-typing')) {
       introText.classList.add('glitch-typing');
@@ -70,19 +76,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!isDeleting && charIndex === currentPhrase.length) {
       isDeleting = true;
-      typingSpeed = 1500;
+      typingSpeed = 1200;
       introText.classList.remove('glitch-typing');
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      typingSpeed = 500;
+      phraseIndex = (phraseIndex + 1) % normalPhrases.length;
+      loopCount++;
+
+      // After some loops, switch to final scramble
+      if (loopCount >= 2) {
+        setTimeout(scrambleToFinal, 1000);
+        return;
+      }
+      typingSpeed = 400;
       introText.classList.add('glitch-typing');
     }
 
-    setTimeout(typeEffect, typingSpeed);
+    setTimeout(typeNormal, typingSpeed);
   }
 
-  typeEffect();
+  function scrambleToFinal() {
+    scrambled = true;
+    let output = '';
+    let queue = [];
+
+    for (let i = 0; i < finalPhrase.length; i++) {
+      queue.push({ from: randomChar(), to: finalPhrase[i] });
+    }
+
+    let frame = 0;
+
+    function update() {
+      output = '';
+      let complete = 0;
+
+      for (let i = 0; i < queue.length; i++) {
+        if (frame > i * 2) { // Slightly smoother than usual
+          output += queue[i].to;
+          complete++;
+        } else {
+          output += randomChar();
+        }
+      }
+
+      introText.textContent = output;
+
+      if (complete === queue.length) {
+        introText.classList.remove('glitch-typing');
+        return;
+      } else {
+        frame++;
+        requestAnimationFrame(update);
+      }
+    }
+
+    update();
+  }
+
+  // Start typing normally first
+  typeNormal();
 });
 
 // === PARTICLES BACKGROUND ===

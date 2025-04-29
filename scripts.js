@@ -159,8 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
       particleOptions.particles.color = { value: "#ffffff" };
       particleOptions.particles.links.color = "#ffffff";
     } else {
-      particleOptions.particles.color = { value: "#111827" };
-      particleOptions.particles.links.color = "#111827";
+      particleOptions.particles.color = { value: "#3B82F6" };
+      particleOptions.particles.links.color = "#3B82F6";
     }
     tsParticles.load("hero-bg", particleOptions);
   }

@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       move: { enable: true, speed: 1 },
       size: { value: { min: 1, max: 3 } },
-      opacity: { value: { min: 0.3, max: 0.7 } }
+      opacity: { value: { min: 0.7, max: 1 } }
     }
   };
 

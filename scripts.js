@@ -68,17 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isDeleting) {
         introText.textContent = currentPhrase.substring(0, charIndex - 1);
         charIndex--;
-        typingSpeed = 50;
+        typingSpeed = 30;
       } else {
         introText.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
-        typingSpeed = 100;
+        typingSpeed = 80;
       }
 
       if (!isDeleting && charIndex === currentPhrase.length) {
         // Fully typed current phrase — now trigger scramble
         afterNormalGlitch = true;
-        setTimeout(scrambleToSoccer, 300);
+        setTimeout(scrambleToSoccer, 500);
         return;
       } else if (isDeleting && charIndex === 0) {
         // Finished deleting — move to next phrase

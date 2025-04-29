@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDeleting && charIndex === currentPhrase.length) {
         // Fully typed current phrase — now trigger scramble
         afterNormalGlitch = true;
-        setTimeout(scrambleToSoccer, 700);
+        setTimeout(scrambleToSoccer, 1100);
         return;
       } else if (isDeleting && charIndex === 0) {
         // Finished deleting — move to next phrase

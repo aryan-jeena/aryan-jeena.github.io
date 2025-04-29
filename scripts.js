@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// === TYPEWRITER + SCRAMBLE EFFECT ===
+// === TYPEWRITER + SCRAMBLE AFTER EACH TITLE ===
 document.addEventListener('DOMContentLoaded', () => {
   const introText = document.getElementById('intro-text');
   const normalPhrases = [
@@ -44,74 +44,69 @@ document.addEventListener('DOMContentLoaded', () => {
     "AI/ML Enthusiast",
     "Quantitative Analyst"
   ];
-  const finalPhrase = "Soccer Player";
+  const soccerPhrase = "Soccer Player";
   const scrambleChars = "!<>-_\\/[]{}—=+*^?#________";
-  let loopCount = 0;
   let phraseIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
   let typingSpeed = 100;
-  let scrambled = false;
+  let afterNormalGlitch = false; 
 
   function randomChar() {
     return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
   }
 
-  function typeNormal() {
+  function typeEffect() {
     const currentPhrase = normalPhrases[phraseIndex];
 
-    if (!introText.classList.contains('glitch-typing')) {
-      introText.classList.add('glitch-typing');
-    }
-
-    if (isDeleting) {
-      introText.textContent = currentPhrase.substring(0, charIndex - 1);
-      charIndex--;
-      typingSpeed = 50;
-    } else {
-      introText.textContent = currentPhrase.substring(0, charIndex + 1);
-      charIndex++;
-      typingSpeed = 100;
-    }
-
-    if (!isDeleting && charIndex === currentPhrase.length) {
-      isDeleting = true;
-      typingSpeed = 1200;
-      introText.classList.remove('glitch-typing');
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      phraseIndex = (phraseIndex + 1) % normalPhrases.length;
-      loopCount++;
-
-      // After some loops, switch to final scramble
-      if (loopCount >= 2) {
-        setTimeout(scrambleToFinal, 1000);
-        return;
+    if (!afterNormalGlitch) {
+      // Typing normal phrase
+      if (!introText.classList.contains('glitch-typing')) {
+        introText.classList.add('glitch-typing');
       }
-      typingSpeed = 400;
-      introText.classList.add('glitch-typing');
+
+      if (isDeleting) {
+        introText.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 50;
+      } else {
+        introText.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 100;
+      }
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        // Fully typed current phrase — now trigger scramble
+        afterNormalGlitch = true;
+        setTimeout(scrambleToSoccer, 300);
+        return;
+      } else if (isDeleting && charIndex === 0) {
+        // Finished deleting — move to next phrase
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % normalPhrases.length;
+        typingSpeed = 400;
+      }
     }
 
-    setTimeout(typeNormal, typingSpeed);
+    setTimeout(typeEffect, typingSpeed);
   }
 
-  function scrambleToFinal() {
-    scrambled = true;
+  function scrambleToSoccer() {
     let output = '';
     let queue = [];
 
-    for (let i = 0; i < finalPhrase.length; i++) {
-      queue.push({ from: randomChar(), to: finalPhrase[i] });
+    for (let i = 0; i < soccerPhrase.length; i++) {
+      queue.push({ from: randomChar(), to: soccerPhrase[i] });
     }
 
     let frame = 0;
 
-    function update() {
+    function updateScramble() {
       output = '';
       let complete = 0;
 
       for (let i = 0; i < queue.length; i++) {
-        if (frame > i * 2) { // Slightly smoother than usual
+        if (frame > i * 2) {
           output += queue[i].to;
           complete++;
         } else {
@@ -122,19 +117,22 @@ document.addEventListener('DOMContentLoaded', () => {
       introText.textContent = output;
 
       if (complete === queue.length) {
-        introText.classList.remove('glitch-typing');
-        return;
+        setTimeout(() => {
+          isDeleting = true;
+          afterNormalGlitch = false;
+          typeEffect(); // continue deleting
+        }, 700); // Briefly show Soccer Player before deleting
       } else {
         frame++;
-        requestAnimationFrame(update);
+        requestAnimationFrame(updateScramble);
       }
     }
 
-    update();
+    updateScramble();
   }
 
-  // Start typing normally first
-  typeNormal();
+  // Start typing
+  typeEffect();
 });
 
 // === PARTICLES BACKGROUND ===

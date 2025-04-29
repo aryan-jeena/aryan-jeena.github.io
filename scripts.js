@@ -137,17 +137,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === PARTICLES BACKGROUND ===
 document.addEventListener('DOMContentLoaded', () => {
-  tsParticles.load("hero-bg", {
+  const particleOptions = {
     background: { color: { value: "transparent" } },
     fullScreen: { enable: false },
     particles: {
       number: { value: 80 },
-      color: { value: "#ffffff" },
-      links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.4, width: 1 },
+      links: {
+        enable: true,
+        distance: 150,
+        opacity: 0.4,
+        width: 1
+      },
       move: { enable: true, speed: 1 },
       size: { value: { min: 1, max: 3 } },
       opacity: { value: { min: 0.3, max: 0.7 } }
     }
+  };
+
+  function loadParticlesBasedOnTheme() {
+    if (body.classList.contains('dark-mode')) {
+      particleOptions.particles.color = { value: "#ffffff" };
+      particleOptions.particles.links.color = "#ffffff";
+    } else {
+      particleOptions.particles.color = { value: "#111827" };
+      particleOptions.particles.links.color = "#111827";
+    }
+    tsParticles.load("hero-bg", particleOptions);
+  }
+
+  loadParticlesBasedOnTheme();
+
+  // Reload particles when theme changes
+  darkModeToggle.addEventListener('click', () => {
+    tsParticles.dom().forEach((p) => p.destroy()); // Clear existing
+    loadParticlesBasedOnTheme();
   });
 });
 

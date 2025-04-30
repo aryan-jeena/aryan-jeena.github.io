@@ -15,6 +15,10 @@
   --transition-speed: 0.3s;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* === GLOBAL === */
 body {
   font-family: 'Inter', sans-serif;
@@ -61,7 +65,14 @@ body.dark-mode .navbar {
   font-weight: bold;
   color: var(--primary-light);
   text-decoration: none;
+  animation: pulseAJ 2s infinite; /* <--- Add this */
 }
+
+@keyframes pulseAJ {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
 
 body.dark-mode .logo {
   color: var(--primary-dark);
@@ -118,6 +129,8 @@ body.dark-mode #darkModeToggle {
   color: white;
 }
 
+
+
 #hero-bg {
   position: absolute;
   top: 0;
@@ -136,6 +149,15 @@ body.dark-mode #darkModeToggle {
   backdrop-filter: blur(10px);
 }
 
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+
 #intro-text {
   font-size: 1.4rem;
   font-family: 'Space Grotesk', sans-serif;
@@ -150,6 +172,31 @@ body.dark-mode #darkModeToggle {
 
 @keyframes blink {
   50% { opacity: 0; }
+}
+
+.connect-btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-light);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.connect-btn:hover {
+  background-color: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+body.dark-mode .connect-btn {
+  background-color: var(--primary-dark);
+}
+
+body.dark-mode .connect-btn:hover {
+  background-color: var(--accent-dark);
 }
 
 /* === HERO GLITCH / BOUNCE === */
@@ -177,6 +224,7 @@ body.dark-mode .animated-name {
 }
 
 body.dark-mode .glitch-typing {
+  animation: flashGlitchDark 0.2s infinite alternate;
   color: var(--primary-dark);
 }
 
@@ -209,7 +257,7 @@ body.dark-mode .glitch-typing {
   }
 }
 
-body.dark-mode @keyframes flashGlitch {
+@keyframes flashGlitchDark {
   0% {
     opacity: 1;
     transform: skew(0deg);
@@ -221,6 +269,30 @@ body.dark-mode @keyframes flashGlitch {
     text-shadow: 0 0 8px var(--accent-dark);
   }
 }
+
+.scroll-down {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #3B82F6; /* Light mode: same blue as particles */
+  animation: pulse 1.5s infinite;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .scroll-down {
+  color: #ffffff; /* Dark mode: same white as particles */
+}
+
+.scroll-down:hover {
+  transform: translateX(-50%) translateY(3px);
+}
+
+
+
 
 
 /* === SECTIONS === */
@@ -306,6 +378,19 @@ footer {
 body.dark-mode footer {
   background-color: var(--bg-dark);
 }
+
+.footer-heading {
+  color: var(--primary-light);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+body.dark-mode .footer-heading {
+  color: var(--primary-dark);
+}
+
 
 .social-links {
   display: flex;

@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDeleting && charIndex === currentPhrase.length) {
         // Fully typed current phrase — now trigger scramble
         afterNormalGlitch = true;
-        setTimeout(scrambleToSoccer, 1100);
+        setTimeout(scrambleToSoccer, 1500);
         return;
       } else if (isDeleting && charIndex === 0) {
         // Finished deleting — move to next phrase
@@ -142,17 +142,43 @@ document.addEventListener('DOMContentLoaded', () => {
     fullScreen: { enable: false },
     particles: {
       number: { value: 80 },
+      color: { value: "#ffffff" },
       links: {
         enable: true,
         distance: 150,
-        opacity: 0.4,
-        width: 1
+        opacity: 0.7,
+        width: 1,
+        color: "#ffffff"
       },
       move: { enable: true, speed: 1 },
-      size: { value: { min: 1, max: 3 } },
+      size: {
+        value: { min: 1.5, max: 3 },
+        animation: {
+          enable: true,
+          speed: 2,
+          minimumValue: 1.5,
+          sync: false
+        }
+      },
       opacity: { value: { min: 0.7, max: 1 } }
+    },
+    interactivity: {
+      events: {
+        onHover: {
+          enable: true,
+          mode: "repulse"
+        },
+        resize: true
+      },
+      modes: {
+        repulse: {
+          distance: 100,
+          duration: 0.4
+        }
+      }
     }
   };
+  
 
   function loadParticlesBasedOnTheme() {
     if (body.classList.contains('dark-mode')) {

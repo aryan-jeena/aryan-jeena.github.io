@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let phraseIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
-  let typingSpeed = 100;
+  let typingSpeed = 85;
   let afterNormalGlitch = false; 
 
   function randomChar() {
@@ -72,19 +72,19 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         introText.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
-        typingSpeed = 80;
+        typingSpeed = 50;
       }
 
       if (!isDeleting && charIndex === currentPhrase.length) {
         // Fully typed current phrase — now trigger scramble
         afterNormalGlitch = true;
-        setTimeout(scrambleToSoccer, 1500);
+        setTimeout(scrambleToSoccer, 1000);
         return;
       } else if (isDeleting && charIndex === 0) {
         // Finished deleting — move to next phrase
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % normalPhrases.length;
-        typingSpeed = 400;
+        typingSpeed = 300;
       }
     }
 
@@ -231,31 +231,73 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = document.getElementById('skillsChart')?.getContext('2d');
   if (!ctx) return;
 
-  new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
-      datasets: [{
-        label: 'Proficiency',
-        data: [90, 85, 80, 75, 75, 70],
-        backgroundColor: 'rgba(99, 102, 241, 0.2)',
-        borderColor: 'rgba(99, 102, 241, 1)',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        r: {
-          beginAtZero: true,
-          max: 100,
-          ticks: { stepSize: 20, color: 'white' },
-          grid: { color: 'rgba(255,255,255,0.1)' },
-          angleLines: { color: 'rgba(255,255,255,0.2)' },
-          pointLabels: { color: 'white' }
+  function updateChart() {
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    const labelColor = isDarkMode ? '#ffffff' : '#3B82F6';
+
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
+        datasets: [{
+          label: 'Proficiency',
+          data: [90, 85, 80, 75, 75, 70],
+          backgroundColor: 'rgba(59, 130, 246, 0.2)',
+          borderColor: 'rgba(59, 130, 246, 0.8)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(59, 130, 246, 1)',
+          pointRadius: 4,
+          pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 100,
+            ticks: { 
+              display: false,
+              stepSize: 20
+            },
+            grid: { 
+              color: 'rgba(59, 130, 246, 0.1)',
+            },
+            angleLines: { 
+              color: 'rgba(59, 130, 246, 0.1)',
+            },
+            pointLabels: { 
+              color: labelColor,
+              font: {
+                size: 14,
+                family: "'Space Grotesk', sans-serif",
+                weight: '500'
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
         }
       }
-    }
+    });
+  }
+
+  // Initial chart creation
+  updateChart();
+
+  // Update chart when theme changes
+  darkModeToggle.addEventListener('click', () => {
+    // Destroy the old chart
+    Chart.getChart(ctx.canvas)?.destroy();
+    // Create new chart with updated colors
+    updateChart();
   });
 });
 
@@ -281,4 +323,128 @@ window.addEventListener('scroll', () => {
 });
 backToTopButton.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// === SECTION ANIMATIONS ===
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize AOS with stricter settings
+    AOS.init({
+        duration: 1200,
+        easing: 'ease-out',
+        once: true,
+        mirror: false,
+        offset: 100, // Reduced offset
+        anchorPlacement: 'center-bottom', // Changed to trigger later
+        startEvent: 'load',
+        disable: false,
+        throttleDelay: 50,
+        debounceDelay: 50,
+        delay: 0 // Remove any default delay
+    });
+});
+
+// Create a new Intersection Observer for sections
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('section-visible');
+            sectionObserver.unobserve(entry.target); // Stop observing after animation
+        }
+    });
+}, {
+    threshold: 0.15, // Trigger when 15% of the section is visible
+    rootMargin: '-50px 0px' // Small negative margin to delay trigger
+});
+
+// === SKILL BARS ANIMATION ===
+const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const skillBars = entry.target;
+            skillBars.classList.add('animate');
+            
+            // Animate each skill level
+            skillBars.querySelectorAll('.skill-level').forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 300);
+            });
+            
+            skillObserver.unobserve(skillBars);
+        }
+    });
+}, {
+    threshold: 0.15,
+    rootMargin: '-50px 0px'
+});
+
+// Start observing elements
+document.addEventListener('DOMContentLoaded', () => {
+    // Observe all sections
+    document.querySelectorAll('.section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(40px)';
+        sectionObserver.observe(section);
+    });
+
+    // Observe skill bars
+    document.querySelectorAll('.skill-bars').forEach(skillBar => {
+        skillObserver.observe(skillBar);
+    });
+});
+
+// === SCROLLBAR VISIBILITY ===
+let scrollTimer = null;
+
+function showScrollbar() {
+    document.body.classList.remove('hide-scrollbar');
+    document.body.classList.add('show-scrollbar', 'scrollbar-transition');
+}
+
+function hideScrollbar() {
+    document.body.classList.remove('show-scrollbar');
+    document.body.classList.add('hide-scrollbar', 'scrollbar-transition');
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    // Start with visible scrollbar
+    showScrollbar();
+    
+    // Handle scroll events
+    window.addEventListener('scroll', () => {
+        showScrollbar();
+        
+        // Clear previous timer
+        if (scrollTimer) clearTimeout(scrollTimer);
+        
+        // Set new timer to hide scrollbar
+        scrollTimer = setTimeout(() => {
+            hideScrollbar();
+        }, 1500);
+    });
+    
+    // Show on hover near right edge
+    document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth - e.clientX <= 50) {
+            showScrollbar();
+        }
+    });
+});
+
+// Add this to your existing JavaScript
+document.addEventListener('DOMContentLoaded', () => {
+    // Subtle hover effect for experience items
+    document.querySelectorAll('.experience-item, .education-item, .project-card').forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateY(-5px)';
+            item.style.boxShadow = '0 6px 30px rgba(0, 0, 0, 0.1)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0)';
+            item.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.06)';
+        });
+    });
 });

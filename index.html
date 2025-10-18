@@ -19,9 +19,21 @@
 
   <!-- Hero Animation -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+
+  <!-- Typed.js for terminal effect -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
 </head>
 
 <body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loader"></div>
+    <p class="loading-text">Loading Portfolio...</p>
+  </div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-indicator" id="scroll-indicator"></div>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-content">
@@ -31,9 +43,11 @@
         <li><a href="#education">Education</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#github-stats">GitHub Stats</a></li>
         <li><a href="#awards">Awards</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#terminal">Terminal</a></li>
       </ul>
       <button id="darkModeToggle" aria-label="Toggle dark mode">
         <i class="fas fa-moon"></i>
@@ -177,19 +191,43 @@
 
         <section id="projects" class="section">
             <h2><i class="fas fa-code"></i> Projects</h2>
+
+            <!-- Project Filter -->
+            <div class="project-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn" data-filter="web">Web Dev</button>
+                <button class="filter-btn" data-filter="data">Data Science</button>
+                <button class="filter-btn" data-filter="other">Other</button>
+            </div>
+
             <div class="featured-projects">
                 <h3>Featured Work</h3>
                 <div class="project-grid">
-                    <div class="project-card featured">
+                    <div class="project-card featured" data-category="ml">
                         <div class="project-image">
-                            <img src="https://via.placeholder.com/400x250?text=Project+Image" alt="Project thumbnail">
+                            <img src="https://via.placeholder.com/400x250?text=ML+Project" alt="Project thumbnail">
+                            <div class="project-overlay">
+                                <span class="project-status">Featured</span>
+                            </div>
                         </div>
-                        <h3>ML Project</h3>
-                        <p class="project-description">ML Project.</p>
+                        <h3>AI-Powered Pathology Analysis</h3>
+                        <p class="project-description">Developed machine learning models for Proscia's digital pathology platform, analyzing 100,000+ images to improve cancer diagnostic accuracy by 15%.</p>
                         <div class="tech-stack">
                             <span>Python</span>
                             <span>TensorFlow</span>
-                            <span>React</span>
+                            <span>SQL</span>
+                            <span>Computer Vision</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>100K+ Images</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-chart-line"></i>
+                                <span>15% Accuracy Boost</span>
+                            </div>
                         </div>
                         <div class="project-links">
                             <a href="#" target="_blank" class="btn"><i class="fas fa-link"></i> Live Demo</a>
@@ -205,6 +243,45 @@
                         <i class="fas fa-spinner fa-spin"></i> Loading projects...
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- GitHub Stats Section -->
+        <section id="github-stats" class="section">
+            <h2><i class="fab fa-github"></i> GitHub Activity & Stats</h2>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-code-branch"></i>
+                    <h3 id="total-repos">--</h3>
+                    <p>Total Repositories</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3 id="total-stars">--</h3>
+                    <p>Total Stars</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-code-commit"></i>
+                    <h3 id="total-commits">--</h3>
+                    <p>Total Contributions</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3 id="languages-count">--</h3>
+                    <p>Languages Used</p>
+                </div>
+            </div>
+
+            <!-- GitHub Contribution Graph -->
+            <div class="github-graph">
+                <h3>Contribution Activity</h3>
+                <img id="github-contributions" src="https://ghchart.rshah.org/3B82F6/aryan-jeena" alt="GitHub Contributions" />
+            </div>
+
+            <!-- Most Used Languages -->
+            <div class="languages-chart">
+                <h3>Top Languages</h3>
+                <canvas id="languagesChart"></canvas>
             </div>
         </section>
 
@@ -406,6 +483,96 @@
                 <li>Lifeguarding with CPR/AED for Professional Rescuers and First Aid</li>
                 <li>Basic Life Support (BLS)</li>
             </ul>
+        </section>
+
+        <!-- Interactive Terminal Section -->
+        <section id="terminal" class="section">
+            <h2><i class="fas fa-terminal"></i> Interactive Terminal</h2>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="terminal-btn red"></span>
+                        <span class="terminal-btn yellow"></span>
+                        <span class="terminal-btn green"></span>
+                    </div>
+                    <div class="terminal-title">aryan@portfolio:~$</div>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">visitor@aryan-portfolio:~$</span>
+                        <span class="terminal-text">cat welcome.txt</span>
+                    </div>
+                    <div class="terminal-output">
+                        <p>Welcome to Aryan's interactive portfolio terminal!</p>
+                        <p>Type 'help' to see available commands.</p>
+                        <p></p>
+                    </div>
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt">visitor@aryan-portfolio:~$</span>
+                        <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus />
+                    </div>
+                </div>
+            </div>
+            <div class="terminal-info">
+                <p><i class="fas fa-lightbulb"></i> Try commands like: <code>help</code>, <code>about</code>, <code>skills</code>, <code>projects</code>, <code>contact</code>, <code>resume</code>, <code>clear</code></p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2><i class="fas fa-envelope"></i> Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>I'm always open to discussing new opportunities, interesting projects, or potential collaborations in SWE and quantitative finance.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:aryanj@sas.upenn.edu">aryanj@sas.upenn.edu</a>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+19086365723">+1 (908) 636-5723</a>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fab fa-linkedin"></i>
+                            <a href="https://www.linkedin.com/in/aryan-jeena/" target="_blank">LinkedIn</a>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fab fa-github"></i>
+                            <a href="https://github.com/aryan-jeena" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="resume-download">
+                        <a href="#" id="download-resume" class="download-btn">
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
         </section>
 
     <!-- Add other sections (Experience, Projects, etc.) here just like before -->

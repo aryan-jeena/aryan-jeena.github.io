@@ -173,13 +173,15 @@ body.dark-mode #darkModeToggle {
   position: relative;
   z-index: 1;
   background: rgba(0, 0, 0, 0.6);
-  padding: 2rem 3rem;
+  padding: 1.5rem 2.5rem 0.75rem 2.5rem;
   border-radius: 12px;
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   opacity: 0;
   transform: translateY(30px);
   animation: fadeIn 0.5s ease-out forwards;
+  display: inline-block;
+  text-align: center;
 }
 
 .hero-buttons {
@@ -194,10 +196,13 @@ body.dark-mode #darkModeToggle {
 #intro-text {
   font-size: 1.4rem;
   font-family: 'Space Grotesk', sans-serif;
-  min-height: 3em;
+  min-height: 2.5em;
   margin-top: 1rem;
+  margin-bottom: 0;
   opacity: 0;
   animation: fadeIn 0.5s ease-out forwards 1.1s;
+  text-align: center;
+  display: block;
 }
 
 #intro-text::after {
@@ -241,12 +246,15 @@ body.dark-mode .connect-btn:hover {
   color: var(--primary-light);
   opacity: 0;
   transform: translateY(-30px);
-  animation: 
+  animation:
     fadeInName 0.7s ease-out forwards 0.3s,
     bounceGlow 2s infinite ease-in-out 1.5s;
   text-shadow: 0 0 5px var(--accent-light), 0 0 10px var(--accent-light), 0 0 20px var(--accent-light);
   letter-spacing: -0.03em;
   font-weight: 700;
+  text-align: center;
+  display: block;
+  margin: 0 0 1rem 0;
 }
 
 body.dark-mode .animated-name {
@@ -312,18 +320,17 @@ body.dark-mode .glitch-typing {
 }
 
 .scroll-down {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 2rem;
   color: #3B82F6;
   cursor: pointer;
   z-index: 2;
   opacity: 0;
-  animation: 
+  animation:
     fadeIn 0.5s ease-out forwards 1.5s,
     pulse 1.5s infinite 1.5s;
+  text-align: center;
+  display: block;
+  margin-top: -0.5rem;
 }
 
 body.dark-mode .scroll-down {
@@ -371,6 +378,7 @@ body.dark-mode .scroll-down {
   padding-bottom: 0.5rem;
   margin-bottom: 2.5rem;
   letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
 body.dark-mode .section h2 {
@@ -385,8 +393,42 @@ body.dark-mode .section h2 {
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-item::before, .education-item::before, .project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.experience-item:hover::before, .education-item:hover::before, .project-card:hover::before {
+  left: 100%;
+}
+
+.experience-item h3, .education-item h3, .project-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.experience-item p, .education-item p, .project-card p, .section p {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+.experience-item ul li, .section ul li {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.8;
 }
 
 body.dark-mode .experience-item, body.dark-mode .education-item, body.dark-mode .project-card, body.dark-mode .repo-item, body.dark-mode .skills-category {
@@ -397,8 +439,17 @@ body.dark-mode .experience-item, body.dark-mode .education-item, body.dark-mode 
 }
 
 .experience-item:hover, .education-item:hover, .project-card:hover, .repo-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.dark-mode .experience-item:hover,
+body.dark-mode .education-item:hover,
+body.dark-mode .project-card:hover,
+body.dark-mode .repo-item:hover {
+  box-shadow: 0 12px 40px rgba(96, 165, 250, 0.3);
+  border-color: rgba(96, 165, 250, 0.4);
 }
 
 /* === SKILLS BAR === */
@@ -470,6 +521,8 @@ body.dark-mode footer {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   text-align: center;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 body.dark-mode .footer-heading {
@@ -676,6 +729,8 @@ body.dark-mode .tech-icon i {
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--primary-light);
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 body.dark-mode .tools-category h4 {
@@ -971,6 +1026,21 @@ body.dark-mode .btn:hover {
     background: var(--accent-dark);
 }
 
+/* === SECTION HEADINGS (h3) === */
+.featured-projects h3, .github-projects h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+}
+
+body.dark-mode .featured-projects h3,
+body.dark-mode .github-projects h3 {
+    color: var(--text-dark);
+}
+
 /* === GITHUB STATS SECTION === */
 .stats-container {
     display: grid;
@@ -1038,6 +1108,8 @@ body.dark-mode .stat-card p {
     color: var(--primary-light);
     font-family: 'Space Grotesk', sans-serif;
     margin-bottom: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
 }
 
 body.dark-mode .github-graph h3 {
@@ -1062,6 +1134,8 @@ body.dark-mode .github-graph h3 {
     font-family: 'Space Grotesk', sans-serif;
     margin-bottom: 1.5rem;
     text-align: center;
+    font-weight: 600;
+    letter-spacing: -0.015em;
 }
 
 body.dark-mode .languages-chart h3 {
@@ -1169,6 +1243,12 @@ body.dark-mode .languages-chart h3 {
     background: var(--card-light);
     border-radius: 8px;
     border-left: 4px solid var(--primary-light);
+    font-family: 'Inter', sans-serif;
+}
+
+.terminal-info p {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
 }
 
 body.dark-mode .terminal-info {
@@ -1201,10 +1281,19 @@ body.dark-mode .terminal-info code {
     color: var(--primary-light);
     font-family: 'Space Grotesk', sans-serif;
     margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: -0.015em;
 }
 
 body.dark-mode .contact-info h3 {
     color: var(--primary-dark);
+}
+
+.contact-info p {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
 }
 
 .contact-methods {
@@ -1468,6 +1557,8 @@ body.dark-mode .repo-item {
     color: var(--primary-light);
     font-family: 'Space Grotesk', sans-serif;
     margin-top: 0;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 body.dark-mode .repo-item h3 {
@@ -1513,6 +1604,391 @@ body.dark-mode .scroll-indicator {
     animation: float 2s ease-in-out infinite;
 }
 
+/* === GRADIENT TEXT EFFECT === */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.dark-mode .gradient-text {
+    background: linear-gradient(135deg, var(--primary-dark), var(--accent-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* === ANIMATED BACKGROUND GRADIENT === */
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-gradient-bg {
+    background: linear-gradient(-45deg, #3B82F6, #22D3EE, #8B5CF6, #EC4899);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+}
+
+/* === ENHANCED STATS CARDS === */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+
+.stat-card:hover::before {
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* === ENHANCED BUTTONS === */
+.btn, .download-btn, .submit-btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before, .download-btn::before, .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: -1;
+}
+
+.btn:hover::before, .download-btn:hover::before, .submit-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* === GLOWING EFFECT FOR IMPORTANT ELEMENTS === */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+}
+
+.glow-on-hover:hover {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* === SMOOTH SECTION TRANSITIONS === */
+.section {
+    will-change: transform, opacity;
+}
+
+/* === IMPROVED TECH ICONS === */
+.tech-icon {
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.tech-icon:hover::after {
+    width: 150%;
+    height: 150%;
+}
+
+.tech-icon i, .tech-icon span {
+    position: relative;
+    z-index: 1;
+}
+
+/* === RIBBON EFFECT FOR FEATURED PROJECTS === */
+.project-status {
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.project-status::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+}
+
+/* === ENHANCED EDUCATION AND EXPERIENCE ITEMS === */
+.education-item, .experience-item {
+    background: linear-gradient(135deg, var(--card-light) 0%, rgba(59, 130, 246, 0.02) 100%);
+}
+
+body.dark-mode .education-item,
+body.dark-mode .experience-item {
+    background: linear-gradient(135deg, var(--card-dark) 0%, rgba(96, 165, 250, 0.03) 100%);
+}
+
+/* === SKILL BAR ENHANCEMENTS === */
+.skill-bar {
+    position: relative;
+    overflow: visible;
+}
+
+.skill-level {
+    position: relative;
+}
+
+.skill-level::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+    border-radius: 2px;
+}
+
+/* === TIMELINE EFFECT FOR EXPERIENCE === */
+#experience .experience-item {
+    position: relative;
+    padding-left: 3.5rem;
+}
+
+#experience .experience-item::after {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 2rem;
+    bottom: -2rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary-light), transparent);
+}
+
+#experience .experience-item:last-child::after {
+    display: none;
+}
+
+#experience .experience-item::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 2rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    box-shadow: 0 0 0 4px var(--card-light), 0 0 0 6px var(--primary-light);
+    z-index: 2;
+}
+
+body.dark-mode #experience .experience-item::before {
+    background: var(--primary-dark);
+    box-shadow: 0 0 0 4px var(--card-dark), 0 0 0 6px var(--primary-dark);
+}
+
+body.dark-mode #experience .experience-item::after {
+    background: linear-gradient(to bottom, var(--primary-dark), transparent);
+}
+
+/* === SECTION HEADER DECORATIONS === */
+.section h2 {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 1rem;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-light), var(--accent-light));
+    border-radius: 2px;
+}
+
+body.dark-mode .section h2::after {
+    background: linear-gradient(to right, var(--primary-dark), var(--accent-dark));
+}
+
+/* === AWARDS STYLING === */
+#awards ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#awards ul li {
+    position: relative;
+    padding: 1rem 1.5rem 1rem 3rem;
+    margin-bottom: 0.75rem;
+    background: var(--card-light);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-light);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#awards ul li::before {
+    content: '\f091';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-light);
+    font-size: 1.2rem;
+}
+
+#awards ul li:hover {
+    transform: translateX(8px);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+    background: linear-gradient(135deg, var(--card-light), rgba(59, 130, 246, 0.05));
+}
+
+body.dark-mode #awards ul li {
+    background: var(--card-dark);
+    border-left-color: var(--primary-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode #awards ul li::before {
+    color: var(--primary-dark);
+}
+
+body.dark-mode #awards ul li:hover {
+    box-shadow: 0 4px 16px rgba(96, 165, 250, 0.3);
+    background: linear-gradient(135deg, var(--card-dark), rgba(96, 165, 250, 0.05));
+}
+
+/* === CERTIFICATIONS STYLING === */
+#certifications ul {
+    list-style: none;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+#certifications ul li {
+    position: relative;
+    padding: 1rem 1.5rem 1rem 3rem;
+    background: var(--card-light);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-light);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#certifications ul li::before {
+    content: '\f0a3';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-light);
+    font-size: 1.2rem;
+}
+
+#certifications ul li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(34, 211, 238, 0.2);
+}
+
+body.dark-mode #certifications ul li {
+    background: var(--card-dark);
+    border-left-color: var(--accent-dark);
+}
+
+body.dark-mode #certifications ul li::before {
+    color: var(--accent-dark);
+}
+
+/* === ENHANCED PROJECT CARDS === */
+.project-card {
+    background: linear-gradient(135deg, var(--card-light), rgba(59, 130, 246, 0.03));
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card:hover {
+    border-color: var(--primary-light);
+    background: linear-gradient(135deg, var(--card-light), rgba(59, 130, 246, 0.08));
+}
+
+body.dark-mode .project-card {
+    background: linear-gradient(135deg, var(--card-dark), rgba(96, 165, 250, 0.03));
+}
+
+body.dark-mode .project-card:hover {
+    border-color: var(--primary-dark);
+    background: linear-gradient(135deg, var(--card-dark), rgba(96, 165, 250, 0.08));
+}
+
+/* === ENHANCED TECH STACK TAGS === */
+.tech-stack span {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tech-stack span:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* === SMOOTH SCROLL BEHAVIOR === */
+html {
+    scroll-padding-top: 100px;
+}
+
+/* === ENHANCED CONTACT FORM === */
+.contact-form {
+    backdrop-filter: blur(10px);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    transform: translateY(-2px);
+}
+
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
     .contact-container {
@@ -1538,5 +2014,29 @@ body.dark-mode .scroll-indicator {
 
     .terminal-container {
         font-size: 0.9rem;
+    }
+
+    .animated-name {
+        font-size: 2.5rem;
+    }
+
+    #intro-text {
+        font-size: 1.1rem;
+    }
+
+    #experience .experience-item {
+        padding-left: 2rem;
+    }
+
+    #experience .experience-item::after {
+        left: 0.5rem;
+    }
+
+    #experience .experience-item::before {
+        left: 0;
+    }
+
+    #certifications ul {
+        grid-template-columns: 1fr;
     }
 }

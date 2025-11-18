@@ -64,12 +64,14 @@
   <div class="hero-overlay">
     <!-- Glitchy + animated + bouncing name -->
     <h1 id="hero-title" class="animated-name">Aryan Jeena</h1>
-      
+
 
     <!-- Typewriter subtitle -->
     <p id="intro-text"></p>
+
+    <!-- Scroll arrow inside the overlay -->
     <a href="#about" class="scroll-down" aria-label="Scroll down">
-        <i class="fas fa-chevron-down"></i>
+      <i class="fas fa-chevron-down"></i>
     </a>
   </div>
 </header>
@@ -88,7 +90,8 @@
                 <h3>University of Pennsylvania</h3>
                 <p>B.S.E in Computer Science and Mathematics, Minor in Statistics (Expected May 2027)</p>
                 <p>Concentrations: Artificial Intelligence and Statistics</p>
-                <p><strong>Related Coursework:</strong> Mathematical Foundations of Computer Science, Programming Languages and Techniques, Honors Multivariable Calculus 3, Honors Multivariable Calculus 3 (II), Market and Social Systems on the Internet, Intro to Microeconomics, Business Ethics and Social Responsibility, Principles of Physics I: Mechanics and Wave Motion, Craft Of Prose</p>
+                <p><strong>GPA:</strong> 3.7/4.0</p>
+                <p><strong>Related Coursework:</strong> Programming Languages and Techniques I, Programming Languages and Techniques II, Mathematical Foundations of Computer Science, Honors Multivariable Calculus III (Parts I & II), Big Data Analytics, AI Lab: Data, Systems, and Decisions, Market and Social Systems on the Internet</p>
                 <p><strong>Clubs & Activities:</strong> Wharton Investment and Trading Group, Wharton Undergraduate Finance Club, Wharton MUSE Consulting (Innovation Committee Lead), AI in Business Club (Consulting & Development Committee), Wharton Undergraduate Data Analytics Club, Wharton Undergraduate Statistics Society, Penn Undergraduate Math Society, South Asian Society - Board Member (Cultural Committee), Stouffer House Treasurer</p>
             </div>
             </div>
@@ -108,20 +111,37 @@
 
         <section id="experience" class="section">
             <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            
+
             <div class="experience-item">
                 <div class="experience-header">
-                    <h3>AI in Business Club - Proscia Project Lead</h3>
+                    <h3>Timing - Software Development Intern</h3>
                     <div class="experience-meta">
-                        Philadelphia, PA<br>
-                        Aug 2024 - Present
+                        New York, NY<br>
+                        May 2025 - Aug 2025
                     </div>
                 </div>
                 <ul>
-                    <li>Collaborate with Proscia, an AI-powered digital pathology company, to develop data-driven solutions for enhancing cancer diagnostics and pathology workflows.</li>
-                    <li>Conduct machine learning model evaluation for Proscia's Concentriq® platform, analyzing 100,000+ pathology images to improve AI-driven diagnostic accuracy.</li>
-                    <li>Work with a team of 5 consultants, leveraging tools such as Python, TensorFlow, and SQL to optimize Proscia's AI models, reducing error rates by 15% in histopathological analysis.</li>
-                    <li>Provide strategic recommendations on AI integration and business development, streamlining client adoption processes for leading healthcare institutions and research labs.</li>
+                    <li>Designed and implemented smart contact creation modal with autofill from LinkedIn/Google APIs, improving speed-to-input by ~40%.</li>
+                    <li>Contributed to frontend and backend specs for AI-powered personal CRM, including calendar syncing, reminders, and follow-up classification.</li>
+                    <li>Created adaptive onboarding logic in TypeScript, using conditional survey inputs to personalize user flows and improve activation by ~25%.</li>
+                    <li>Developed chatbot functionality using OpenAI Assistants API with real-time message handling, enabling automated networking queries, follow-up suggestions, and calendar-based reminders.</li>
+                    <li>Authored technical documentation for MVP onboarding flow, agent integration, and analytics logic for handoff to engineering.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3>AI in Business Club - Proscia Project</h3>
+                    <div class="experience-meta">
+                        Philadelphia, PA<br>
+                        Aug 2024 - May 2025
+                    </div>
+                </div>
+                <ul>
+                    <li>Collaborated with Proscia, an AI-powered digital pathology company, to develop data-driven solutions for enhancing cancer diagnostics and pathology workflows.</li>
+                    <li>Conducted machine learning model evaluation for Proscia's Concentriq® platform, analyzing 100,000+ pathology images to improve AI-driven diagnostic accuracy.</li>
+                    <li>Worked with a team of 5 consultants, leveraging tools such as Python, TensorFlow, and SQL to optimize Proscia's AI models, reducing error rates by ~10–15% in histopathological analysis through hyperparameter tuning and pipeline optimizations.</li>
+                    <li>Provided strategic recommendations on AI integration and business development, streamlining client adoption processes for leading healthcare institutions and research labs.</li>
                 </ul>
             </div>
 
@@ -138,6 +158,21 @@
                     <li>Conduct market research and competitive analysis using tools like Google Analytics, Tableau, and SEMrush, helping startups optimize their go-to-market strategies and increase customer retention by 20% on average.</li>
                     <li>Lead monthly strategy sessions with startup founders, tracking key performance indicators (KPIs) and implementing tailored deliverables to accelerate growth.</li>
                     <li>Assist in fundraising efforts, supporting startups in preparing investor pitch decks and financial models, helping secure over $50,000 in early-stage funding.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3>Abacus Aviation and Management Services Inc. - Software Engineering Intern</h3>
+                    <div class="experience-meta">
+                        Toronto, Canada<br>
+                        April 2024 - Aug 2024
+                    </div>
+                </div>
+                <ul>
+                    <li>Engineered a full-stack inventory management system to digitize parts tracking and maintenance workflows for FAA/EASA-certified aircraft (B747/B787), improving compliance visibility and reducing paperwork by ~50%.</li>
+                    <li>Designed relational database schema in PostgreSQL to log parts usage, maintenance intervals, and compliance checks; reduced lookup time by 50–60%.</li>
+                    <li>Built user-facing dashboard in React with real-time status updates, search/filter features, and alert system for expiring parts and service due dates.</li>
                 </ul>
             </div>
 
@@ -206,27 +241,95 @@
                 <div class="project-grid">
                     <div class="project-card featured" data-category="ml">
                         <div class="project-image">
-                            <img src="https://via.placeholder.com/400x250?text=ML+Project" alt="Project thumbnail">
+                            <img src="https://via.placeholder.com/400x250?text=FitMax" alt="FitMax thumbnail">
                             <div class="project-overlay">
                                 <span class="project-status">Featured</span>
                             </div>
                         </div>
-                        <h3>AI-Powered Pathology Analysis</h3>
-                        <p class="project-description">Developed machine learning models for Proscia's digital pathology platform, analyzing 100,000+ images to improve cancer diagnostic accuracy by 15%.</p>
+                        <h3>FitMax</h3>
+                        <p class="project-description">Full-stack AI web application with FastAPI microservices, Next.js/TypeScript frontend, and PostgreSQL (pgvector) for personalized health recommendations. Implemented Transformer-based NLP engine using PyTorch and Hugging Face for semantic search over PubMed data, reducing query time by ~30%.</p>
                         <div class="tech-stack">
-                            <span>Python</span>
-                            <span>TensorFlow</span>
-                            <span>SQL</span>
-                            <span>Computer Vision</span>
+                            <span>FastAPI</span>
+                            <span>Next.js</span>
+                            <span>TypeScript</span>
+                            <span>PyTorch</span>
+                            <span>PostgreSQL</span>
+                            <span>Docker</span>
                         </div>
                         <div class="project-stats">
                             <div class="stat">
-                                <i class="fas fa-star"></i>
-                                <span>100K+ Images</span>
+                                <i class="fas fa-database"></i>
+                                <span>Vector Embeddings</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-chart-line"></i>
-                                <span>15% Accuracy Boost</span>
+                                <span>30% Faster Queries</span>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" target="_blank" class="btn"><i class="fas fa-link"></i> Live Demo</a>
+                            <a href="#" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card featured" data-category="data">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250?text=Soccer+Betting" alt="Soccer Injury Betting thumbnail">
+                            <div class="project-overlay">
+                                <span class="project-status">Featured</span>
+                            </div>
+                        </div>
+                        <h3>Soccer Injury Betting</h3>
+                        <p class="project-description">Scalable ML pipeline with modular Python architecture automating ETL workflows via API integration (API-Football). Built predictive regression models using CatBoost and Scikit-learn with feature engineering (ELO, rolling averages), achieving 18-20% ROI.</p>
+                        <div class="tech-stack">
+                            <span>Python</span>
+                            <span>CatBoost</span>
+                            <span>Scikit-learn</span>
+                            <span>Streamlit</span>
+                            <span>Pandas</span>
+                            <span>NumPy</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-database"></i>
+                                <span>9,000+ Records</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-chart-line"></i>
+                                <span>18-20% ROI</span>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" target="_blank" class="btn"><i class="fas fa-link"></i> Live Demo</a>
+                            <a href="#" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card featured" data-category="web">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250?text=Portfolio+Platform" alt="Portfolio Platform thumbnail">
+                            <div class="project-overlay">
+                                <span class="project-status">Featured</span>
+                            </div>
+                        </div>
+                        <h3>Real-Time Portfolio & Risk Management Platform</h3>
+                        <p class="project-description">Distributed, event-driven system using FastAPI microservices, Kafka message streaming, and asynchronous I/O for real-time market data ingestion and portfolio tracking. Implemented production-grade DevOps stack with Docker, Prometheus-Grafana metrics, and CI/CD automation.</p>
+                        <div class="tech-stack">
+                            <span>FastAPI</span>
+                            <span>Kafka</span>
+                            <span>React</span>
+                            <span>Redis</span>
+                            <span>PostgreSQL</span>
+                            <span>WebSockets</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-bolt"></i>
+                                <span>Sub-Second Latency</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Real-Time Analytics</span>
                             </div>
                         </div>
                         <div class="project-links">
@@ -288,6 +391,7 @@
         <section id="awards" class="section">
             <h2><i class="fas fa-trophy"></i> Awards & Honors</h2>
             <ul>
+                <li>USACO Gold Division - USA Computing Olympiad</li>
                 <li>National Merit Scholarship Semi-Finalist</li>
                 <li>ACTFL English and Spanish Global Seal of Biliteracy - Professional Working Fluency (A1 in all 4 Categories)</li>
                 <li>Catholic Math League Top Scorer 2022-2023 - #1 out of 719 Students Nationally</li>
@@ -338,19 +442,19 @@
                             </div>
                         </div>
                         <div class="skill">
+                            <div class="skill-name">TypeScript</div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
                             <div class="skill-name">OCaml</div>
                             <div class="skill-bar">
                                 <div class="skill-level" data-width="80"></div>
                             </div>
                         </div>
                         <div class="skill">
-                            <div class="skill-name">HTML</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="75"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">CSS</div>
+                            <div class="skill-name">SQL</div>
                             <div class="skill-bar">
                                 <div class="skill-level" data-width="75"></div>
                             </div>
@@ -358,7 +462,13 @@
                         <div class="skill">
                             <div class="skill-name">JavaScript</div>
                             <div class="skill-bar">
-                                <div class="skill-level" data-width="70"></div>
+                                <div class="skill-level" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <div class="skill-name">HTML/CSS</div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-width="75"></div>
                             </div>
                         </div>
                     </div>
@@ -366,13 +476,52 @@
                 <div class="skills-category">
                     <h3>Technologies & Tools</h3>
                     
+                    <!-- Web Frameworks & Backend -->
+                    <div class="tools-category">
+                        <h4>Web Frameworks & Backend</h4>
+                        <div class="tech-icons">
+                            <div class="tech-icon">
+                                <i class="fas fa-bolt"></i>
+                                <span>FastAPI</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-n"></i>
+                                <span>Next.js</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-stream"></i>
+                                <span>Streamlit</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Data Science & ML Tools -->
                     <div class="tools-category">
                         <h4>Data Science & ML</h4>
                         <div class="tech-icons">
                             <div class="tech-icon">
+                                <i class="fas fa-fire"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Hugging Face</span>
+                            </div>
+                            <div class="tech-icon">
                                 <i class="fas fa-brain"></i>
                                 <span>TensorFlow</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-chart-area"></i>
+                                <span>Scikit-learn</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-cat"></i>
+                                <span>CatBoost</span>
                             </div>
                             <div class="tech-icon">
                                 <i class="fas fa-table"></i>
@@ -381,6 +530,37 @@
                             <div class="tech-icon">
                                 <i class="fas fa-calculator"></i>
                                 <span>NumPy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DevOps & Infrastructure -->
+                    <div class="tools-category">
+                        <h4>DevOps & Infrastructure</h4>
+                        <div class="tech-icons">
+                            <div class="tech-icon">
+                                <i class="fab fa-docker"></i>
+                                <span>Docker</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-database"></i>
+                                <span>Redis</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-stream"></i>
+                                <span>Kafka</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-database"></i>
+                                <span>PostgreSQL</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Prometheus</span>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Grafana</span>
                             </div>
                         </div>
                     </div>
@@ -400,10 +580,6 @@
                             <div class="tech-icon">
                                 <i class="fas fa-search"></i>
                                 <span>SEMrush</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-database"></i>
-                                <span>SQL</span>
                             </div>
                         </div>
                     </div>

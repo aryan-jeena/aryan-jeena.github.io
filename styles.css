@@ -1837,7 +1837,7 @@ body.dark-mode #experience .experience-item::after {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 60%;
+    width: 100%;
     height: 3px;
     background: linear-gradient(to right, var(--primary-light), var(--accent-light));
     border-radius: 2px;

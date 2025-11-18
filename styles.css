@@ -2197,48 +2197,6 @@ body.dark-mode .fact-dot.active {
     }
 }
 
-/* === ANIMATED PARTICLES BACKGROUND === */
-.particles-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.particle {
-    position: absolute;
-    font-size: 1.5rem;
-    opacity: 0.3;
-    animation: floatParticle 15s infinite ease-in-out;
-    pointer-events: auto;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.particle:hover {
-    opacity: 0.8;
-    transform: scale(1.3) rotate(20deg);
-}
-
-@keyframes floatParticle {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    25% {
-        transform: translate(50px, -50px) rotate(90deg);
-    }
-    50% {
-        transform: translate(0, -100px) rotate(180deg);
-    }
-    75% {
-        transform: translate(-50px, -50px) rotate(270deg);
-    }
-}
-
 /* === EASTER EGG SOCCER GAME === */
 .soccer-game-overlay {
     position: fixed;
@@ -2437,9 +2395,5 @@ body.dark-mode .fact-dot.active {
     .soccer-game-container {
         width: 95%;
         height: 400px;
-    }
-
-    .particle {
-        font-size: 1rem;
     }
 }

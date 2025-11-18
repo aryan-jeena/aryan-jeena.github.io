@@ -1021,66 +1021,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===================================================================
-// === ANIMATED PARTICLES BACKGROUND ===
-// ===================================================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    const particlesContainer = document.getElementById('particles-container');
-    if (!particlesContainer) return;
-
-    const particles = [
-        '⚽', // Soccer ball
-        '🏃', // Running
-        '🎵', // Music note
-        '💪', // Muscle/lifting
-        '🎧', // Headphones
-        '⚡', // Energy
-    ];
-
-    const numParticles = 15;
-
-    function createParticle() {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
-
-        // Random position
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-
-        // Random animation duration
-        const duration = 10 + Math.random() * 20;
-        particle.style.animationDuration = duration + 's';
-
-        // Random delay
-        particle.style.animationDelay = Math.random() * 5 + 's';
-
-        // Make particles move away from cursor on hover
-        particle.addEventListener('mouseenter', (e) => {
-            const rect = particle.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-            const distance = 100;
-
-            particle.style.transform = `translate(${-Math.cos(angle) * distance}px, ${-Math.sin(angle) * distance}px) scale(1.3) rotate(20deg)`;
-
-            setTimeout(() => {
-                particle.style.transform = '';
-            }, 500);
-        });
-
-        particlesContainer.appendChild(particle);
-    }
-
-    // Create initial particles
-    for (let i = 0; i < numParticles; i++) {
-        createParticle();
-    }
-});
-
-// ===================================================================
 // === EASTER EGG SOCCER GAME ===
 // ===================================================================
 

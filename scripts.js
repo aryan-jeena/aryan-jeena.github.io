@@ -912,5 +912,365 @@ document.addEventListener('keydown', (e) => {
     // Escape to clear terminal focus
     if (e.key === 'Escape') {
         document.getElementById('terminal-input')?.blur();
+        // Also close soccer game if open
+        const soccerGame = document.getElementById('soccer-game');
+        if (soccerGame && soccerGame.classList.contains('active')) {
+            soccerGame.classList.remove('active');
+        }
     }
+});
+
+// ===================================================================
+// === FUN FACTS CAROUSEL ===
+// ===================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const facts = [
+        { category: 'Running', icon: 'fa-running', text: 'Marathon PR: 3:10:67' },
+        { category: 'Training', icon: 'fa-shoe-prints', text: 'Average Weekly Mileage: 11 miles' },
+        { category: 'Soccer', icon: 'fa-futbol', text: 'Position: Center Attacking Midfielder' },
+        { category: 'Soccer', icon: 'fa-trophy', text: '15 Years Playing Soccer' },
+        { category: 'Achievement', icon: 'fa-medal', text: 'Won State Championships with Club' },
+        { category: 'Fitness', icon: 'fa-dumbbell', text: 'Bench Press PR: 215 lbs' },
+        { category: 'Music', icon: 'fa-music', text: 'Favorite Genre: Latin Hip-Hop' },
+        { category: 'Coding', icon: 'fa-code', text: 'Favorite Language: Python' },
+        { category: 'Projects', icon: 'fa-project-diagram', text: 'Favorite Project: Soccer Injury Betting' },
+        { category: 'Study Fuel', icon: 'fa-mug-hot', text: 'Go-To Drink: Chocolate Milk' },
+        { category: 'Soccer', icon: 'fa-hashtag', text: 'Jersey Number: 11' },
+        { category: 'Food', icon: 'fa-utensils', text: 'Favorite Food: Chicken Over Rice' },
+        { category: 'Travel', icon: 'fa-globe', text: 'Countries Visited: 18' }
+    ];
+
+    let currentFactIndex = 0;
+    let autoRotateInterval;
+
+    const factIcon = document.getElementById('fact-icon');
+    const factCategory = document.getElementById('fact-category');
+    const factText = document.getElementById('fact-text');
+    const factDotsContainer = document.getElementById('fact-dots');
+    const prevBtn = document.getElementById('prev-fact');
+    const nextBtn = document.getElementById('next-fact');
+
+    // Check if elements exist
+    if (!factIcon || !factCategory || !factText || !factDotsContainer) {
+        return; // Exit if fun facts section doesn't exist
+    }
+
+    // Create dots
+    facts.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('fact-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => showFact(index));
+        factDotsContainer.appendChild(dot);
+    });
+
+    function showFact(index) {
+        // Add transition out animation
+        factCategory.style.animation = 'none';
+        factText.style.animation = 'none';
+
+        setTimeout(() => {
+            currentFactIndex = index;
+            const fact = facts[currentFactIndex];
+
+            // Update content
+            factIcon.innerHTML = `<i class="fas ${fact.icon}"></i>`;
+            factCategory.textContent = fact.category;
+            factText.textContent = fact.text;
+
+            // Restart animations
+            factCategory.style.animation = 'fadeInUp 0.5s ease forwards';
+            factText.style.animation = 'fadeInUp 0.5s ease 0.1s forwards';
+
+            // Update dots
+            document.querySelectorAll('.fact-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentFactIndex);
+            });
+        }, 100);
+
+        resetAutoRotate();
+    }
+
+    function nextFact() {
+        showFact((currentFactIndex + 1) % facts.length);
+    }
+
+    function prevFact() {
+        showFact((currentFactIndex - 1 + facts.length) % facts.length);
+    }
+
+    function resetAutoRotate() {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = setInterval(nextFact, 6000); // Rotate every 6 seconds
+    }
+
+    // Event listeners
+    if (prevBtn) prevBtn.addEventListener('click', prevFact);
+    if (nextBtn) nextBtn.addEventListener('click', nextFact);
+
+    // Start auto-rotate
+    resetAutoRotate();
+
+    // Pause on hover
+    const factDisplay = document.querySelector('.fact-display');
+    if (factDisplay) {
+        factDisplay.addEventListener('mouseenter', () => clearInterval(autoRotateInterval));
+        factDisplay.addEventListener('mouseleave', resetAutoRotate);
+    }
+});
+
+// ===================================================================
+// === ANIMATED PARTICLES BACKGROUND ===
+// ===================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const particlesContainer = document.getElementById('particles-container');
+    if (!particlesContainer) return;
+
+    const particles = [
+        '⚽', // Soccer ball
+        '🏃', // Running
+        '🎵', // Music note
+        '💪', // Muscle/lifting
+        '🎧', // Headphones
+        '⚡', // Energy
+    ];
+
+    const numParticles = 15;
+
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+
+        // Random position
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+
+        // Random animation duration
+        const duration = 10 + Math.random() * 20;
+        particle.style.animationDuration = duration + 's';
+
+        // Random delay
+        particle.style.animationDelay = Math.random() * 5 + 's';
+
+        // Make particles move away from cursor on hover
+        particle.addEventListener('mouseenter', (e) => {
+            const rect = particle.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            const distance = 100;
+
+            particle.style.transform = `translate(${-Math.cos(angle) * distance}px, ${-Math.sin(angle) * distance}px) scale(1.3) rotate(20deg)`;
+
+            setTimeout(() => {
+                particle.style.transform = '';
+            }, 500);
+        });
+
+        particlesContainer.appendChild(particle);
+    }
+
+    // Create initial particles
+    for (let i = 0; i < numParticles; i++) {
+        createParticle();
+    }
+});
+
+// ===================================================================
+// === EASTER EGG SOCCER GAME ===
+// ===================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const soccerGame = document.getElementById('soccer-game');
+    const closeBtn = document.getElementById('close-game');
+    const soccerBall = document.getElementById('soccer-ball');
+    const scoreDisplay = document.getElementById('game-score');
+
+    if (!soccerGame || !soccerBall) return;
+
+    let score = 0;
+    let ballVelocityX = 0;
+    let ballVelocityY = 0;
+    let ballX = 380;
+    let ballY = 230;
+
+    // Konami code: ↑ ↑ ↓ ↓ ← → ← → B A
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    // Alternative activation: Click bottom-right corner 3 times
+    let cornerClicks = 0;
+    let cornerClickTimer;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                activateGame();
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    // Corner click activation
+    document.addEventListener('click', (e) => {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+
+        // Check if click is in bottom-right corner (last 50px)
+        if (e.clientX > windowWidth - 50 && e.clientY > windowHeight - 50) {
+            cornerClicks++;
+            clearTimeout(cornerClickTimer);
+
+            if (cornerClicks === 3) {
+                activateGame();
+                cornerClicks = 0;
+            }
+
+            cornerClickTimer = setTimeout(() => {
+                cornerClicks = 0;
+            }, 2000);
+        }
+    });
+
+    function activateGame() {
+        soccerGame.classList.add('active');
+        resetBall();
+        score = 0;
+        updateScore();
+    }
+
+    function closeGame() {
+        soccerGame.classList.remove('active');
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeGame);
+    }
+
+    function resetBall() {
+        ballX = 380;
+        ballY = 230;
+        ballVelocityX = 0;
+        ballVelocityY = 0;
+        updateBallPosition();
+    }
+
+    function updateBallPosition() {
+        soccerBall.style.left = ballX + 'px';
+        soccerBall.style.top = ballY + 'px';
+    }
+
+    function updateScore() {
+        scoreDisplay.textContent = `Goals: ${score}`;
+    }
+
+    // Kick ball on click
+    soccerBall.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const container = document.querySelector('.soccer-game-container');
+        const rect = container.getBoundingClientRect();
+        const ballRect = soccerBall.getBoundingClientRect();
+
+        const ballCenterX = ballRect.left + ballRect.width / 2;
+        const ballCenterY = ballRect.top + ballRect.height / 2;
+
+        const clickX = e.clientX;
+        const clickY = e.clientY;
+
+        // Calculate kick direction and power
+        const angle = Math.atan2(ballCenterY - clickY, ballCenterX - clickX);
+        const power = 15;
+
+        ballVelocityX = Math.cos(angle) * power;
+        ballVelocityY = Math.sin(angle) * power;
+    });
+
+    // Game physics loop
+    function gameLoop() {
+        if (!soccerGame.classList.contains('active')) return;
+
+        const container = document.querySelector('.soccer-game-container');
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        // Update position
+        ballX += ballVelocityX;
+        ballY += ballVelocityY;
+
+        // Apply friction
+        ballVelocityX *= 0.98;
+        ballVelocityY *= 0.98;
+
+        // Stop if velocity is very small
+        if (Math.abs(ballVelocityX) < 0.1) ballVelocityX = 0;
+        if (Math.abs(ballVelocityY) < 0.1) ballVelocityY = 0;
+
+        // Bounce off walls
+        if (ballX < 0) {
+            ballX = 0;
+            ballVelocityX = -ballVelocityX * 0.7;
+        }
+        if (ballX > containerWidth - 40) {
+            ballX = containerWidth - 40;
+            ballVelocityX = -ballVelocityX * 0.7;
+        }
+
+        // Check for goals
+        const goalLeft = (containerWidth / 2) - 75;
+        const goalRight = (containerWidth / 2) + 75;
+
+        // Top goal
+        if (ballY < 80 && ballX > goalLeft && ballX < goalRight) {
+            score++;
+            updateScore();
+            resetBall();
+            celebrateGoal();
+        }
+
+        // Bottom goal
+        if (ballY > containerHeight - 120 && ballX > goalLeft && ballX < goalRight) {
+            score++;
+            updateScore();
+            resetBall();
+            celebrateGoal();
+        }
+
+        // Bounce off top/bottom (if not in goal)
+        if (ballY < 0) {
+            ballY = 0;
+            ballVelocityY = -ballVelocityY * 0.7;
+        }
+        if (ballY > containerHeight - 40) {
+            ballY = containerHeight - 40;
+            ballVelocityY = -ballVelocityY * 0.7;
+        }
+
+        updateBallPosition();
+        requestAnimationFrame(gameLoop);
+    }
+
+    function celebrateGoal() {
+        // Flash score
+        scoreDisplay.style.transform = 'scale(1.5)';
+        scoreDisplay.style.color = '#FFD700';
+        setTimeout(() => {
+            scoreDisplay.style.transform = 'scale(1)';
+            scoreDisplay.style.color = 'white';
+        }, 500);
+    }
+
+    // Start game loop
+    setInterval(() => {
+        if (soccerGame.classList.contains('active')) {
+            gameLoop();
+        }
+    }, 16); // ~60 FPS
 });

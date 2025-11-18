@@ -31,6 +31,27 @@
     <p class="loading-text">Loading Portfolio...</p>
   </div>
 
+  <!-- Particles Background -->
+  <div class="particles-container" id="particles-container"></div>
+
+  <!-- Soccer Game Easter Egg -->
+  <div class="soccer-game-overlay" id="soccer-game">
+    <div class="soccer-game-container">
+      <button class="close-game" id="close-game">×</button>
+      <div class="game-score" id="game-score">Goals: 0</div>
+      <div class="soccer-field-lines">
+        <div class="center-circle"></div>
+      </div>
+      <div class="soccer-goal top"></div>
+      <div class="soccer-goal bottom"></div>
+      <div class="soccer-ball" id="soccer-ball">⚽</div>
+      <div class="game-instructions">
+        <p>Click the ball to kick it! Score in the goals to earn points!</p>
+        <p><small>Press Escape or click × to close</small></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Scroll Progress Indicator -->
   <div class="scroll-indicator" id="scroll-indicator"></div>
 
@@ -82,6 +103,31 @@
     <section id="about" class="section">
       <h2><i class="fas fa-user"></i> About Me</h2>
       <p>Hi! I'm Aryan Jeena, a passionate Computer Science and Mathematics major with a minor in Statistics at the University of Pennsylvania. I thrive at the intersection of artificial intelligence, quantitative analysis, and innovative technology solutions. Through my work at organizations like AI in Business Club's Proscia project and Yale's Center for Clinical Investigation, I've developed a deep understanding of how AI and data science can revolutionize healthcare and business operations. As a co-founder of IvyRise College Consulting, I've also demonstrated my entrepreneurial spirit by leveraging AI/ML tools to transform educational consulting. I'm driven by the challenge of translating complex mathematical concepts into practical solutions, whether in quantitative finance, machine learning, or software engineering. Currently, I'm focused on developing cutting-edge AI applications and exploring novel approaches to data-driven decision making.</p>
+    </section>
+
+    <!-- Fun Facts Carousel -->
+    <section id="fun-facts" class="section fun-facts-section">
+      <h2><i class="fas fa-lightbulb"></i> Fun Facts</h2>
+      <div class="fun-facts-container">
+        <div class="fact-display">
+          <div class="fact-icon" id="fact-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="fact-content">
+            <p class="fact-category" id="fact-category">Running</p>
+            <p class="fact-text" id="fact-text">Marathon PR: 3:10:67</p>
+          </div>
+        </div>
+        <div class="fact-controls">
+          <button id="prev-fact" class="fact-nav-btn" aria-label="Previous fact">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="fact-dots" id="fact-dots"></div>
+          <button id="next-fact" class="fact-nav-btn" aria-label="Next fact">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
     </section>
 
 <section id="education" class="section">

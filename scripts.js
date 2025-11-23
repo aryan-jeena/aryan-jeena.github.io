@@ -1021,196 +1021,553 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===================================================================
-// === EASTER EGG SOCCER GAME ===
+// ===================================================================
+// === COMPREHENSIVE MENTAL MATH GAME ===
 // ===================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    const soccerGame = document.getElementById('soccer-game');
+    // Initialize game launcher
+    const launcher = document.getElementById('mathGameLauncher');
+    const gameOverlay = document.getElementById('math-game');
     const closeBtn = document.getElementById('close-game');
-    const soccerBall = document.getElementById('soccer-ball');
-    const scoreDisplay = document.getElementById('game-score');
+    
+    if (!launcher || !gameOverlay) return;
+    
+    // Launch game
+    launcher.addEventListener('click', () => {
+        gameOverlay.classList.add('active');
+        switchTab('play');
+    });
+    
+    // Close game
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            gameOverlay.classList.remove('active');
+        });
+    }
+    
+    // Tab System
+    const tabs = document.querySelectorAll('.game-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetTab = tab.dataset.tab;
+            switchTab(targetTab);
+        });
+    });
+    
+    function switchTab(tabName) {
+        // Update tab buttons
+        tabs.forEach(t => t.classList.remove('active'));
+        document.querySelector(`[data-tab="${tabName}"]`)?.classList.add('active');
+        
+        // Update panels
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(`${tabName}-panel`)?.classList.add('active');
+    }
+    
+    // Game State
+    let gameSettings = {
+        mode: 'timed',
+        difficulty: 'medium',
+        rangeMin: 1,
+        rangeMax: 100,
+        operations: { add: true, subtract: true, multiply: true, divide: false },
+        options: {
+            allowNegative: false,
+            allowDecimals: false,
+            autoNext: false,
+            showHints: false
+        }
+    };
+    
+    let gameState = {
+        active: false,
+        score: 0,
+        streak: 0,
+        bestStreak: 0,
+        correct: 0,
+        incorrect: 0,
+        totalProblems: 0,
+        problemHistory: [],
+        timer: 60,
+        lives: 3,
+        currentProblem: null,
+        currentAnswer: null,
+        startTime: null,
+        isPaused: false
+    };
+    
+    // Advanced Settings Toggle
+    document.getElementById('show-advanced')?.addEventListener('click', function() {
+        const advanced = document.getElementById('advanced-settings');
+        if (advanced.style.display === 'none') {
+            advanced.style.display = 'block';
+            this.innerHTML = '<i class="fas fa-sliders-h"></i> Hide Advanced Settings';
+        } else {
+            advanced.style.display = 'none';
+            this.innerHTML = '<i class="fas fa-sliders-h"></i> Advanced Settings';
+        }
+    });
+    
+    // Preset Selection
+    document.querySelectorAll('.quick-preset, .preset').forEach(preset => {
+        preset.addEventListener('click', function() {
+            document.querySelectorAll('.quick-preset, .preset').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            
+            const presetName = this.dataset.preset;
+            applyPreset(presetName);
+        });
+    });
+    
+    function applyPreset(preset) {
+        const presets = {
+            beginner: {
+                difficulty: 'easy',
+                rangeMin: 1,
+                rangeMax: 20,
+                operations: { add: true, subtract: true, multiply: false, divide: false }
+            },
+            intermediate: {
+                difficulty: 'medium',
+                rangeMin: 1,
+                rangeMax: 50,
+                operations: { add: true, subtract: true, multiply: true, divide: false }
+            },
+            advanced: {
+                difficulty: 'hard',
+                rangeMin: 1,
+                rangeMax: 100,
+                operations: { add: true, subtract: true, multiply: true, divide: true }
+            }
+        };
+        
+        if (presets[preset]) {
+            gameSettings = { ...gameSettings, ...presets[preset] };
+            updateUIFromSettings();
+        }
+    }
+    
+    function updateUIFromSettings() {
+        // Update difficulty buttons
+        document.querySelectorAll('.diff-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.diff === gameSettings.difficulty);
+        });
+        
+        // Update operation checkboxes
+        document.getElementById('op-add').checked = gameSettings.operations.add;
+        document.getElementById('op-subtract').checked = gameSettings.operations.subtract;
+        document.getElementById('op-multiply').checked = gameSettings.operations.multiply;
+        document.getElementById('op-divide').checked = gameSettings.operations.divide;
+    }
+    
+    // Mode Selection
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            gameSettings.mode = this.dataset.mode;
+        });
+    });
+    
+    // Difficulty Selection
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            gameSettings.difficulty = this.dataset.diff;
+            const range = this.dataset.range.split('-');
+            gameSettings.rangeMin = parseInt(range[0]);
+            gameSettings.rangeMax = parseInt(range[1]);
+        });
+    });
+    
+    // Operation Checkboxes
+    ['add', 'subtract', 'multiply', 'divide'].forEach(op => {
+        document.getElementById(`op-${op}`)?.addEventListener('change', (e) => {
+            gameSettings.operations[op] = e.target.checked;
+        });
+    });
 
-    if (!soccerGame || !soccerBall) return;
+    // Additional Options Checkboxes
+    document.getElementById('allow-negative')?.addEventListener('change', (e) => {
+        gameSettings.options.allowNegative = e.target.checked;
+    });
 
-    let score = 0;
-    let ballVelocityX = 0;
-    let ballVelocityY = 0;
-    let ballX = 380;
-    let ballY = 230;
+    document.getElementById('allow-decimals')?.addEventListener('change', (e) => {
+        gameSettings.options.allowDecimals = e.target.checked;
+    });
 
-    // Konami code: ↑ ↑ ↓ ↓ ← → ← → B A
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiIndex = 0;
+    document.getElementById('auto-next')?.addEventListener('change', (e) => {
+        gameSettings.options.autoNext = e.target.checked;
+    });
 
-    // Alternative activation: Click bottom-right corner 3 times
-    let cornerClicks = 0;
-    let cornerClickTimer;
+    document.getElementById('show-hints')?.addEventListener('change', (e) => {
+        gameSettings.options.showHints = e.target.checked;
+    });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
-            konamiIndex++;
-            if (konamiIndex === konamiCode.length) {
-                activateGame();
-                konamiIndex = 0;
+    // Start Game
+    document.getElementById('start-game')?.addEventListener('click', startGame);
+    document.getElementById('play-again')?.addEventListener('click', startGame);
+    
+    function startGame() {
+        // Reset state
+        gameState = {
+            active: true,
+            score: 0,
+            streak: 0,
+            bestStreak: 0,
+            correct: 0,
+            incorrect: 0,
+            totalProblems: 0,
+            problemHistory: [],
+            timer: gameSettings.mode === 'timed' ? 60 : 999999,
+            lives: 3,
+            currentProblem: null,
+            currentAnswer: null,
+            startTime: Date.now(),
+            isPaused: false
+        };
+        
+        // Show game screen
+        document.getElementById('quick-start').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'block';
+        document.getElementById('results-screen').style.display = 'none';
+        
+        // Setup UI for mode
+        document.getElementById('timer-stat').style.display = gameSettings.mode === 'timed' ? 'block' : 'none';
+        document.getElementById('progress-stat').style.display = gameSettings.mode === 'sprint' ? 'block' : 'none';
+        document.getElementById('lives-stat').style.display = gameSettings.mode === 'survival' ? 'block' : 'none';
+        
+        // Start timer if timed mode
+        if (gameSettings.mode === 'timed') {
+            gameState.timerInterval = setInterval(updateTimer, 1000);
+        }
+        
+        updateDisplay();
+        generateProblem();
+        
+        document.getElementById('answer').focus();
+    }
+    
+    function updateTimer() {
+        gameState.timer--;
+        document.getElementById('timer').textContent = gameState.timer;
+        
+        if (gameState.timer <= 0) {
+            endGame();
+        }
+    }
+    
+    function generateProblem() {
+        const ops = [];
+        if (gameSettings.operations.add) ops.push('+');
+        if (gameSettings.operations.subtract) ops.push('-');
+        if (gameSettings.operations.multiply) ops.push('*');
+        if (gameSettings.operations.divide) ops.push('/');
+        
+        if (ops.length === 0) {
+            alert('Please select at least one operation!');
+            return;
+        }
+        
+        const op = ops[Math.floor(Math.random() * ops.length)];
+        let num1, num2, answer;
+        
+        const min = gameSettings.rangeMin;
+        const max = gameSettings.rangeMax;
+        
+        switch (op) {
+            case '+':
+                num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                answer = num1 + num2;
+                gameState.currentProblem = `${num1} + ${num2}`;
+                break;
+            case '-':
+                num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                if (gameSettings.options.allowNegative) {
+                    num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                } else {
+                    num2 = Math.floor(Math.random() * num1) + 1;
+                }
+                answer = num1 - num2;
+                gameState.currentProblem = `${num1} - ${num2}`;
+                break;
+            case '*':
+                const multMax = Math.min(max, 20);
+                num1 = Math.floor(Math.random() * multMax) + 1;
+                num2 = Math.floor(Math.random() * multMax) + 1;
+                answer = num1 * num2;
+                gameState.currentProblem = `${num1} × ${num2}`;
+                break;
+            case '/':
+                num2 = Math.floor(Math.random() * Math.min(max, 20)) + 1;
+                answer = Math.floor(Math.random() * Math.min(max, 20)) + 1;
+                num1 = num2 * answer;
+                gameState.currentProblem = `${num1} ÷ ${num2}`;
+                break;
+        }
+        
+        gameState.currentAnswer = answer;
+        gameState.problemStartTime = Date.now();
+
+        document.getElementById('problem').textContent = gameState.currentProblem;
+        document.getElementById('problem-number').textContent = gameState.totalProblems + 1;
+        document.getElementById('answer').value = '';
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('feedback').className = 'feedback';
+
+        // Show hints if enabled
+        const hintElement = document.getElementById('hint');
+        if (gameSettings.options.showHints && hintElement) {
+            let hint = '';
+            const absAnswer = Math.abs(answer);
+            if (absAnswer < 10) {
+                hint = 'Hint: Single digit answer';
+            } else if (absAnswer < 100) {
+                hint = 'Hint: Double digit answer';
+            } else {
+                hint = 'Hint: Large number';
+            }
+            if (answer < 0) {
+                hint += ' (negative)';
+            }
+            hintElement.textContent = hint;
+            hintElement.style.display = 'block';
+        } else if (hintElement) {
+            hintElement.style.display = 'none';
+        }
+    }
+    
+    // Answer Input
+    const answerInput = document.getElementById('answer');
+    if (answerInput) {
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer();
+        });
+    }
+    
+    function checkAnswer() {
+        const userAnswer = parseInt(document.getElementById('answer').value);
+        if (isNaN(userAnswer)) return;
+        
+        gameState.totalProblems++;
+        const timeTaken = Date.now() - gameState.problemStartTime;
+        const feedback = document.getElementById('feedback');
+        
+        const isCorrect = userAnswer === gameState.currentAnswer;
+        
+        // Record in history
+        gameState.problemHistory.push({
+            problem: gameState.currentProblem,
+            userAnswer,
+            correctAnswer: gameState.currentAnswer,
+            correct: isCorrect,
+            time: timeTaken
+        });
+        
+        if (isCorrect) {
+            gameState.correct++;
+            gameState.streak++;
+            gameState.bestStreak = Math.max(gameState.bestStreak, gameState.streak);
+            
+            const points = 10 + Math.max(0, 10 - Math.floor(timeTaken / 1000)) + Math.floor(gameState.streak / 5) * 5;
+            gameState.score += points;
+            
+            feedback.textContent = '✓ Correct!';
+            feedback.className = 'feedback correct';
+            
+            if (gameState.streak >= 5 && gameState.streak % 5 === 0) {
+                showCombo();
+            }
+
+            if (gameSettings.options.autoNext) {
+                setTimeout(() => {
+                    if (gameSettings.mode === 'sprint' && gameState.totalProblems >= 20) {
+                        endGame();
+                    } else {
+                        generateProblem();
+                    }
+                }, 800);
+            } else {
+                setTimeout(() => {
+                    if (gameSettings.mode === 'sprint' && gameState.totalProblems >= 20) {
+                        endGame();
+                    } else {
+                        generateProblem();
+                    }
+                }, 1500);
             }
         } else {
-            konamiIndex = 0;
-        }
-    });
-
-    // Corner click activation
-    document.addEventListener('click', (e) => {
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-
-        // Check if click is in bottom-right corner (last 50px)
-        if (e.clientX > windowWidth - 50 && e.clientY > windowHeight - 50) {
-            cornerClicks++;
-            clearTimeout(cornerClickTimer);
-
-            if (cornerClicks === 3) {
-                activateGame();
-                cornerClicks = 0;
+            gameState.incorrect++;
+            gameState.streak = 0;
+            
+            feedback.textContent = `✗ ${gameState.currentAnswer}`;
+            feedback.className = 'feedback incorrect';
+            
+            if (gameSettings.mode === 'survival') {
+                gameState.lives--;
+                updateLives();
+                if (gameState.lives <= 0) {
+                    setTimeout(endGame, 1000);
+                    return;
+                }
             }
+            
+            setTimeout(generateProblem, 1000);
+        }
+        
+        updateDisplay();
+    }
+    
+    function showCombo() {
+        const combo = document.getElementById('combo');
+        combo.textContent = `${gameState.streak}x COMBO!`;
+        combo.classList.add('show');
+        setTimeout(() => combo.classList.remove('show'), 1200);
+    }
+    
+    function updateDisplay() {
+        document.getElementById('score').textContent = gameState.score;
+        document.getElementById('streak').textContent = gameState.streak + '🔥';
+        document.getElementById('accuracy').textContent = gameState.totalProblems > 0 
+            ? Math.round((gameState.correct / gameState.totalProblems) * 100) + '%' 
+            : '100%';
+        if (gameSettings.mode === 'sprint') {
+            document.getElementById('progress').textContent = `${gameState.totalProblems}/20`;
+        }
+    }
+    
+    function updateLives() {
+        const hearts = '❤️'.repeat(gameState.lives);
+        document.getElementById('lives').textContent = hearts || '💀';
+    }
+    
+    function endGame() {
+        if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+        gameState.active = false;
+        
+        // Show results
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById('results-screen').style.display = 'block';
+        
+        const totalTime = Date.now() - gameState.startTime;
+        const avgSpeed = gameState.totalProblems > 0 ? (totalTime / gameState.totalProblems / 1000).toFixed(2) : 0;
+        
+        document.getElementById('final-score').textContent = gameState.score;
+        document.getElementById('final-correct').textContent = gameState.correct;
+        document.getElementById('final-streak').textContent = gameState.bestStreak;
+        document.getElementById('final-accuracy').textContent = gameState.totalProblems > 0 
+            ? Math.round((gameState.correct / gameState.totalProblems) * 100) + '%' 
+            : '100%';
+        document.getElementById('final-speed').textContent = avgSpeed + 's';
+        
+        // Save stats
+        saveGameStats();
+        
+        // Check for achievements
+        displayAchievements();
+    }
+    
+    function displayAchievements() {
+        const achievements = [];
+        if (gameState.bestStreak >= 10) achievements.push('🔥 Hot Streak!');
+        if (gameState.bestStreak >= 20) achievements.push('🔥🔥 On Fire!');
+        if (gameState.correct >= 50) achievements.push('💯 Century!');
+        if (gameState.totalProblems > 0 && gameState.correct / gameState.totalProblems >= 0.95) achievements.push('🎯 Perfect Aim!');
+        if (gameState.score >= 500) achievements.push('⭐ High Scorer!');
+        
+        const achievementEl = document.getElementById('achievements');
+        achievementEl.innerHTML = '';
+        achievements.forEach(ach => {
+            const badge = document.createElement('div');
+            badge.className = 'achievement-badge';
+            badge.textContent = ach;
+            achievementEl.appendChild(badge);
+        });
+    }
+    
+    function saveGameStats() {
+        const stats = JSON.parse(localStorage.getItem('mathArenaStats') || '{}');
+        
+        stats.gamesPlayed = (stats.gamesPlayed || 0) + 1;
+        stats.totalCorrect = (stats.totalCorrect || 0) + gameState.correct;
+        stats.totalProblems = (stats.totalProblems || 0) + gameState.totalProblems;
+        stats.highScore = Math.max(gameState.score, stats.highScore || 0);
+        stats.bestStreak = Math.max(gameState.bestStreak, stats.bestStreak || 0);
+        
+        localStorage.setItem('mathArenaStats', JSON.stringify(stats));
+        
+        // Check for new high score
+        if (gameState.score > (stats.previousHigh || 0)) {
+            document.getElementById('new-record').style.display = 'block';
+            stats.previousHigh = gameState.score;
+        }
+        
+        updateStatsDisplay();
+    }
+    
+    function updateStatsDisplay() {
+        const stats = JSON.parse(localStorage.getItem('mathArenaStats') || '{}');
+        
+        document.getElementById('total-games').textContent = stats.gamesPlayed || 0;
+        document.getElementById('total-correct').textContent = stats.totalCorrect || 0;
+        document.getElementById('high-score').textContent = stats.highScore || 0;
+        document.getElementById('best-streak-stat').textContent = stats.bestStreak || 0;
+    }
+    
+    // Initialize stats on load
+    updateStatsDisplay();
+    
+    // Pause and Quit buttons
+    const pauseModal = document.getElementById('pause-modal');
+    const pauseBtn = document.getElementById('pause-btn');
+    const resumeBtn = document.getElementById('resume-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const endGameBtn = document.getElementById('end-game-btn');
 
-            cornerClickTimer = setTimeout(() => {
-                cornerClicks = 0;
-            }, 2000);
+    pauseBtn?.addEventListener('click', () => {
+        pauseModal.classList.add('active');
+        if (gameState.timerInterval) {
+            clearInterval(gameState.timerInterval);
+            gameState.isPaused = true;
         }
     });
 
-    function activateGame() {
-        soccerGame.classList.add('active');
-        resetBall();
-        score = 0;
-        updateScore();
-    }
-
-    function closeGame() {
-        soccerGame.classList.remove('active');
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeGame);
-    }
-
-    function resetBall() {
-        ballX = 380;
-        ballY = 230;
-        ballVelocityX = 0;
-        ballVelocityY = 0;
-        updateBallPosition();
-    }
-
-    function updateBallPosition() {
-        soccerBall.style.left = ballX + 'px';
-        soccerBall.style.top = ballY + 'px';
-    }
-
-    function updateScore() {
-        scoreDisplay.textContent = `Goals: ${score}`;
-    }
-
-    // Kick ball on click
-    soccerBall.addEventListener('click', (e) => {
-        e.stopPropagation();
-
-        const container = document.querySelector('.soccer-game-container');
-        const rect = container.getBoundingClientRect();
-        const ballRect = soccerBall.getBoundingClientRect();
-
-        const ballCenterX = ballRect.left + ballRect.width / 2;
-        const ballCenterY = ballRect.top + ballRect.height / 2;
-
-        const clickX = e.clientX;
-        const clickY = e.clientY;
-
-        // Calculate kick direction and power
-        const angle = Math.atan2(ballCenterY - clickY, ballCenterX - clickX);
-        const power = 15;
-
-        ballVelocityX = Math.cos(angle) * power;
-        ballVelocityY = Math.sin(angle) * power;
+    resumeBtn?.addEventListener('click', () => {
+        pauseModal.classList.remove('active');
+        if (gameSettings.mode === 'timed' && gameState.isPaused) {
+            gameState.timerInterval = setInterval(updateTimer, 1000);
+            gameState.isPaused = false;
+        }
+        document.getElementById('answer')?.focus();
     });
 
-    // Game physics loop
-    function gameLoop() {
-        if (!soccerGame.classList.contains('active')) return;
+    restartBtn?.addEventListener('click', () => {
+        pauseModal.classList.remove('active');
+        startGame();
+    });
 
-        const container = document.querySelector('.soccer-game-container');
-        const containerWidth = container.offsetWidth;
-        const containerHeight = container.offsetHeight;
+    endGameBtn?.addEventListener('click', () => {
+        pauseModal.classList.remove('active');
+        if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById('quick-start').style.display = 'block';
+    });
 
-        // Update position
-        ballX += ballVelocityX;
-        ballY += ballVelocityY;
+    document.getElementById('quit-btn')?.addEventListener('click', () => {
+        pauseBtn.click(); // Open pause modal instead of confirm
+    });
 
-        // Apply friction
-        ballVelocityX *= 0.98;
-        ballVelocityY *= 0.98;
-
-        // Stop if velocity is very small
-        if (Math.abs(ballVelocityX) < 0.1) ballVelocityX = 0;
-        if (Math.abs(ballVelocityY) < 0.1) ballVelocityY = 0;
-
-        // Bounce off walls
-        if (ballX < 0) {
-            ballX = 0;
-            ballVelocityX = -ballVelocityX * 0.7;
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (pauseModal.classList.contains('active')) {
+                resumeBtn.click();
+            } else if (gameOverlay.classList.contains('active')) {
+                gameOverlay.classList.remove('active');
+            }
         }
-        if (ballX > containerWidth - 40) {
-            ballX = containerWidth - 40;
-            ballVelocityX = -ballVelocityX * 0.7;
-        }
-
-        // Check for goals
-        const goalLeft = (containerWidth / 2) - 75;
-        const goalRight = (containerWidth / 2) + 75;
-
-        // Top goal
-        if (ballY < 80 && ballX > goalLeft && ballX < goalRight) {
-            score++;
-            updateScore();
-            resetBall();
-            celebrateGoal();
-        }
-
-        // Bottom goal
-        if (ballY > containerHeight - 120 && ballX > goalLeft && ballX < goalRight) {
-            score++;
-            updateScore();
-            resetBall();
-            celebrateGoal();
-        }
-
-        // Bounce off top/bottom (if not in goal)
-        if (ballY < 0) {
-            ballY = 0;
-            ballVelocityY = -ballVelocityY * 0.7;
-        }
-        if (ballY > containerHeight - 40) {
-            ballY = containerHeight - 40;
-            ballVelocityY = -ballVelocityY * 0.7;
-        }
-
-        updateBallPosition();
-        requestAnimationFrame(gameLoop);
-    }
-
-    function celebrateGoal() {
-        // Flash score
-        scoreDisplay.style.transform = 'scale(1.5)';
-        scoreDisplay.style.color = '#FFD700';
-        setTimeout(() => {
-            scoreDisplay.style.transform = 'scale(1)';
-            scoreDisplay.style.color = 'white';
-        }, 500);
-    }
-
-    // Start game loop
-    setInterval(() => {
-        if (soccerGame.classList.contains('active')) {
-            gameLoop();
-        }
-    }, 16); // ~60 FPS
+    });
 });

@@ -31,20 +31,380 @@
     <p class="loading-text">Loading Portfolio...</p>
   </div>
 
-  <!-- Soccer Game Easter Egg -->
-  <div class="soccer-game-overlay" id="soccer-game">
-    <div class="soccer-game-container">
-      <button class="close-game" id="close-game">×</button>
-      <div class="game-score" id="game-score">Goals: 0</div>
-      <div class="soccer-field-lines">
-        <div class="center-circle"></div>
+  <!-- Mental Math Game -->
+  <div class="math-game-overlay" id="math-game">
+    <div class="math-game-container">
+      <!-- Header with Tabs -->
+      <div class="game-header">
+        <div class="game-logo">
+          <i class="fas fa-calculator"></i>
+          <span>Math Arena</span>
+        </div>
+        <div class="game-tabs">
+          <button class="game-tab active" data-tab="play"><i class="fas fa-play"></i> <span>Play</span></button>
+          <button class="game-tab" data-tab="practice"><i class="fas fa-dumbbell"></i> <span>Practice</span></button>
+          <button class="game-tab" data-tab="daily"><i class="fas fa-calendar-day"></i> <span>Daily</span></button>
+          <button class="game-tab" data-tab="leaderboard"><i class="fas fa-trophy"></i> <span>Board</span></button>
+          <button class="game-tab" data-tab="stats"><i class="fas fa-chart-line"></i> <span>Stats</span></button>
+        </div>
+        <button class="close-game" id="close-game">×</button>
       </div>
-      <div class="soccer-goal top"></div>
-      <div class="soccer-goal bottom"></div>
-      <div class="soccer-ball" id="soccer-ball">⚽</div>
-      <div class="game-instructions">
-        <p>Click the ball to kick it! Score in the goals to earn points!</p>
-        <p><small>Press Escape or click × to close</small></p>
+
+      <!-- Main Content Area -->
+      <div class="game-content">
+
+        <!-- PLAY TAB -->
+        <div class="tab-panel active" id="play-panel">
+          <!-- Quick Start Screen -->
+          <div class="quick-start" id="quick-start">
+            <h2>Ready to Train?</h2>
+
+            <div class="quick-options">
+              <div class="quick-preset" data-preset="beginner">
+                <div class="preset-icon">🌱</div>
+                <div class="preset-name">Beginner</div>
+                <div class="preset-desc">Easy • Addition/Subtraction • 1-20</div>
+              </div>
+              <div class="preset" data-preset="intermediate">
+                <div class="preset-icon">📚</div>
+                <div class="preset-name">Intermediate</div>
+                <div class="preset-desc">Medium • All Ops • 1-50</div>
+              </div>
+              <div class="preset" data-preset="advanced">
+                <div class="preset-icon">🎓</div>
+                <div class="preset-name">Advanced</div>
+                <div class="preset-desc">Hard • All Ops • 1-100</div>
+              </div>
+              <div class="preset" data-preset="custom">
+                <div class="preset-icon">⚙️</div>
+                <div class="preset-name">Custom</div>
+                <div class="preset-desc">Your settings</div>
+              </div>
+            </div>
+
+            <button class="advanced-toggle" id="show-advanced">
+              <i class="fas fa-sliders-h"></i> Advanced Settings
+            </button>
+
+            <!-- Advanced Settings (Hidden by default) -->
+            <div class="advanced-settings" id="advanced-settings" style="display: none;">
+              <div class="settings-section">
+                <h3>Game Mode</h3>
+                <div class="mode-buttons">
+                  <button class="mode-btn active" data-mode="timed">⏱️ Timed (60s)</button>
+                  <button class="mode-btn" data-mode="sprint">⚡ Sprint (20)</button>
+                  <button class="mode-btn" data-mode="survival">💀 Survival (3❤️)</button>
+                  <button class="mode-btn" data-mode="zen">🧘 Zen</button>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <h3>Difficulty & Range</h3>
+                <div class="difficulty-options">
+                  <button class="diff-btn active" data-diff="easy" data-range="1-10">😊 Easy (1-10)</button>
+                  <button class="diff-btn" data-diff="medium" data-range="1-50">🤔 Medium (1-50)</button>
+                  <button class="diff-btn" data-diff="hard" data-range="1-100">😰 Hard (1-100)</button>
+                  <button class="diff-btn" data-diff="insane" data-range="1-999">🤯 Insane (1-999)</button>
+                </div>
+                <div class="custom-range">
+                  <label>
+                    <span>Custom Range:</span>
+                    <input type="number" id="range-min" placeholder="Min" value="1" min="1">
+                    <span>to</span>
+                    <input type="number" id="range-max" placeholder="Max" value="100" min="1">
+                  </label>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <h3>Operations</h3>
+                <div class="op-checkboxes">
+                  <label><input type="checkbox" id="op-add" checked> ➕ Addition</label>
+                  <label><input type="checkbox" id="op-subtract" checked> ➖ Subtraction</label>
+                  <label><input type="checkbox" id="op-multiply" checked> ✖️ Multiplication</label>
+                  <label><input type="checkbox" id="op-divide"> ➗ Division</label>
+                  <label><input type="checkbox" id="op-mixed"> 🔀 Mixed Operations</label>
+                  <label><input type="checkbox" id="op-squares"> ²  Squares</label>
+                  <label><input type="checkbox" id="op-roots"> √ Square Roots</label>
+                  <label><input type="checkbox" id="op-percent"> % Percentages</label>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <h3>Additional Options</h3>
+                <div class="additional-options">
+                  <label><input type="checkbox" id="allow-negative"> Allow Negative Results</label>
+                  <label><input type="checkbox" id="allow-decimals"> Allow Decimals</label>
+                  <label><input type="checkbox" id="auto-next"> Auto-Next Problem</label>
+                  <label><input type="checkbox" id="show-hints"> Show Hints</label>
+                </div>
+              </div>
+            </div>
+
+            <button class="start-btn" id="start-game">Start Game</button>
+          </div>
+
+          <!-- Active Game Screen -->
+          <div class="game-screen" id="game-screen" style="display: none;">
+            <div class="game-stats-bar">
+              <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
+              <div class="stat"><span class="stat-label">Streak</span><span class="stat-value" id="streak">0🔥</span></div>
+              <div class="stat timer-stat" id="timer-stat"><span class="stat-label">Time</span><span class="stat-value" id="timer">60</span></div>
+              <div class="stat" id="progress-stat"><span class="stat-label">Progress</span><span class="stat-value" id="progress">0/20</span></div>
+              <div class="stat lives-stat" id="lives-stat"><span class="stat-label">Lives</span><span class="stat-value" id="lives">❤️❤️❤️</span></div>
+              <div class="stat"><span class="stat-label">Accuracy</span><span class="stat-value" id="accuracy">100%</span></div>
+            </div>
+
+            <div class="problem-area">
+              <div class="problem-number">#<span id="problem-number">1</span></div>
+              <div class="problem-display" id="problem">7 × 8</div>
+              <div class="answer-section">
+                <input type="number" id="answer" class="answer-input" placeholder="?" autocomplete="off" autofocus>
+                <button class="skip-btn" id="skip-btn" title="Skip (Tab)">Skip →</button>
+              </div>
+              <div class="feedback" id="feedback"></div>
+              <div class="hint" id="hint" style="display: none;"></div>
+            </div>
+
+            <div class="game-progress-bar">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div class="combo-overlay" id="combo"></div>
+
+            <div class="game-controls">
+              <button class="ctrl-btn" id="pause-btn"><i class="fas fa-pause"></i> Pause</button>
+              <button class="ctrl-btn" id="quit-btn"><i class="fas fa-times"></i> Quit</button>
+            </div>
+          </div>
+
+          <!-- Pause Modal -->
+          <div class="pause-modal" id="pause-modal">
+            <div class="pause-content">
+              <h2>⏸️ Game Paused</h2>
+              <div class="pause-buttons">
+                <button class="pause-btn primary" id="resume-btn"><i class="fas fa-play"></i> Resume</button>
+                <button class="pause-btn" id="restart-btn"><i class="fas fa-redo"></i> Restart</button>
+                <button class="pause-btn danger" id="end-game-btn"><i class="fas fa-times"></i> End Game</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results Screen -->
+          <div class="results-screen" id="results-screen" style="display: none;">
+            <h2 id="results-title">Great Job!</h2>
+            <div class="results-stats">
+              <div class="result-card">
+                <div class="result-icon">🎯</div>
+                <div class="result-value" id="final-score">0</div>
+                <div class="result-label">Final Score</div>
+              </div>
+              <div class="result-card">
+                <div class="result-icon">✅</div>
+                <div class="result-value" id="final-correct">0</div>
+                <div class="result-label">Correct</div>
+              </div>
+              <div class="result-card">
+                <div class="result-icon">🔥</div>
+                <div class="result-value" id="final-streak">0</div>
+                <div class="result-label">Best Streak</div>
+              </div>
+              <div class="result-card">
+                <div class="result-icon">📊</div>
+                <div class="result-value" id="final-accuracy">0%</div>
+                <div class="result-label">Accuracy</div>
+              </div>
+              <div class="result-card">
+                <div class="result-icon">⚡</div>
+                <div class="result-value" id="final-speed">0s</div>
+                <div class="result-label">Avg Speed</div>
+              </div>
+            </div>
+            <div class="achievements" id="achievements"></div>
+            <div class="new-record" id="new-record" style="display: none;">
+              🏆 NEW HIGH SCORE! 🏆
+            </div>
+            <div class="results-actions">
+              <button class="action-btn primary" id="play-again">Play Again</button>
+              <button class="action-btn" id="review-problems">Review Problems</button>
+              <button class="action-btn" id="share-results"><i class="fas fa-share"></i> Share</button>
+            </div>
+          </div>
+
+          <!-- Problem Review Screen -->
+          <div class="review-screen" id="review-screen" style="display: none;">
+            <h3>Problem Review</h3>
+            <div class="review-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="correct">Correct</button>
+              <button class="filter-btn" data-filter="incorrect">Incorrect</button>
+            </div>
+            <div class="review-list" id="review-list"></div>
+            <button class="back-btn" id="back-from-review">Back to Results</button>
+          </div>
+        </div>
+
+        <!-- PRACTICE TAB -->
+        <div class="tab-panel" id="practice-panel">
+          <h2>Practice Mode</h2>
+          <p class="tab-desc">Focus on specific operations or number ranges</p>
+
+          <div class="practice-drills">
+            <div class="drill-card" data-drill="tables">
+              <div class="drill-icon">📋</div>
+              <h3>Multiplication Tables</h3>
+              <p>Master your times tables</p>
+              <button class="drill-btn">Start</button>
+            </div>
+            <div class="drill-card" data-drill="mental-add">
+              <div class="drill-icon">➕</div>
+              <h3>Mental Addition</h3>
+              <p>Practice addition strategies</p>
+              <button class="drill-btn">Start</button>
+            </div>
+            <div class="drill-card" data-drill="quick-subtract">
+              <div class="drill-icon">➖</div>
+              <h3>Quick Subtraction</h3>
+              <p>Speed subtraction drills</p>
+              <button class="drill-btn">Start</button>
+            </div>
+            <div class="drill-card" data-drill="division">
+              <div class="drill-icon">➗</div>
+              <h3>Division Facts</h3>
+              <p>Division fluency practice</p>
+              <button class="drill-btn">Start</button>
+            </div>
+            <div class="drill-card" data-drill="squares">
+              <div class="drill-icon">²</div>
+              <h3>Perfect Squares</h3>
+              <p>Learn square numbers</p>
+              <button class="drill-btn">Start</button>
+            </div>
+            <div class="drill-card" data-drill="percentages">
+              <div class="drill-icon">%</div>
+              <h3>Percentages</h3>
+              <p>Calculate percentages quickly</p>
+              <button class="drill-btn">Start</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAILY CHALLENGE TAB -->
+        <div class="tab-panel" id="daily-panel">
+          <h2>Daily Challenge</h2>
+          <p class="tab-desc">Complete today's unique challenge and compete with others!</p>
+
+          <div class="daily-challenge-card">
+            <div class="daily-header">
+              <div class="daily-date" id="daily-date">Today's Challenge</div>
+              <div class="daily-streak">🔥 <span id="daily-streak">0</span> day streak</div>
+            </div>
+            <div class="daily-info">
+              <div class="daily-stat">
+                <span class="daily-stat-label">Mode:</span>
+                <span class="daily-stat-value" id="daily-mode">-</span>
+              </div>
+              <div class="daily-stat">
+                <span class="daily-stat-label">Difficulty:</span>
+                <span class="daily-stat-value" id="daily-difficulty">-</span>
+              </div>
+              <div class="daily-stat">
+                <span class="daily-stat-label">Operations:</span>
+                <span class="daily-stat-value" id="daily-operations">-</span>
+              </div>
+            </div>
+            <div class="daily-completion" id="daily-completion" style="display: none;">
+              <div class="completion-badge">✅ Completed!</div>
+              <div class="completion-score">Score: <span id="daily-score">0</span></div>
+              <div class="completion-rank">Rank: <span id="daily-rank">#0</span></div>
+            </div>
+            <button class="daily-start-btn" id="daily-start">Start Daily Challenge</button>
+          </div>
+
+          <div class="daily-leaderboard">
+            <h3>Today's Top Scores</h3>
+            <div class="daily-leaders" id="daily-leaders">
+              <div class="leader-item">
+                <span class="leader-rank">1.</span>
+                <span class="leader-name">-</span>
+                <span class="leader-score">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEADERBOARD TAB -->
+        <div class="tab-panel" id="leaderboard-panel">
+          <h2>Leaderboard</h2>
+
+          <div class="leaderboard-filters">
+            <button class="lb-filter active" data-period="today">Today</button>
+            <button class="lb-filter" data-period="week">This Week</button>
+            <button class="lb-filter" data-period="month">This Month</button>
+            <button class="lb-filter" data-period="alltime">All Time</button>
+          </div>
+
+          <div class="leaderboard-list" id="leaderboard-list">
+            <div class="leaderboard-item your-score">
+              <div class="lb-rank">#-</div>
+              <div class="lb-player">
+                <div class="lb-name">You</div>
+                <div class="lb-details">0 games played</div>
+              </div>
+              <div class="lb-score">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS TAB -->
+        <div class="tab-panel" id="stats-panel">
+          <h2>Your Statistics</h2>
+
+          <div class="stats-overview">
+            <div class="overview-card">
+              <div class="overview-icon">🎯</div>
+              <div class="overview-value" id="total-games">0</div>
+              <div class="overview-label">Total Games</div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-icon">✅</div>
+              <div class="overview-value" id="total-correct">0</div>
+              <div class="overview-label">Total Correct</div>
+            </div>
+            <div class="overview-card highlight">
+              <div class="overview-icon">🏆</div>
+              <div class="overview-value" id="high-score">0</div>
+              <div class="overview-label">High Score</div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-icon">🔥</div>
+              <div class="overview-value" id="best-streak-stat">0</div>
+              <div class="overview-label">Best Streak</div>
+            </div>
+          </div>
+
+          <div class="stats-charts">
+            <div class="chart-container">
+              <h3>Score History</h3>
+              <canvas id="score-chart"></canvas>
+            </div>
+            <div class="chart-container">
+              <h3>Accuracy by Operation</h3>
+              <canvas id="accuracy-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="detailed-stats">
+            <h3>Detailed Breakdown</h3>
+            <div class="stat-table" id="stat-table"></div>
+          </div>
+
+          <div class="stats-actions">
+            <button class="action-btn" id="export-stats"><i class="fas fa-download"></i> Export Data</button>
+            <button class="action-btn danger" id="reset-all-stats">Reset All Stats</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -810,6 +1170,12 @@
   <!-- Back to Top -->
   <button id="backToTop" aria-label="Back to top">
     <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Math Game Launcher -->
+  <button id="mathGameLauncher" class="math-game-launcher" aria-label="Open Math Arena">
+    <i class="fas fa-calculator"></i>
+    <span class="launcher-tooltip">Math Arena</span>
   </button>
 
   <!-- Scripts -->

@@ -393,8 +393,86 @@
     <!-- Example Section -->
     <section id="about" class="section">
       <h2><i class="fas fa-user"></i> About Me</h2>
-      <p>Hi, I'm Aryan — a Computer Science &amp; Mathematics student at the University of Pennsylvania (minor in Statistics, concentration in Artificial Intelligence) building at the intersection of software engineering, machine learning, and quantitative finance. In 2026 I'll be joining <strong>BlackRock's Aladdin Engineering Group</strong> and <strong>Amazon's Project Kuiper</strong> as a software engineering intern.</p>
-      <p>I love turning hard math and systems problems into products people actually use — from a Transformer-powered health platform to real-time, event-driven trading infrastructure. Whether I'm training models on 100K+ pathology images, shipping low-latency distributed systems, or co-founding a venture, I'm happiest where rigorous mathematics meets clean, production-grade engineering. Outside of code, I'm a marathon runner, a lifelong competitive mathlete, and an incurably curious builder.</p>
+      <div class="card-about-grid">
+        <div class="card-bio-col">
+          <p>Hi, I'm Aryan — a Computer Science &amp; Mathematics student at the University of Pennsylvania (minor in Statistics, concentration in Artificial Intelligence) building at the intersection of software engineering, machine learning, and quantitative finance. In 2026 I'll be joining <strong>BlackRock's Aladdin Engineering Group</strong> and <strong>Amazon's Project Kuiper</strong> as a software engineering intern.</p>
+                <p>I love turning hard math and systems problems into products people actually use — from a Transformer-powered health platform to real-time, event-driven trading infrastructure. Whether I'm training models on 100K+ pathology images, shipping low-latency distributed systems, or co-founding a venture, I'm happiest where rigorous mathematics meets clean, production-grade engineering. Outside of code, I'm a marathon runner, a lifelong competitive mathlete, and an incurably curious builder.</p>
+        </div>
+        <div class="card-holo-wrap" id="card-holo-wrap">
+            <div class="card-holo" id="card-holo" tabindex="0" role="img" aria-label="Holographic player card for Aryan Jeena, Software Engineer and Quant. Rarity: Legendary Intern.">
+              <div class="card-holo-inner" id="card-holo-inner">
+                <!-- Holographic foil / sheen layers -->
+                <div class="card-foil" aria-hidden="true"></div>
+                <div class="card-glare" aria-hidden="true"></div>
+                <div class="card-sparkle" aria-hidden="true"></div>
+        
+                <!-- Card body -->
+                <div class="card-frame">
+                  <div class="card-rarity" aria-hidden="true">
+                    <span class="card-rarity-star"><i class="fas fa-star"></i></span>
+                    LEGENDARY INTERN
+                  </div>
+        
+                  <header class="card-head">
+                    <div class="card-name">ARYAN JEENA</div>
+                    <div class="card-role">Software Engineer <span class="card-dot">·</span> Quant</div>
+                  </header>
+        
+                  <div class="card-crest" aria-hidden="true">
+                    <div class="card-crest-ring"></div>
+                    <div class="card-crest-ring card-crest-ring--2"></div>
+                    <div class="card-monogram">AJ</div>
+                    <div class="card-crest-glyph"><i class="fas fa-chart-line"></i></div>
+                  </div>
+        
+                  <div class="card-stats-meta">
+                    <div class="card-meta-row">
+                      <span class="card-meta-key">School</span>
+                      <span class="card-meta-val">UPenn CS + Math</span>
+                    </div>
+                    <div class="card-meta-row">
+                      <span class="card-meta-key">Incoming</span>
+                      <span class="card-meta-val">Amazon <span class="card-dot">·</span> BlackRock</span>
+                    </div>
+                    <div class="card-meta-row">
+                      <span class="card-meta-key">Specialty</span>
+                      <span class="card-meta-val">ML / Quant / Systems</span>
+                    </div>
+                  </div>
+        
+                  <div class="card-bars">
+                    <div class="card-bar">
+                      <div class="card-bar-label"><span>Problem-Solving</span><span class="card-bar-num">96</span></div>
+                      <div class="card-bar-track"><span class="card-bar-fill" style="--card-w:96%"></span></div>
+                    </div>
+                    <div class="card-bar">
+                      <div class="card-bar-label"><span>Mathematics</span><span class="card-bar-num">94</span></div>
+                      <div class="card-bar-track"><span class="card-bar-fill" style="--card-w:94%"></span></div>
+                    </div>
+                    <div class="card-bar">
+                      <div class="card-bar-label"><span>Systems</span><span class="card-bar-num">90</span></div>
+                      <div class="card-bar-track"><span class="card-bar-fill" style="--card-w:90%"></span></div>
+                    </div>
+                    <div class="card-bar">
+                      <div class="card-bar-label"><span>Shipping</span><span class="card-bar-num">92</span></div>
+                      <div class="card-bar-track"><span class="card-bar-fill" style="--card-w:92%"></span></div>
+                    </div>
+                  </div>
+        
+                  <footer class="card-foot">
+                    <div class="card-foil-strip" aria-hidden="true"></div>
+                    <div class="card-foot-mark">
+                      <span class="card-foot-os">aryan<span class="card-foot-dot">.</span>os</span>
+                      <span class="card-foot-serial">#AJ-0001</span>
+                    </div>
+                  </footer>
+                </div>
+              </div>
+              <div class="card-shadow" aria-hidden="true"></div>
+            </div>
+            <div class="card-hint" id="card-hint" aria-hidden="true"><i class="fas fa-hand-pointer"></i> hover to tilt</div>
+          </div>
+      </div>
     </section>
 
 <section id="education" class="section">
@@ -887,6 +965,20 @@
         <section id="skills" class="section">
             <h2><i class="fas fa-chart-bar"></i> Skills</h2>
             <p class="skills-intro">A working toolkit spanning software engineering, machine learning, and quantitative finance.</p>
+            <div class="con-wrap" id="con-wrap">
+              <canvas id="con-canvas" class="con-canvas" tabindex="0" role="img"
+                      aria-label="Interactive force-directed knowledge graph of Aryan's skills, grouped by Languages, ML/AI, Quant and Math, and Systems and Infrastructure. Drag nodes to rearrange; hover to highlight connections."></canvas>
+              <div class="con-bar">
+                <div class="con-legend" aria-hidden="true">
+                  <span class="con-legend-item"><span class="con-dot con-d-lang"></span>Languages</span>
+                  <span class="con-legend-item"><span class="con-dot con-d-ml"></span>ML / AI</span>
+                  <span class="con-legend-item"><span class="con-dot con-d-quant"></span>Quant &middot; Math</span>
+                  <span class="con-legend-item"><span class="con-dot con-d-sys"></span>Systems &middot; Infra</span>
+                </div>
+                <span class="con-hint"><i class="fas fa-hand-pointer"></i> Drag a node &middot; hover to trace connections</span>
+                <button type="button" class="con-reset" id="con-reset"><i class="fas fa-rotate-left"></i> Reset layout</button>
+              </div>
+            </div>
             <div class="skill-groups">
                 <div class="skill-group">
                   <h3><i class="fas fa-code"></i> Languages</h3>

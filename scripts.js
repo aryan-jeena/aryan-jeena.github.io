@@ -35,169 +35,226 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// === TYPEWRITER + SCRAMBLE AFTER EACH TITLE ===
+// === TYPEWRITER SUBTITLE (clean role rotation) ===
 document.addEventListener('DOMContentLoaded', () => {
   const introText = document.getElementById('intro-text');
-  const normalPhrases = [
-    "Computer Science & Mathematics @ UPenn",
+  if (!introText) return;
+
+  const phrases = [
     "Software Engineer",
-    "AI/ML Enthusiast",
-    "Quantitative Analyst"
+    "AI / ML Engineer",
+    "Quantitative Researcher",
+    "Full-Stack Developer"
   ];
-  const soccerPhrase = "Soccer Player";
-  const scrambleChars = "!<>-_\\/[]{}—=+*^?#________";
   let phraseIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
-  let typingSpeed = 85;
-  let afterNormalGlitch = false; 
 
-  function randomChar() {
-    return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-  }
+  function tick() {
+    const current = phrases[phraseIndex];
 
-  function typeEffect() {
-    const currentPhrase = normalPhrases[phraseIndex];
-
-    if (!afterNormalGlitch) {
-      // Typing normal phrase
-      if (!introText.classList.contains('glitch-typing')) {
-        introText.classList.add('glitch-typing');
-      }
-
-      if (isDeleting) {
-        introText.textContent = currentPhrase.substring(0, charIndex - 1);
-        charIndex--;
-        typingSpeed = 30;
-      } else {
-        introText.textContent = currentPhrase.substring(0, charIndex + 1);
-        charIndex++;
-        typingSpeed = 50;
-      }
-
-      if (!isDeleting && charIndex === currentPhrase.length) {
-        // Fully typed current phrase — now trigger scramble
-        afterNormalGlitch = true;
-        setTimeout(scrambleToSoccer, 1000);
-        return;
-      } else if (isDeleting && charIndex === 0) {
-        // Finished deleting — move to next phrase
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % normalPhrases.length;
-        typingSpeed = 300;
-      }
+    if (isDeleting) {
+      introText.textContent = current.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      introText.textContent = current.substring(0, charIndex + 1);
+      charIndex++;
     }
 
-    setTimeout(typeEffect, typingSpeed);
-  }
+    let delay = isDeleting ? 35 : 70;
 
-  function scrambleToSoccer() {
-    let output = '';
-    let queue = [];
-
-    for (let i = 0; i < soccerPhrase.length; i++) {
-      queue.push({ from: randomChar(), to: soccerPhrase[i] });
+    if (!isDeleting && charIndex === current.length) {
+      delay = 1600;           // pause on the fully-typed phrase
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      delay = 400;
     }
 
-    let frame = 0;
-
-    function updateScramble() {
-      output = '';
-      let complete = 0;
-
-      for (let i = 0; i < queue.length; i++) {
-        if (frame > i * 2) {
-          output += queue[i].to;
-          complete++;
-        } else {
-          output += randomChar();
-        }
-      }
-
-      introText.textContent = output;
-
-      if (complete === queue.length) {
-        setTimeout(() => {
-          isDeleting = true;
-          afterNormalGlitch = false;
-          typeEffect(); // continue deleting
-        }, 700); // Briefly show Soccer Player before deleting
-      } else {
-        frame++;
-        requestAnimationFrame(updateScramble);
-      }
-    }
-
-    updateScramble();
+    setTimeout(tick, delay);
   }
 
-  // Start typing
-  typeEffect();
+  tick();
 });
 
-// === PARTICLES BACKGROUND ===
+// === HERO BACKGROUND: animated equity curve (quant-themed) ===
+// A subtle, live "market" chart of mean-reverting random walks that scrolls
+// left in real time. On-brand for a SWE/quant portfolio, lightweight, and
+// fully respectful of prefers-reduced-motion.
 document.addEventListener('DOMContentLoaded', () => {
-  const particleOptions = {
-    background: { color: { value: "transparent" } },
-    fullScreen: { enable: false },
-    particles: {
-      number: { value: 80 },
-      color: { value: "#ffffff" },
-      links: {
-        enable: true,
-        distance: 150,
-        opacity: 0.7,
-        width: 1,
-        color: "#ffffff"
-      },
-      move: { enable: true, speed: 1 },
-      size: {
-        value: { min: 1.5, max: 3 },
-        animation: {
-          enable: true,
-          speed: 2,
-          minimumValue: 1.5,
-          sync: false
-        }
-      },
-      opacity: { value: { min: 0.7, max: 1 } }
-    },
-    interactivity: {
-      events: {
-        onHover: {
-          enable: true,
-          mode: "repulse"
-        },
-        resize: true
-      },
-      modes: {
-        repulse: {
-          distance: 100,
-          duration: 0.4
-        }
-      }
-    }
-  };
-  
+  const host = document.getElementById('hero-bg');
+  if (!host) return;
 
-  function loadParticlesBasedOnTheme() {
-    if (body.classList.contains('dark-mode')) {
-      particleOptions.particles.color = { value: "#ffffff" };
-      particleOptions.particles.links.color = "#ffffff";
-    } else {
-      particleOptions.particles.color = { value: "#3B82F6" };
-      particleOptions.particles.links.color = "#3B82F6";
-    }
-    tsParticles.load("hero-bg", particleOptions);
+  const canvas = document.createElement('canvas');
+  canvas.className = 'hero-canvas';
+  host.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = host.clientWidth;
+    H = host.clientHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Theme-aware accent colors
+  function palette() {
+    const dark = document.body.classList.contains('dark-mode');
+    return {
+      line: dark ? '#67E8F9' : '#38BDF8',
+      fillTop: dark ? 'rgba(103, 232, 249, 0.22)' : 'rgba(56, 189, 248, 0.22)',
+      fillBot: dark ? 'rgba(103, 232, 249, 0)' : 'rgba(56, 189, 248, 0)',
+      ghost: dark ? 'rgba(148, 197, 255, 0.28)' : 'rgba(191, 219, 254, 0.40)',
+      grid: 'rgba(255, 255, 255, 0.05)'
+    };
   }
 
-  loadParticlesBasedOnTheme();
+  // Mean-reverting random walk generator
+  function makeSeries(n, start, vol, mean) {
+    const a = new Array(n);
+    let v = start;
+    for (let i = 0; i < n; i++) {
+      v += (mean - v) * 0.015 + (Math.random() - 0.5) * vol;
+      a[i] = v;
+    }
+    return a;
+  }
 
-  // Reload particles when theme changes
-  darkModeToggle.addEventListener('click', () => {
-    tsParticles.dom().forEach((p) => p.destroy()); // Clear existing
-    loadParticlesBasedOnTheme();
+  const N = 200;
+  let series = [];
+  function rebuild() {
+    series = [
+      { data: makeSeries(N, 0.5, 0.05, 0.52), w: 2.6, main: true },
+      { data: makeSeries(N, 0.6, 0.045, 0.6), w: 1.3, main: false },
+      { data: makeSeries(N, 0.4, 0.05, 0.42), w: 1.3, main: false }
+    ];
+  }
+  rebuild();
+
+  function nextVal(arr, mean, vol) {
+    const last = arr[arr.length - 1];
+    return last + (mean - last) * 0.015 + (Math.random() - 0.5) * vol;
+  }
+
+  let phase = 0;
+  const speed = 0.18;          // points advanced per frame
+  let raf = null;
+  let visible = true;
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    const c = palette();
+    const step = W / (N - 2);
+
+    // faint grid
+    ctx.strokeStyle = c.grid;
+    ctx.lineWidth = 1;
+    for (let x = (W % 64); x <= W; x += 64) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y <= H; y += 64) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // shared vertical framing across all series
+    let lo = Infinity, hi = -Infinity;
+    series.forEach(s => s.data.forEach(v => { if (v < lo) lo = v; if (v > hi) hi = v; }));
+    const pad = (hi - lo) * 0.18 || 1;
+    lo -= pad; hi += pad;
+    const yOf = v => H - ((v - lo) / (hi - lo)) * (H * 0.78) - H * 0.11;
+    const xOf = i => (i - phase) * step;
+
+    series.forEach(s => {
+      const d = s.data;
+
+      if (s.main) {
+        // area fill under the main curve
+        const grad = ctx.createLinearGradient(0, 0, 0, H);
+        grad.addColorStop(0, c.fillTop);
+        grad.addColorStop(1, c.fillBot);
+        ctx.beginPath();
+        ctx.moveTo(xOf(0), H);
+        for (let i = 0; i < N; i++) ctx.lineTo(xOf(i), yOf(d[i]));
+        ctx.lineTo(xOf(N - 1), H);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      ctx.beginPath();
+      for (let i = 0; i < N; i++) {
+        const x = xOf(i), y = yOf(d[i]);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = s.main ? c.line : c.ghost;
+      ctx.lineWidth = s.w;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // leading dot on the main line
+      if (s.main) {
+        const lastX = xOf(N - 1), lastY = yOf(d[N - 1]);
+        ctx.beginPath();
+        ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = c.line;
+        ctx.fill();
+      }
+    });
+  }
+
+  function step3() {
+    phase += speed;
+    while (phase >= 1) {
+      phase -= 1;
+      series.forEach(s => {
+        s.data.push(nextVal(s.data, s.main ? 0.52 : (s.data === series[1]?.data ? 0.6 : 0.42), s.main ? 0.05 : 0.045));
+        s.data.shift();
+      });
+    }
+    render();
+    if (visible) raf = requestAnimationFrame(step3);
+  }
+
+  function start() {
+    if (raf || reduceMotion) return;
+    visible = true;
+    raf = requestAnimationFrame(step3);
+  }
+  function stop() {
+    visible = false;
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+  }
+
+  // Pause when the hero scrolls out of view or tab is hidden
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries[0].isIntersecting ? start() : stop();
+    }, { threshold: 0.05 }).observe(host);
+  }
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : start();
   });
+
+  if (reduceMotion) {
+    render();                  // static frame, no animation
+  } else {
+    start();
+  }
+
+  // Repaint immediately on theme toggle for correct colors
+  if (typeof darkModeToggle !== 'undefined' && darkModeToggle) {
+    darkModeToggle.addEventListener('click', () => requestAnimationFrame(render));
+  }
 });
 
 // === GITHUB PROJECTS LOADER ===
@@ -226,88 +283,62 @@ async function loadGitHubRepos() {
 }
 document.addEventListener('DOMContentLoaded', loadGitHubRepos);
 
-// === RADAR SKILLS CHART ===
-document.addEventListener('DOMContentLoaded', () => {
-  const ctx = document.getElementById('skillsChart')?.getContext('2d');
-  if (!ctx) return;
-
-  function updateChart() {
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    const labelColor = isDarkMode ? '#ffffff' : '#3B82F6';
-
-    new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: ['Python', 'Java', 'OCaml', 'HTML', 'CSS', 'JavaScript'],
-        datasets: [{
-          label: 'Proficiency',
-          data: [90, 85, 80, 75, 75, 70],
-          backgroundColor: 'rgba(59, 130, 246, 0.2)',
-          borderColor: 'rgba(59, 130, 246, 0.8)',
-          borderWidth: 2,
-          pointBackgroundColor: 'rgba(59, 130, 246, 1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(59, 130, 246, 1)',
-          pointRadius: 4,
-          pointHoverRadius: 6
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          r: {
-            beginAtZero: true,
-            max: 100,
-            ticks: { 
-              display: false,
-              stepSize: 20
-            },
-            grid: { 
-              color: 'rgba(59, 130, 246, 0.1)',
-            },
-            angleLines: { 
-              color: 'rgba(59, 130, 246, 0.1)',
-            },
-            pointLabels: { 
-              color: labelColor,
-              font: {
-                size: 14,
-                family: "'Space Grotesk', sans-serif",
-                weight: '500'
-              }
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            display: false
-          }
-        }
-      }
-    });
-  }
-
-  // Initial chart creation
-  updateChart();
-
-  // Update chart when theme changes
-  darkModeToggle.addEventListener('click', () => {
-    // Destroy the old chart
-    Chart.getChart(ctx.canvas)?.destroy();
-    // Create new chart with updated colors
-    updateChart();
-  });
-});
-
 // === SMOOTH SCROLL NAVIGATION ===
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
+    const href = anchor.getAttribute('href');
     e.preventDefault();
-    const target = document.querySelector(anchor.getAttribute('href'));
+    if (href === '#') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
+});
+
+// === MOBILE NAV (hamburger) ===
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('nav-links');
+  if (!toggle || !links) return;
+  const icon = toggle.querySelector('i');
+
+  function setOpen(open) {
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    if (icon) icon.className = open ? 'fas fa-xmark' : 'fas fa-bars';
+  }
+
+  toggle.addEventListener('click', () => setOpen(!links.classList.contains('open')));
+  // Close the menu after tapping a link
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+});
+
+// === SCROLL-SPY: highlight the active nav link ===
+document.addEventListener('DOMContentLoaded', () => {
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  const map = new Map();
+  navLinks.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (id) map.set(id, a);
+  });
+  const sections = Array.from(map.keys())
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = map.get(entry.target.id);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
 });
 
 // === BACK TO TOP BUTTON ===
@@ -356,29 +387,6 @@ const sectionObserver = new IntersectionObserver((entries) => {
     rootMargin: '-50px 0px' // Small negative margin to delay trigger
 });
 
-// === SKILL BARS ANIMATION ===
-const skillObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const skillBars = entry.target;
-            skillBars.classList.add('animate');
-            
-            // Animate each skill level
-            skillBars.querySelectorAll('.skill-level').forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                setTimeout(() => {
-                    bar.style.width = width + '%';
-                }, 300);
-            });
-            
-            skillObserver.unobserve(skillBars);
-        }
-    });
-}, {
-    threshold: 0.15,
-    rootMargin: '-50px 0px'
-});
-
 // Start observing elements
 document.addEventListener('DOMContentLoaded', () => {
     // Observe all sections
@@ -388,10 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionObserver.observe(section);
     });
 
-    // Observe skill bars
-    document.querySelectorAll('.skill-bars').forEach(skillBar => {
-        skillObserver.observe(skillBar);
-    });
 });
 
 // === SCROLLBAR VISIBILITY ===
@@ -476,6 +480,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// === ANIMATED COUNT-UP FOR GITHUB STAT NUMBERS ===
+const statTargets = {};
+let statsSectionSeen = false;
+
+function animateCount(el, to) {
+    const duration = 1100;
+    const start = performance.now();
+    function frame(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+        el.textContent = Math.round(to * eased);
+        if (t < 1) requestAnimationFrame(frame);
+        else el.textContent = to;
+    }
+    requestAnimationFrame(frame);
+}
+
+function runStatCounters() {
+    Object.keys(statTargets).forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.dataset.counted) {
+            el.dataset.counted = '1';
+            animateCount(el, statTargets[id]);
+        }
+    });
+}
+
+function registerStat(id, value) {
+    statTargets[id] = Number(value) || 0;
+    if (statsSectionSeen) runStatCounters();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.stats-container');
+    if (!container) return;
+    new IntersectionObserver((entries, obs) => {
+        if (entries[0].isIntersecting) {
+            statsSectionSeen = true;
+            runStatCounters();
+            obs.disconnect();
+        }
+    }, { threshold: 0.3 }).observe(container);
+});
+
 // === GITHUB STATS ===
 async function loadGitHubStats() {
     try {
@@ -495,13 +543,15 @@ async function loadGitHubStats() {
             if (repo.language) languages.add(repo.language);
         });
 
-        // Update stats
-        document.getElementById('total-repos').textContent = userData.public_repos;
-        document.getElementById('total-stars').textContent = totalStars;
-        document.getElementById('languages-count').textContent = languages.size;
+        // Years on GitHub — derived from the account creation date
+        const createdYear = new Date(userData.created_at).getFullYear();
+        const yearsActive = Math.max(1, new Date().getFullYear() - createdYear);
 
-        // Estimate commits (this is a rough estimate based on repos)
-        document.getElementById('total-commits').textContent = '500+';
+        // Register real (API-sourced) values; they animate via count-up when scrolled into view
+        registerStat('total-repos', userData.public_repos);
+        registerStat('total-stars', totalStars);
+        registerStat('languages-count', languages.size);
+        registerStat('years-active', yearsActive);
 
         // Create language chart
         createLanguageChart(repos);
@@ -598,10 +648,14 @@ const terminalCommands = {
   <span style="color: #4EC9B0">experience</span>- Show my work experience
   <span style="color: #4EC9B0">education</span> - Display my education
   <span style="color: #4EC9B0">contact</span>   - Get my contact information
-  <span style="color: #4EC9B0">resume</span>    - Download my resume
+  <span style="color: #4EC9B0">social</span>    - Open my LinkedIn / GitHub
+  <span style="color: #4EC9B0">theme</span>     - Toggle light / dark mode
+  <span style="color: #4EC9B0">goto</span>      - Jump to a section (e.g. goto projects)
   <span style="color: #4EC9B0">clear</span>     - Clear the terminal
   <span style="color: #4EC9B0">whoami</span>    - Display current user
-  <span style="color: #4EC9B0">date</span>      - Show current date and time`;
+  <span style="color: #4EC9B0">date</span>      - Show current date and time
+
+<span style="color: #6A9955">Tip: use ↑ / ↓ for command history.</span>`;
     },
     about: () => {
         return `<span style="color: #CE9178">Aryan Jeena</span>
@@ -613,60 +667,70 @@ with hands-on experience in machine learning, data science, and full-stack devel
     },
     skills: () => {
         return `<span style="color: #4EC9B0">Programming Languages:</span>
-  • Python, Java, OCaml, JavaScript, HTML/CSS
+  • Python, Java, OCaml, TypeScript, JavaScript, SQL, HTML/CSS
 
-<span style="color: #4EC9B0">Technologies & Tools:</span>
-  • TensorFlow, Pandas, NumPy
-  • SQL, Tableau, Google Analytics
-  • Git, VS Code, Jupyter
+<span style="color: #4EC9B0">Frameworks & Libraries:</span>
+  • FastAPI, React, Next.js, Streamlit
+  • PyTorch, Hugging Face, CatBoost, Scikit-learn, Pandas, NumPy
+
+<span style="color: #4EC9B0">Infra, Tools & Analytics:</span>
+  • Docker, Redis, Kafka, PostgreSQL, SQLModel
+  • Git, GitHub Actions, CI/CD, Prometheus, Grafana
+  • JWT, WebSockets, OpenAPI, Tableau, Power BI
 
 <span style="color: #4EC9B0">Areas of Expertise:</span>
-  • Machine Learning & AI
-  • Data Science & Analytics
-  • Quantitative Analysis
-  • Full-Stack Development`;
+  • Machine Learning & AI  •  Distributed Systems
+  • Quantitative Analysis  •  Full-Stack Development`;
     },
     projects: () => {
         return `<span style="color: #CE9178">Featured Projects:</span>
 
-1. <span style="color: #4EC9B0">AI-Powered Pathology Analysis</span>
-   Developed ML models analyzing 100K+ pathology images
-   Technologies: Python, TensorFlow, SQL
+1. <span style="color: #4EC9B0">FitMax</span>
+   Full-stack AI health platform — FastAPI, Next.js, PostgreSQL/pgvector
+   Transformer NLP semantic search over PubMed (~30% faster queries)
 
-2. <span style="color: #4EC9B0">IvyRise College Consulting</span>
-   Co-founded consulting service using AI/ML for college admissions
-   Served 50+ students across Tri-State Area
+2. <span style="color: #4EC9B0">Soccer Injury Betting</span>
+   Scalable ML pipeline over 9,000+ records via API-Football
+   CatBoost + Scikit-learn models achieving 18-20% ROI
+
+3. <span style="color: #4EC9B0">Real-Time Portfolio & Risk Platform</span>
+   Event-driven system — FastAPI, Kafka, Redis, WebSockets
+   Sub-second latency P/L, volatility, Sharpe & drawdown analytics
 
 Check out more projects on my GitHub: github.com/aryan-jeena`;
     },
     experience: () => {
         return `<span style="color: #CE9178">Work Experience:</span>
 
-<span style="color: #4EC9B0">AI in Business Club - Proscia Project Lead</span> (Aug 2024 - Present)
-  • Machine learning model evaluation for digital pathology
-  • Analyzed 100K+ images, improved accuracy by 15%
+<span style="color: #4EC9B0">Amazon - SDE Intern, Project Kuiper</span> (Sept 2026 - Dec 2026) <span style="color: #DCDCAA">[Incoming]</span>
+  • Distributed systems for LEO satellite broadband
 
-<span style="color: #4EC9B0">MUSE - Innovation Committee Lead</span> (Aug 2024 - Present)
-  • Strategic consulting for student startups
-  • Helped secure $50K+ in early-stage funding
+<span style="color: #4EC9B0">BlackRock - SWE Analyst Intern, Aladdin</span> (Jun 2026 - Aug 2026) <span style="color: #DCDCAA">[Incoming]</span>
+  • Engineering on the Aladdin investment & risk platform
 
-<span style="color: #4EC9B0">Yale Center for Clinical Investigation</span> (Jul 2023 - Sep 2023)
-  • Research intern in clinical investigation
-  • Enhanced patient engagement systems`;
+<span style="color: #4EC9B0">Timing - Software Development Intern</span> (May 2025 - Aug 2025)
+  • Built AI-powered CRM features; OpenAI Assistants chatbot
+  • Smart contact autofill (+40% speed), adaptive onboarding (+25%)
+
+<span style="color: #4EC9B0">AI in Business Club - Proscia Project</span> (Aug 2024 - May 2025)
+  • ML model evaluation over 100K+ pathology images (-10-15% error)
+
+<span style="color: #4EC9B0">Abacus Aviation - SWE Intern</span> (Apr 2024 - Aug 2024)
+  • Full-stack parts/maintenance system for B747/B787 (-50% paperwork)`;
     },
     education: () => {
         return `<span style="color: #CE9178">Education:</span>
 
-<span style="color: #4EC9B0">University of Pennsylvania</span> (Expected May 2027)
+<span style="color: #4EC9B0">University of Pennsylvania</span> (Expected May 2028)
   B.S.E in Computer Science and Mathematics
   Minor in Statistics
-  Concentrations: AI and Statistics
+  Concentration in Artificial Intelligence
 
 <span style="color: #4EC9B0">Key Coursework:</span>
-  • Mathematical Foundations of CS
-  • Programming Languages and Techniques
-  • Market and Social Systems on the Internet
-  • Honors Multivariable Calculus`;
+  • Mathematical Foundations of CS  •  Real Analysis
+  • Programming Languages and Techniques I & II
+  • Numerical Optimization for Data Science & ML
+  • Probability  •  Discrete Mathematics II  •  Big Data Analytics`;
     },
     contact: () => {
         return `<span style="color: #CE9178">Contact Information:</span>
@@ -678,14 +742,25 @@ Check out more projects on my GitHub: github.com/aryan-jeena`;
 
 Feel free to reach out for opportunities or collaborations!`;
     },
-    resume: () => {
-        return `<span style="color: #CE9178">Downloading resume...</span>
-Resume will be available soon. Please check the contact section for the download button!`;
+    social: () => {
+        window.open('https://www.linkedin.com/in/aryan-jeena/', '_blank');
+        window.open('https://github.com/aryan-jeena', '_blank');
+        return `<span style="color: #CE9178">Opening LinkedIn & GitHub in new tabs...</span>
+<span style="color: #4EC9B0">LinkedIn:</span> linkedin.com/in/aryan-jeena
+<span style="color: #4EC9B0">GitHub:</span>   github.com/aryan-jeena`;
+    },
+    theme: () => {
+        document.getElementById('darkModeToggle')?.click();
+        const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        return `<span style="color: #CE9178">Theme toggled → ${mode} mode.</span>`;
     },
     clear: () => 'CLEAR',
     whoami: () => 'visitor',
     date: () => new Date().toString()
 };
+
+// Sections reachable via the terminal "goto" command
+const terminalSections = ['about', 'education', 'experience', 'projects', 'github-stats', 'awards', 'skills', 'certifications', 'terminal', 'contact'];
 
 document.addEventListener('DOMContentLoaded', () => {
     const terminalInput = document.getElementById('terminal-input');
@@ -693,49 +768,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!terminalInput || !terminalBody) return;
 
+    const history = [];
+    let historyIndex = 0;
+
+    function printOutput(html) {
+        const inputLine = terminalBody.querySelector('.terminal-input-line');
+        const div = document.createElement('div');
+        div.className = 'terminal-output';
+        div.innerHTML = `<p>${html.replace(/\n/g, '</p><p>')}</p>`;
+        terminalBody.insertBefore(div, inputLine);
+    }
+
+    function runCommand(raw) {
+        const inputLine = terminalBody.querySelector('.terminal-input-line');
+
+        // Echo the typed command (escaped)
+        const commandLine = document.createElement('div');
+        commandLine.className = 'terminal-line';
+        commandLine.innerHTML =
+            `<span class="terminal-prompt">visitor@aryan-portfolio:~$</span> ` +
+            `<span class="terminal-text">${raw.replace(/</g, '&lt;')}</span>`;
+        terminalBody.insertBefore(commandLine, inputLine);
+
+        const parts = raw.trim().split(/\s+/);
+        const command = (parts[0] || '').toLowerCase();
+        const arg = (parts[1] || '').toLowerCase();
+
+        if (!command) {
+            // blank line — do nothing
+        } else if (command === 'clear') {
+            Array.from(terminalBody.children).forEach(child => {
+                if (!child.classList.contains('terminal-input-line')) child.remove();
+            });
+        } else if (command === 'goto') {
+            if (terminalSections.includes(arg)) {
+                document.getElementById(arg)?.scrollIntoView({ behavior: 'smooth' });
+                printOutput(`<span style="color:#CE9178">Navigating to ${arg}…</span>`);
+            } else {
+                printOutput(`<span style="color:#EF4444">Unknown section: ${arg || '(none)'}</span>\nTry: ${terminalSections.join(', ')}`);
+            }
+        } else if (terminalCommands[command]) {
+            printOutput(terminalCommands[command]());
+        } else {
+            printOutput(`<span style="color:#EF4444">Command not found: ${command}</span>\nType 'help' for available commands.`);
+        }
+
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
     terminalInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            const command = terminalInput.value.trim().toLowerCase();
-
-            // Add command to terminal
-            const commandLine = document.createElement('div');
-            commandLine.className = 'terminal-line';
-            commandLine.innerHTML = `
-                <span class="terminal-prompt">visitor@aryan-portfolio:~$</span>
-                <span class="terminal-text">${terminalInput.value}</span>
-            `;
-
-            // Insert before input line
-            const inputLine = terminalBody.querySelector('.terminal-input-line');
-            terminalBody.insertBefore(commandLine, inputLine);
-
-            // Process command
-            if (command === 'clear') {
-                // Clear all except welcome and input line
-                const children = Array.from(terminalBody.children);
-                children.forEach(child => {
-                    if (!child.classList.contains('terminal-input-line')) {
-                        child.remove();
-                    }
-                });
-            } else if (terminalCommands[command]) {
-                const output = terminalCommands[command]();
-                const outputDiv = document.createElement('div');
-                outputDiv.className = 'terminal-output';
-                outputDiv.innerHTML = `<p>${output.replace(/\n/g, '</p><p>')}</p>`;
-                terminalBody.insertBefore(outputDiv, inputLine);
-            } else if (command) {
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'terminal-output';
-                errorDiv.innerHTML = `<p style="color: #EF4444">Command not found: ${command}</p><p>Type 'help' for available commands.</p>`;
-                terminalBody.insertBefore(errorDiv, inputLine);
-            }
-
-            // Clear input
+            const raw = terminalInput.value;
+            if (raw.trim()) history.push(raw);
+            historyIndex = history.length;
+            runCommand(raw);
             terminalInput.value = '';
-
-            // Scroll to bottom
-            terminalBody.scrollTop = terminalBody.scrollHeight;
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (history.length && historyIndex > 0) {
+                historyIndex--;
+                terminalInput.value = history[historyIndex];
+                setTimeout(() => terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length), 0);
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex < history.length - 1) {
+                historyIndex++;
+                terminalInput.value = history[historyIndex];
+            } else {
+                historyIndex = history.length;
+                terminalInput.value = '';
+            }
         }
     });
 
@@ -745,51 +848,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// === CONTACT FORM VALIDATION ===
+// === CONTACT FORM (opens the visitor's email client — real, no fake submit) ===
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-
-            // Basic validation
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-
-            // Simulate form submission
-            alert(`Thank you for your message, ${name}! I'll get back to you soon.`);
-            contactForm.reset();
-        });
+    let status = document.getElementById('form-status');
+    if (!status) {
+        status = document.createElement('p');
+        status.id = 'form-status';
+        status.className = 'form-status';
+        status.setAttribute('role', 'status');
+        contactForm.appendChild(status);
     }
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !subject || !message) {
+            status.textContent = 'Please fill in all fields.';
+            status.className = 'form-status error';
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            status.textContent = 'Please enter a valid email address.';
+            status.className = 'form-status error';
+            return;
+        }
+
+        const bodyText = `Hi Aryan,\n\n${message}\n\n— ${name} (${email})`;
+        const mailto = `mailto:aryanj@sas.upenn.edu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+        window.location.href = mailto;
+
+        status.innerHTML = 'Opening your email app… if nothing happens, reach me directly at <a href="mailto:aryanj@sas.upenn.edu">aryanj@sas.upenn.edu</a>.';
+        status.className = 'form-status success';
+        contactForm.reset();
+    });
 });
 
-// === RESUME DOWNLOAD ===
+// === DYNAMIC FOOTER YEAR ===
 document.addEventListener('DOMContentLoaded', () => {
-    const downloadBtn = document.getElementById('download-resume');
+    const yearEl = document.getElementById('footer-year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+});
 
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Resume download feature coming soon! For now, please contact me directly at aryanj@sas.upenn.edu');
-            // In the future, this would trigger an actual PDF download
-            // window.location.href = 'path/to/resume.pdf';
-        });
-    }
+// === AWARDS SHOW MORE / LESS ===
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('awards-toggle');
+    const list = document.getElementById('awards-list');
+    if (!toggle || !list) return;
+
+    const label = toggle.querySelector('span');
+    const total = list.querySelectorAll('li').length;
+
+    toggle.addEventListener('click', () => {
+        const collapsed = list.classList.toggle('collapsed');
+        toggle.classList.toggle('expanded', !collapsed);
+        toggle.setAttribute('aria-expanded', String(!collapsed));
+        label.textContent = collapsed ? `Show all ${total} awards` : 'Show fewer';
+    });
 });
 
 // === LOADING SCREEN ===
@@ -896,9 +1020,10 @@ function getLanguageColor(language) {
 document.addEventListener('DOMContentLoaded', loadGitHubRepos);
 
 // === KEYBOARD SHORTCUTS ===
+// Note: Cmd/Ctrl+K is owned by the Command Palette module. The terminal uses
+// Ctrl+` (backtick), mirroring VS Code's "toggle terminal" shortcut.
 document.addEventListener('keydown', (e) => {
-    // Ctrl/Cmd + K to focus terminal
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    if (e.ctrlKey && e.key === '`') {
         e.preventDefault();
         const terminal = document.getElementById('terminal');
         if (terminal) {
@@ -912,11 +1037,6 @@ document.addEventListener('keydown', (e) => {
     // Escape to clear terminal focus
     if (e.key === 'Escape') {
         document.getElementById('terminal-input')?.blur();
-        // Also close soccer game if open
-        const soccerGame = document.getElementById('soccer-game');
-        if (soccerGame && soccerGame.classList.contains('active')) {
-            soccerGame.classList.remove('active');
-        }
     }
 });
 
@@ -926,7 +1046,7 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const facts = [
-        { category: 'Running', icon: 'fa-running', text: 'Marathon PR: 3:10:67' },
+        { category: 'Running', icon: 'fa-running', text: 'Marathon PR: 4:13:16' },
         { category: 'Training', icon: 'fa-shoe-prints', text: 'Average Weekly Mileage: 11 miles' },
         { category: 'Soccer', icon: 'fa-futbol', text: 'Position: Center Attacking Midfielder' },
         { category: 'Soccer', icon: 'fa-trophy', text: '15 Years Playing Soccer' },
@@ -1519,6 +1639,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize stats on load
     updateStatsDisplay();
+
+    // Reset stats button
+    document.getElementById('reset-all-stats')?.addEventListener('click', () => {
+        if (confirm('Reset all Math Arena stats? This cannot be undone.')) {
+            localStorage.removeItem('mathArenaStats');
+            updateStatsDisplay();
+        }
+    });
     
     // Pause and Quit buttons
     const pauseModal = document.getElementById('pause-modal');
@@ -1571,3 +1699,1893 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+// ===== MODULE: cmdk =====
+/* ============================================================
+   Command Palette (cmdk) — self-contained IIFE
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent || '');
+
+  function init() {
+    if (document.getElementById('cmdk-overlay')) return; // guard double-init
+
+    // ---- Action definitions -------------------------------------------------
+    function nav(id) {
+      return function () {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      };
+    }
+
+    var actions = [
+      // Navigation
+      { icon: 'fa-user',          label: 'Go to About',         cat: 'Nav', kw: 'about bio intro me',          run: nav('about') },
+      { icon: 'fa-graduation-cap',label: 'Go to Education',     cat: 'Nav', kw: 'education school upenn degree', run: nav('education') },
+      { icon: 'fa-briefcase',     label: 'Go to Experience',    cat: 'Nav', kw: 'experience work job intern',   run: nav('experience') },
+      { icon: 'fa-folder-open',   label: 'Go to Projects',      cat: 'Nav', kw: 'projects portfolio build',     run: nav('projects') },
+      { icon: 'fa-flask',         label: 'Go to Playground',    cat: 'Nav', kw: 'playground quant sandbox demo', run: nav('playground') },
+      { icon: 'fa-chart-line',    label: 'Go to GitHub Stats',  cat: 'Nav', kw: 'github stats activity graphs', run: nav('github-stats') },
+      { icon: 'fa-trophy',        label: 'Go to Awards',        cat: 'Nav', kw: 'awards honors prizes',         run: nav('awards') },
+      { icon: 'fa-code',          label: 'Go to Skills',        cat: 'Nav', kw: 'skills tech stack languages',  run: nav('skills') },
+      { icon: 'fa-certificate',   label: 'Go to Certifications',cat: 'Nav', kw: 'certifications certs courses', run: nav('certifications') },
+      { icon: 'fa-terminal',      label: 'Go to Terminal',      cat: 'Nav', kw: 'terminal console shell',       run: nav('terminal') },
+      { icon: 'fa-envelope',      label: 'Go to Contact',       cat: 'Nav', kw: 'contact reach get in touch',   run: nav('contact') },
+
+      // Actions
+      { icon: 'fa-circle-half-stroke', label: 'Toggle theme (light/dark)', cat: 'Action', kw: 'theme dark light mode toggle appearance', run: function () { var b = document.getElementById('darkModeToggle'); if (b) b.click(); } },
+      { icon: 'fa-square-root-variable', label: 'Open Math Arena', cat: 'Action', kw: 'math arena game play challenge', run: function () { var b = document.getElementById('mathGameLauncher'); if (b) b.click(); } },
+      { icon: 'fa-terminal', label: 'Focus terminal', cat: 'Action', kw: 'terminal focus type command shell', run: function () {
+          var t = document.getElementById('terminal');
+          if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+          setTimeout(function () { var inp = document.getElementById('terminal-input'); if (inp) inp.focus(); }, reduce ? 60 : 600);
+        } },
+      { icon: 'fa-copy', label: 'Copy email address', cat: 'Action', kw: 'copy email address clipboard', confirm: true, run: function (item) {
+          var addr = 'aryanj@sas.upenn.edu';
+          function ok() { showConfirm(item, 'Copied!'); }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(addr).then(ok).catch(function () { fallbackCopy(addr); ok(); });
+          } else { fallbackCopy(addr); ok(); }
+        } },
+
+      // Links
+      { icon: 'fa-envelope', label: 'Email Aryan', cat: 'Link', kw: 'email mail contact write', run: function () { window.location.href = 'mailto:aryanj@sas.upenn.edu'; } },
+      { icon: 'fa-linkedin-in', faStyle: 'fab', label: 'Open LinkedIn', cat: 'Link', kw: 'linkedin social profile network', run: function () { window.open('https://www.linkedin.com/in/aryan-jeena/', '_blank', 'noopener'); } },
+      { icon: 'fa-github', faStyle: 'fab', label: 'Open GitHub', cat: 'Link', kw: 'github code repos source', run: function () { window.open('https://github.com/aryan-jeena', '_blank', 'noopener'); } }
+    ];
+
+    function fallbackCopy(text) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (e) { /* no-op */ }
+    }
+
+    // ---- Build DOM ----------------------------------------------------------
+    var pill = document.createElement('button');
+    pill.className = 'cmdk-pill';
+    pill.id = 'cmdk-pill';
+    pill.type = 'button';
+    pill.setAttribute('aria-label', 'Open command palette');
+    pill.setAttribute('aria-haspopup', 'dialog');
+    pill.innerHTML =
+      '<i class="fas fa-bolt" aria-hidden="true"></i>' +
+      '<span class="cmdk-pill-text">Commands</span>' +
+      '<span class="cmdk-pill-keys">' +
+        (isMac ? '<kbd>⌘</kbd><kbd>K</kbd>' : '<kbd>Ctrl</kbd><kbd>K</kbd>') +
+      '</span>';
+
+    var overlay = document.createElement('div');
+    overlay.className = 'cmdk-overlay';
+    overlay.id = 'cmdk-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Command palette');
+    overlay.innerHTML =
+      '<div class="cmdk-modal" id="cmdk-modal">' +
+        '<div class="cmdk-search-row">' +
+          '<i class="fas fa-magnifying-glass" aria-hidden="true"></i>' +
+          '<input type="text" id="cmdk-input" class="cmdk-input" placeholder="Type a command or search…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search commands" aria-controls="cmdk-list" />' +
+          '<span class="cmdk-esc">ESC</span>' +
+        '</div>' +
+        '<ul class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Commands"></ul>' +
+        '<div class="cmdk-foot">' +
+          '<span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>' +
+          '<span><kbd>↵</kbd> run</span>' +
+          '<span><kbd>esc</kbd> close</span>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(pill);
+    document.body.appendChild(overlay);
+
+    var input = overlay.querySelector('#cmdk-input');
+    var list = overlay.querySelector('#cmdk-list');
+    var modal = overlay.querySelector('#cmdk-modal');
+    if (!input || !list || !modal) return;
+
+    // ---- State --------------------------------------------------------------
+    var filtered = actions.slice();
+    var activeIndex = 0;
+    var isOpen = false;
+    var lastFocus = null;
+
+    // ---- Fuzzy / substring matching -----------------------------------------
+    // Returns null if no match, else {score, ranges:[[start,end],...]} for label.
+    function matchLabel(label, query) {
+      if (!query) return { score: 0, ranges: [] };
+      var lower = label.toLowerCase();
+      var q = query.toLowerCase();
+      // Prefer contiguous substring match (highlightable, best score).
+      var idx = lower.indexOf(q);
+      if (idx !== -1) {
+        return { score: 100 - idx, ranges: [[idx, idx + q.length]] };
+      }
+      return null;
+    }
+
+    function scoreAction(act, query) {
+      if (!query) return { score: 0, ranges: [] };
+      var m = matchLabel(act.label, query);
+      if (m) return m;
+      // Fall back to keyword/substring (no label highlight) — fuzzy subsequence.
+      var hay = (act.label + ' ' + (act.kw || '')).toLowerCase();
+      var q = query.toLowerCase().replace(/\s+/g, '');
+      var qi = 0;
+      for (var i = 0; i < hay.length && qi < q.length; i++) {
+        if (hay[i] === q[qi]) qi++;
+      }
+      if (qi === q.length) return { score: 10, ranges: [] };
+      return null;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    function highlight(label, ranges) {
+      if (!ranges || !ranges.length) return escapeHtml(label);
+      var out = '', last = 0;
+      ranges.forEach(function (r) {
+        out += escapeHtml(label.slice(last, r[0]));
+        out += '<mark>' + escapeHtml(label.slice(r[0], r[1])) + '</mark>';
+        last = r[1];
+      });
+      out += escapeHtml(label.slice(last));
+      return out;
+    }
+
+    // ---- Render -------------------------------------------------------------
+    function render(query) {
+      var results = [];
+      actions.forEach(function (act) {
+        var sc = scoreAction(act, query);
+        if (sc) results.push({ act: act, score: sc.score, ranges: sc.ranges });
+      });
+      if (query) results.sort(function (a, b) { return b.score - a.score; });
+      filtered = results;
+
+      list.innerHTML = '';
+      if (!results.length) {
+        var empty = document.createElement('li');
+        empty.className = 'cmdk-empty';
+        empty.textContent = 'No matching commands';
+        list.appendChild(empty);
+        activeIndex = -1;
+        return;
+      }
+
+      results.forEach(function (res, i) {
+        var act = res.act;
+        var li = document.createElement('li');
+        li.className = 'cmdk-item' + (i === activeIndex ? ' cmdk-active' : '');
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', i === activeIndex ? 'true' : 'false');
+        li.dataset.cmdkIndex = String(i);
+        var faStyle = act.faStyle || 'fas';
+        li.innerHTML =
+          '<span class="cmdk-item-icon"><i class="' + faStyle + ' ' + act.icon + '" aria-hidden="true"></i></span>' +
+          '<span class="cmdk-item-label">' + highlight(act.label, res.ranges) + '</span>' +
+          '<span class="cmdk-item-badge" data-cat="' + act.cat + '">' + act.cat + '</span>';
+        li.addEventListener('mouseenter', function () { setActive(i); });
+        li.addEventListener('click', function () { runIndex(i); });
+        list.appendChild(li);
+      });
+    }
+
+    function setActive(i) {
+      if (i < 0 || i >= filtered.length) return;
+      activeIndex = i;
+      var items = list.querySelectorAll('.cmdk-item');
+      items.forEach(function (el, idx) {
+        var on = idx === i;
+        el.classList.toggle('cmdk-active', on);
+        el.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      var act = items[i];
+      if (act && act.scrollIntoView) act.scrollIntoView({ block: 'nearest' });
+    }
+
+    function move(delta) {
+      if (!filtered.length) return;
+      var n = filtered.length;
+      var next = (activeIndex + delta + n) % n;
+      setActive(next);
+    }
+
+    function showConfirm(actObj, text) {
+      // Find the rendered li for this action and append a transient confirmation.
+      var items = list.querySelectorAll('.cmdk-item');
+      filtered.forEach(function (res, i) {
+        if (res.act === actObj && items[i]) {
+          var existing = items[i].querySelector('.cmdk-item-confirm');
+          if (existing) existing.remove();
+          var span = document.createElement('span');
+          span.className = 'cmdk-item-confirm';
+          span.textContent = text;
+          var badge = items[i].querySelector('.cmdk-item-badge');
+          items[i].insertBefore(span, badge);
+          setTimeout(function () { if (span && span.parentNode) span.remove(); }, 1600);
+        }
+      });
+    }
+
+    function runIndex(i) {
+      if (i < 0 || i >= filtered.length) return;
+      var act = filtered[i].act;
+      var keepOpen = !!act.confirm;
+      try { act.run(act); } catch (e) { /* never throw */ }
+      if (!keepOpen) close();
+    }
+
+    // ---- Open / Close -------------------------------------------------------
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+      lastFocus = document.activeElement;
+      activeIndex = 0;
+      input.value = '';
+      render('');
+      overlay.classList.add('cmdk-open');
+      // autofocus
+      setTimeout(function () { input.focus(); }, reduce ? 0 : 30);
+    }
+
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      overlay.classList.remove('cmdk-open');
+      if (lastFocus && lastFocus.focus) {
+        try { lastFocus.focus(); } catch (e) { /* no-op */ }
+      }
+    }
+
+    function toggle() { isOpen ? close() : open(); }
+
+    // ---- Wiring -------------------------------------------------------------
+    pill.addEventListener('click', open);
+
+    overlay.addEventListener('mousedown', function (e) {
+      if (e.target === overlay) close(); // backdrop click (not inside modal)
+    });
+
+    input.addEventListener('input', function () {
+      activeIndex = 0;
+      render(input.value.trim());
+    });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+      else if (e.key === 'Enter') { e.preventDefault(); runIndex(activeIndex); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+    });
+
+    // Global hotkey + Esc.
+    document.addEventListener('keydown', function (e) {
+      var key = (e.key || '').toLowerCase();
+      var combo = (isMac ? e.metaKey : e.ctrlKey);
+      if (combo && key === 'k') {
+        e.preventDefault();
+        toggle();
+        return;
+      }
+      if (e.key === 'Escape' && isOpen) {
+        e.preventDefault();
+        close();
+      }
+    });
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== MODULE: qp =====
+/* ===== Quant Playground (qp) ===== */
+(function(){
+  "use strict";
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function $(id){ return document.getElementById(id); }
+  function isDark(){ return document.body.classList.contains('dark-mode'); }
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+  // Crisp DPR-aware canvas sizing. Returns {ctx,w,h} in CSS pixels, or null.
+  function fitCanvas(canvas){
+    if(!canvas) return null;
+    var rect = canvas.getBoundingClientRect();
+    if(rect.width < 2 || rect.height < 2) return null;
+    var dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2.5));
+    var w = Math.round(rect.width), h = Math.round(rect.height);
+    if(canvas.width !== Math.round(w*dpr) || canvas.height !== Math.round(h*dpr)){
+      canvas.width = Math.round(w*dpr);
+      canvas.height = Math.round(h*dpr);
+    }
+    var ctx = canvas.getContext('2d');
+    if(!ctx) return null;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    return { ctx:ctx, w:w, h:h };
+  }
+
+  // Standard normal via Box-Muller
+  function randn(){
+    var u=0,v=0;
+    while(u===0) u=Math.random();
+    while(v===0) v=Math.random();
+    return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+  }
+
+  // ---------------------------------------------------------------
+  // 1) GEOMETRIC BROWNIAN MOTION
+  // ---------------------------------------------------------------
+  function initGBM(){
+    var canvas = $('qp-gbm-canvas');
+    if(!canvas) return;
+    var muEl=$('qp-gbm-mu'), sigEl=$('qp-gbm-sigma'), pathsEl=$('qp-gbm-paths'), yearsEl=$('qp-gbm-years');
+    var muV=$('qp-gbm-mu-val'), sigV=$('qp-gbm-sigma-val'), pathsV=$('qp-gbm-paths-val'), yearsV=$('qp-gbm-years-val');
+    var runBtn=$('qp-gbm-run'), meanEl=$('qp-gbm-mean'), theoryEl=$('qp-gbm-theory');
+    if(!muEl||!sigEl||!pathsEl||!yearsEl||!runBtn) return;
+
+    var S0=100, STEPS=240;
+    var paths=[];        // array of arrays of prices (length STEPS+1)
+    var minP=S0, maxP=S0;
+    var highlight=0;
+    var animFrame=0, raf=null, running=false;
+    var visible=true;
+
+    function labels(){
+      if(muV) muV.textContent = (+muEl.value).toFixed(2);
+      if(sigV) sigV.textContent = (+sigEl.value).toFixed(2);
+      if(pathsV) pathsV.textContent = pathsEl.value;
+      if(yearsV) yearsV.textContent = (+yearsEl.value).toFixed(2);
+    }
+
+    function simulate(){
+      var mu=+muEl.value, sigma=+sigEl.value, n=Math.round(+pathsEl.value), T=+yearsEl.value;
+      n=clamp(n,1,50);
+      var dt=T/STEPS, drift=(mu-0.5*sigma*sigma)*dt, vol=sigma*Math.sqrt(dt);
+      paths=[]; minP=Infinity; maxP=-Infinity;
+      var sumEnd=0;
+      for(var p=0;p<n;p++){
+        var arr=new Float64Array(STEPS+1);
+        var S=S0; arr[0]=S;
+        for(var i=1;i<=STEPS;i++){
+          S=S*Math.exp(drift+vol*randn());
+          arr[i]=S;
+          if(S<minP)minP=S; if(S>maxP)maxP=S;
+        }
+        sumEnd+=arr[STEPS];
+        paths.push(arr);
+      }
+      if(minP===Infinity){ minP=S0*0.5; maxP=S0*1.5; }
+      // pad range a touch
+      var pad=(maxP-minP)*0.08 || S0*0.1;
+      minP-=pad; maxP+=pad;
+      highlight=Math.floor(Math.random()*paths.length);
+      if(meanEl) meanEl.textContent='$'+(sumEnd/n).toFixed(2);
+      if(theoryEl) theoryEl.textContent='$'+(S0*Math.exp(mu*T)).toFixed(2);
+    }
+
+    function draw(progress){
+      var f=fitCanvas(canvas);
+      if(!f) return;
+      var ctx=f.ctx, w=f.w, h=f.h, dark=isDark();
+      var padL=46, padR=12, padT=12, padB=22;
+      var plotW=w-padL-padR, plotH=h-padT-padB;
+      ctx.clearRect(0,0,w,h);
+
+      var T=+yearsEl.value;
+      function X(i){ return padL + (i/STEPS)*plotW; }
+      function Y(price){ return padT + plotH - ((price-minP)/(maxP-minP))*plotH; }
+
+      // grid
+      ctx.lineWidth=1;
+      ctx.strokeStyle = dark ? 'rgba(255,255,255,0.07)' : 'rgba(15,23,42,0.07)';
+      ctx.fillStyle = dark ? 'rgba(241,245,249,0.55)' : 'rgba(17,24,39,0.55)';
+      ctx.font='10px Inter, sans-serif';
+      ctx.textBaseline='middle';
+      var gy=5;
+      for(var g=0;g<=gy;g++){
+        var price=minP+(maxP-minP)*(g/gy);
+        var yy=Y(price);
+        ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(w-padR,yy); ctx.stroke();
+        ctx.textAlign='right';
+        ctx.fillText(price.toFixed(0), padL-6, yy);
+      }
+      // x ticks
+      ctx.textAlign='center'; ctx.textBaseline='bottom';
+      var gx=4;
+      for(var xg=0;xg<=gx;xg++){
+        var ix=Math.round((xg/gx)*STEPS);
+        var xx=X(ix);
+        ctx.fillText(((T*xg/gx)).toFixed(2)+'y', xx, h-4);
+      }
+
+      // baseline at S0
+      ctx.strokeStyle = dark ? 'rgba(255,255,255,0.18)' : 'rgba(15,23,42,0.18)';
+      ctx.setLineDash([4,4]);
+      var y0=Y(S0);
+      ctx.beginPath(); ctx.moveTo(padL,y0); ctx.lineTo(w-padR,y0); ctx.stroke();
+      ctx.setLineDash([]);
+
+      var upTo=Math.max(1, Math.floor(progress*STEPS));
+      var faint = dark ? 'rgba(96,165,250,0.22)' : 'rgba(59,130,246,0.22)';
+      var accent = dark ? '#67E8F9' : '#0891B2';
+
+      // faint paths first
+      ctx.lineWidth=1.1;
+      for(var p=0;p<paths.length;p++){
+        if(p===highlight) continue;
+        var arr=paths[p];
+        ctx.strokeStyle=faint;
+        ctx.beginPath();
+        ctx.moveTo(X(0),Y(arr[0]));
+        for(var i=1;i<=upTo;i++){ ctx.lineTo(X(i),Y(arr[i])); }
+        ctx.stroke();
+      }
+      // highlighted path
+      if(paths[highlight]){
+        var ha=paths[highlight];
+        ctx.lineWidth=2.2;
+        ctx.strokeStyle=accent;
+        ctx.shadowColor=accent; ctx.shadowBlur=8;
+        ctx.beginPath();
+        ctx.moveTo(X(0),Y(ha[0]));
+        for(var j=1;j<=upTo;j++){ ctx.lineTo(X(j),Y(ha[j])); }
+        ctx.stroke();
+        ctx.shadowBlur=0;
+        // leading dot
+        ctx.fillStyle=accent;
+        ctx.beginPath(); ctx.arc(X(upTo),Y(ha[upTo]),3,0,Math.PI*2); ctx.fill();
+      }
+    }
+
+    function animate(){
+      if(!running) return;
+      if(document.hidden || !visible){ raf=requestAnimationFrame(animate); return; }
+      animFrame+=0.018;
+      var prog=animFrame;
+      if(prog>=1){ prog=1; running=false; }
+      draw(prog);
+      if(running) raf=requestAnimationFrame(animate);
+    }
+
+    function run(){
+      if(raf) cancelAnimationFrame(raf);
+      simulate();
+      if(reduce){
+        running=false; draw(1);
+      } else {
+        animFrame=0; running=true;
+        raf=requestAnimationFrame(animate);
+      }
+    }
+
+    // wire
+    [muEl,sigEl,pathsEl,yearsEl].forEach(function(el){
+      el.addEventListener('input', function(){ labels(); run(); });
+    });
+    runBtn.addEventListener('click', run);
+    labels();
+
+    // resize: redraw final state (or restart if mid-anim short-circuit to static)
+    var resizeT=null;
+    function onResize(){
+      if(resizeT) clearTimeout(resizeT);
+      resizeT=setTimeout(function(){
+        if(paths.length) draw(running?animFrame:1);
+      },120);
+    }
+    window.addEventListener('resize', onResize);
+
+    // visibility / first paint
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        visible=e.isIntersecting;
+        if(visible && !paths.length){ run(); }
+        else if(visible && !running){ draw(1); }
+      });
+    },{threshold:0.12});
+    io.observe(canvas);
+  }
+
+  // ---------------------------------------------------------------
+  // 2) MONTE CARLO PI
+  // ---------------------------------------------------------------
+  function initMonteCarlo(){
+    var canvas=$('qp-mc-canvas');
+    if(!canvas) return;
+    var piEl=$('qp-mc-pi'), nEl=$('qp-mc-n'), inEl=$('qp-mc-in'), resetBtn=$('qp-mc-reset');
+
+    var total=0, inside=0;
+    var raf=null, visible=true, started=false;
+    var DOT=2.0;
+
+    function fmt(n){ return n.toLocaleString(); }
+
+    function clearAll(){
+      var f=fitCanvas(canvas);
+      if(!f) return f;
+      var ctx=f.ctx, w=f.w, h=f.h, dark=isDark();
+      ctx.clearRect(0,0,w,h);
+      // quarter circle guide
+      ctx.strokeStyle = dark ? 'rgba(255,255,255,0.25)' : 'rgba(15,23,42,0.28)';
+      ctx.lineWidth=1.4;
+      ctx.beginPath();
+      ctx.arc(0,h, Math.min(w,h), -Math.PI/2, 0, false);
+      ctx.stroke();
+      return f;
+    }
+
+    function plotPoint(ctx,w,h,x,y,ok){
+      var px=x*w, py=(1-y)*h; // y up
+      ctx.fillStyle = ok ? '#22C55E' : '#EF4444';
+      ctx.beginPath(); ctx.arc(px,py,DOT,0,Math.PI*2); ctx.fill();
+    }
+
+    function updateStats(){
+      if(piEl) piEl.textContent = total? (4*inside/total).toFixed(4) : '—';
+      if(nEl) nEl.textContent = fmt(total);
+      if(inEl) inEl.textContent = fmt(inside);
+    }
+
+    function batch(ctx,w,h,count){
+      for(var i=0;i<count;i++){
+        var x=Math.random(), y=Math.random();
+        var ok=(x*x+y*y)<=1;
+        if(ok) inside++;
+        total++;
+        plotPoint(ctx,w,h,x,y,ok);
+      }
+      updateStats();
+    }
+
+    var f0=null;
+    function ensureCtx(){
+      if(!f0){ f0=clearAll(); }
+      return f0;
+    }
+
+    function loop(){
+      if(document.hidden || !visible){ raf=requestAnimationFrame(loop); return; }
+      var f=ensureCtx();
+      if(f){ batch(f.ctx,f.w,f.h, total<3000?24:60); }
+      if(total<60000) raf=requestAnimationFrame(loop);
+    }
+
+    function reset(){
+      if(raf) cancelAnimationFrame(raf);
+      total=0; inside=0;
+      f0=clearAll();
+      updateStats();
+      if(reduce){
+        if(f0) batch(f0.ctx,f0.w,f0.h,5000);
+      } else {
+        if(visible) raf=requestAnimationFrame(loop);
+      }
+    }
+
+    if(resetBtn) resetBtn.addEventListener('click', reset);
+
+    var resizeT=null;
+    window.addEventListener('resize', function(){
+      if(resizeT) clearTimeout(resizeT);
+      resizeT=setTimeout(function(){
+        // re-fit clears the drawing; restart cleanly to keep visuals consistent
+        if(started) reset();
+      },150);
+    });
+
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        visible=e.isIntersecting;
+        if(visible && !started){ started=true; reset(); }
+        else if(visible && !reduce && total<60000){ if(raf) cancelAnimationFrame(raf); raf=requestAnimationFrame(loop); }
+        else if(!visible && raf){ cancelAnimationFrame(raf); raf=null; }
+      });
+    },{threshold:0.15});
+    io.observe(canvas);
+  }
+
+  // ---------------------------------------------------------------
+  // 3) BLACK-SCHOLES
+  // ---------------------------------------------------------------
+  function initBlackScholes(){
+    var Sel=$('qp-bs-S'), Kel=$('qp-bs-K'), Tel=$('qp-bs-T'), rel=$('qp-bs-r'), sigEl=$('qp-bs-sigma');
+    var toggle=$('qp-bs-toggle');
+    var priceEl=$('qp-bs-price'), dEl=$('qp-bs-delta'), gEl=$('qp-bs-gamma'),
+        vEl=$('qp-bs-vega'), tEl=$('qp-bs-theta'), rhoEl=$('qp-bs-rho');
+    if(!Sel||!Kel||!Tel||!rel||!sigEl||!priceEl) return;
+
+    var isCall=true;
+
+    // Abramowitz-Stegun erf (max error ~1.5e-7)
+    function erf(x){
+      var s = x<0 ? -1 : 1; x=Math.abs(x);
+      var a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+      var t=1/(1+p*x);
+      var y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
+      return s*y;
+    }
+    function normCDF(x){ return 0.5*(1+erf(x/Math.SQRT2)); }
+    function normPDF(x){ return Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI); }
+
+    function fmt(v,dp){
+      if(!isFinite(v)) return '—';
+      return v.toFixed(dp===undefined?4:dp);
+    }
+
+    function compute(){
+      var S=+Sel.value, K=+Kel.value, T=+Tel.value, r=+rel.value, sig=+sigEl.value;
+      if(!(S>0)||!(K>0)||!(T>0)||!(sig>0)){
+        priceEl.textContent='—';
+        [dEl,gEl,vEl,tEl,rhoEl].forEach(function(e){ if(e) e.textContent='—'; });
+        return;
+      }
+      var sqrtT=Math.sqrt(T);
+      var d1=(Math.log(S/K)+(r+0.5*sig*sig)*T)/(sig*sqrtT);
+      var d2=d1-sig*sqrtT;
+      var disc=Math.exp(-r*T);
+      var pdf1=normPDF(d1);
+
+      var gamma=pdf1/(S*sig*sqrtT);
+      var vega=S*pdf1*sqrtT;          // per 1.0 vol
+      var price, delta, rho, theta;
+
+      if(isCall){
+        var Nd1=normCDF(d1), Nd2=normCDF(d2);
+        price=S*Nd1-K*disc*Nd2;
+        delta=Nd1;
+        rho=K*T*disc*Nd2;
+        theta=-(S*pdf1*sig)/(2*sqrtT)-r*K*disc*Nd2;
+      } else {
+        var Nnd1=normCDF(-d1), Nnd2=normCDF(-d2);
+        price=K*disc*Nnd2-S*Nnd1;
+        delta=normCDF(d1)-1;
+        rho=-K*T*disc*Nnd2;
+        theta=-(S*pdf1*sig)/(2*sqrtT)+r*K*disc*Nnd2;
+      }
+
+      priceEl.textContent='$'+fmt(price,2);
+      if(dEl) dEl.textContent=fmt(delta,4);
+      if(gEl) gEl.textContent=fmt(gamma,4);
+      if(vEl) vEl.textContent=fmt(vega/100,4);   // per 1% vol
+      if(tEl) tEl.textContent=fmt(theta/365,4);  // per calendar day
+      if(rhoEl) rhoEl.textContent=fmt(rho/100,4); // per 1% rate
+    }
+
+    [Sel,Kel,Tel,rel,sigEl].forEach(function(el){
+      el.addEventListener('input', compute);
+    });
+
+    if(toggle){
+      toggle.addEventListener('click', function(e){
+        var btn=e.target.closest('.qp-toggle-btn');
+        if(!btn) return;
+        isCall = btn.getAttribute('data-type')==='call';
+        var btns=toggle.querySelectorAll('.qp-toggle-btn');
+        for(var i=0;i<btns.length;i++) btns[i].classList.remove('qp-active');
+        btn.classList.add('qp-active');
+        compute();
+      });
+    }
+
+    compute();
+  }
+
+  function init(){
+    initGBM();
+    initMonteCarlo();
+    initBlackScholes();
+  }
+
+  if(document.readyState!=='loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== MODULE: tilt =====
+(function () {
+  var SELECTOR = '.project-card.featured, .skill-group, .repo-item';
+  var MAX_DEG = 7;          // max tilt on each axis
+  var POP_Z = 14;           // translateZ pop (px)
+  var LIFT_Y = -6;          // slight lift to echo existing hover feel
+
+  // Capability + motion guards. Touch / coarse pointers do nothing.
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function enabled() {
+    return fine.matches && !reduceMQ.matches;
+  }
+
+  var bound = []; // {el, onMove, onEnter, onLeave} for teardown if disabled
+
+  function ensureGlare(el) {
+    var glare = el.querySelector(':scope > .tilt-glare');
+    if (!glare) {
+      glare = document.createElement('div');
+      glare.className = 'tilt-glare';
+      glare.setAttribute('aria-hidden', 'true');
+      // Insert first so it paints beneath non-positioned content.
+      el.insertBefore(glare, el.firstChild);
+    }
+    return glare;
+  }
+
+  function attach(el) {
+    if (!el || el.dataset.tiltBound === '1') return;
+    el.dataset.tiltBound = '1';
+
+    // Preserve the author's inline transform/transition if any, to restore later.
+    var origTransform = el.style.transform || '';
+    var rafId = 0;
+    var pending = null; // {rx, ry, gx, gy}
+    var glare;
+
+    function ensurePositioned() {
+      var pos = window.getComputedStyle(el).position;
+      if (pos === 'static') el.style.position = 'relative';
+    }
+
+    function flush() {
+      rafId = 0;
+      if (!pending) return;
+      el.style.transform =
+        'perspective(900px) rotateX(' + pending.rx.toFixed(2) + 'deg) rotateY(' +
+        pending.ry.toFixed(2) + 'deg) translateZ(' + POP_Z + 'px) translateY(' +
+        LIFT_Y + 'px)';
+      if (glare) {
+        glare.style.setProperty('--tilt-gx', pending.gx.toFixed(1) + '%');
+        glare.style.setProperty('--tilt-gy', pending.gy.toFixed(1) + '%');
+      }
+    }
+
+    function onEnter() {
+      if (!enabled()) return;
+      el.classList.add('tilt-active', 'tilt-tracking');
+      ensurePositioned();
+      glare = ensureGlare(el);
+    }
+
+    function onMove(e) {
+      if (!enabled()) return;
+      if (!el.classList.contains('tilt-active')) onEnter();
+      var r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var px = (e.clientX - r.left) / r.width;   // 0..1
+      var py = (e.clientY - r.top) / r.height;   // 0..1
+      px = px < 0 ? 0 : px > 1 ? 1 : px;
+      py = py < 0 ? 0 : py > 1 ? 1 : py;
+      // Cursor right -> rotateY positive; cursor down -> rotateX negative.
+      var ry = (px - 0.5) * 2 * MAX_DEG;
+      var rx = (0.5 - py) * 2 * MAX_DEG;
+      pending = { rx: rx, ry: ry, gx: px * 100, gy: py * 100 };
+      if (!rafId) rafId = requestAnimationFrame(flush);
+    }
+
+    function onLeave() {
+      pending = null;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+      el.classList.remove('tilt-tracking');
+      // Smoothly return: restore the card's own transform (lets CSS :hover/idle
+      // transition take back over) then drop the active flag next frame.
+      el.style.transform = origTransform;
+      window.setTimeout(function () {
+        // Only clear if not re-entered in the meantime.
+        if (!el.classList.contains('tilt-tracking')) {
+          el.classList.remove('tilt-active');
+        }
+      }, 400);
+    }
+
+    el.addEventListener('pointerenter', onEnter);
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerleave', onLeave);
+    // Reset if the pointer is cancelled (e.g., context menu, drag).
+    el.addEventListener('pointercancel', onLeave);
+
+    bound.push({ el: el, onMove: onMove, onEnter: onEnter, onLeave: onLeave });
+  }
+
+  function scan(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var list = scope.querySelectorAll(SELECTOR);
+    for (var i = 0; i < list.length; i++) attach(list[i]);
+    // If root itself matches (e.g., a freshly-added .repo-item), bind it too.
+    if (root && root.nodeType === 1 && root.matches && root.matches(SELECTOR)) {
+      attach(root);
+    }
+  }
+
+  function init() {
+    if (!enabled()) {
+      // Touch / reduced-motion: do nothing, leave cards untouched.
+      return;
+    }
+    scan(document);
+
+    // Watch the async-loaded GitHub repos grid for late additions.
+    var repos = document.getElementById('github-repos') ||
+                document.getElementById('github-repos-list');
+    var watchTargets = [];
+    if (repos) watchTargets.push(repos);
+    // Some builds use #github-repos as the container id referenced in the brief
+    // as '#github-repos'; guard for the alternate hook too.
+    var alt = document.getElementById('github-repos');
+    if (alt && watchTargets.indexOf(alt) === -1) watchTargets.push(alt);
+
+    if (watchTargets.length && 'MutationObserver' in window) {
+      var mo = new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var added = muts[i].addedNodes;
+          for (var j = 0; j < added.length; j++) {
+            var n = added[j];
+            if (n.nodeType === 1) scan(n);
+          }
+        }
+      });
+      for (var t = 0; t < watchTargets.length; t++) {
+        mo.observe(watchTargets[t], { childList: true, subtree: true });
+      }
+    }
+
+    // Re-scan once more shortly after load in case other scripts populate cards.
+    window.setTimeout(function () { scan(document); }, 1500);
+
+    // If the user switches motion preference mid-session, reset everything.
+    var onPrefChange = function () {
+      if (!enabled()) {
+        for (var i = 0; i < bound.length; i++) {
+          var b = bound[i];
+          b.el.classList.remove('tilt-active', 'tilt-tracking');
+          b.el.style.transform = '';
+        }
+      }
+    };
+    if (reduceMQ.addEventListener) reduceMQ.addEventListener('change', onPrefChange);
+    else if (reduceMQ.addListener) reduceMQ.addListener(onPrefChange);
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== MODULE: egg =====
+/* === egg: Konami code + "quant" easter eggs === */
+(function(){
+  function init(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    var konamiPos = 0;
+    var recent = '';
+    var rainActive = false;
+    var confettiActive = false;
+
+    function isTyping(){
+      var el = document.activeElement;
+      if(!el) return false;
+      var tag = (el.tagName||'').toLowerCase();
+      return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable === true;
+    }
+
+    function pickColors(){
+      var dark = document.body.classList.contains('dark-mode');
+      return {
+        cyan: dark ? '#67E8F9' : '#38BDF8',
+        green: dark ? '#34D399' : '#10B981',
+        up: dark ? '#34D399' : '#10B981',
+        down: dark ? '#F87171' : '#EF4444'
+      };
+    }
+
+    /* ---------- toast ---------- */
+    var activeToast = null;
+    function showToast(){
+      removeToast();
+      var t = document.createElement('div');
+      t.className = 'egg-toast';
+      t.setAttribute('role','status');
+      t.innerHTML =
+        '<span class="egg-toast-icon" aria-hidden="true"><i class="fas fa-terminal"></i></span>' +
+        '<div class="egg-toast-body">' +
+          '<p class="egg-toast-title">You found the source. Green candles only.</p>' +
+          '<p class="egg-toast-hint">Secret unlocked. Press <kbd>Esc</kbd> or click to dismiss &middot; psst, try typing <kbd>quant</kbd>.</p>' +
+        '</div>' +
+        '<button class="egg-toast-close" type="button" aria-label="Dismiss">&times;</button>';
+      document.body.appendChild(t);
+      activeToast = t;
+      requestAnimationFrame(function(){ t.classList.add('egg-visible'); });
+      var btn = t.querySelector('.egg-toast-close');
+      if(btn) btn.addEventListener('click', function(e){ e.stopPropagation(); removeToast(); });
+      var auto = setTimeout(removeToast, 7000);
+      t._eggAuto = auto;
+    }
+    function removeToast(){
+      if(!activeToast) return;
+      var t = activeToast;
+      activeToast = null;
+      if(t._eggAuto) clearTimeout(t._eggAuto);
+      t.classList.remove('egg-visible');
+      setTimeout(function(){ if(t && t.parentNode) t.parentNode.removeChild(t); }, 400);
+    }
+
+    /* ---------- matrix rain ---------- */
+    function triggerKonami(){
+      showToast();
+      if(reduce || rainActive) return;
+      rainActive = true;
+
+      var overlay = document.createElement('div');
+      overlay.className = 'egg-overlay';
+      var canvas = document.createElement('canvas');
+      overlay.appendChild(canvas);
+      document.body.appendChild(overlay);
+
+      var ctx = canvas.getContext('2d');
+      if(!ctx){ rainActive = false; if(overlay.parentNode) overlay.parentNode.removeChild(overlay); return; }
+
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W, H, cols, drops, fontSize;
+      var glyphs = '01<>=+-*%$∑∫√πσΔλ∞≈≤≥01△▽0123456789'.split('');
+
+      function resize(){
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        fontSize = W < 600 ? 14 : 18;
+        cols = Math.ceil(W / fontSize);
+        drops = new Array(cols);
+        for(var i=0;i<cols;i++){ drops[i] = Math.random() * -40; }
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      requestAnimationFrame(function(){ overlay.classList.add('egg-visible'); });
+
+      var started = Date.now();
+      var DURATION = 6000;
+      var rafId = null;
+      var fading = false;
+      var lastFrame = 0;
+
+      function cleanup(){
+        if(rafId) cancelAnimationFrame(rafId);
+        window.removeEventListener('resize', resize);
+        document.removeEventListener('keydown', onEsc, true);
+        overlay.removeEventListener('click', onClick);
+        document.removeEventListener('visibilitychange', onVis);
+        overlay.classList.remove('egg-visible');
+        setTimeout(function(){ if(overlay.parentNode) overlay.parentNode.removeChild(overlay); rainActive = false; }, 600);
+      }
+      function endNow(){
+        if(fading) return;
+        fading = true;
+        cleanup();
+      }
+      function onEsc(e){ if(e.key === 'Escape'){ e.stopPropagation(); endNow(); } }
+      function onClick(){ endNow(); }
+      function onVis(){ if(document.hidden) endNow(); }
+      document.addEventListener('keydown', onEsc, true);
+      overlay.addEventListener('click', onClick);
+      document.addEventListener('visibilitychange', onVis);
+
+      function frame(now){
+        if(fading) return;
+        if(document.hidden){ endNow(); return; }
+        rafId = requestAnimationFrame(frame);
+        if(now - lastFrame < 45){ return; }
+        lastFrame = now;
+
+        var c = pickColors();
+        ctx.fillStyle = document.body.classList.contains('dark-mode')
+          ? 'rgba(2,6,14,0.16)' : 'rgba(8,12,20,0.14)';
+        ctx.fillRect(0,0,W,H);
+        ctx.font = fontSize + "px 'Space Grotesk', monospace";
+
+        for(var i=0;i<cols;i++){
+          var ch = glyphs[(Math.random()*glyphs.length)|0];
+          var x = i * fontSize;
+          var y = drops[i] * fontSize;
+          ctx.fillStyle = Math.random() > 0.92 ? c.green : c.cyan;
+          ctx.fillText(ch, x, y);
+          if(y > H && Math.random() > 0.975){ drops[i] = 0; }
+          drops[i]++;
+        }
+
+        if(Date.now() - started > DURATION){ endNow(); }
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    /* ---------- ticker-arrow confetti for "quant" ---------- */
+    function triggerQuant(){
+      if(confettiActive) return;
+      if(reduce){ flashHint('quant'); return; }
+      confettiActive = true;
+
+      var wrap = document.createElement('div');
+      wrap.className = 'egg-confetti';
+      var canvas = document.createElement('canvas');
+      wrap.appendChild(canvas);
+      document.body.appendChild(wrap);
+
+      var ctx = canvas.getContext('2d');
+      if(!ctx){ confettiActive = false; if(wrap.parentNode) wrap.parentNode.removeChild(wrap); return; }
+
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W = window.innerWidth, H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+
+      var c = pickColors();
+      var N = W < 600 ? 28 : 46;
+      var parts = [];
+      for(var i=0;i<N;i++){
+        var up = Math.random() > 0.5;
+        parts.push({
+          x: W*0.5 + (Math.random()-0.5)*W*0.4,
+          y: H*0.55 + (Math.random()-0.5)*60,
+          vx: (Math.random()-0.5)*7,
+          vy: -6 - Math.random()*7,
+          rot: Math.random()*Math.PI,
+          vr: (Math.random()-0.5)*0.3,
+          size: 10 + Math.random()*8,
+          up: up,
+          color: up ? c.up : c.down,
+          life: 1
+        });
+      }
+
+      var rafId = null;
+      var started = Date.now();
+      var DURATION = 2000;
+      var G = 0.28;
+
+      function cleanup(){
+        if(rafId) cancelAnimationFrame(rafId);
+        document.removeEventListener('visibilitychange', onVis);
+        if(wrap.parentNode) wrap.parentNode.removeChild(wrap);
+        confettiActive = false;
+      }
+      function onVis(){ if(document.hidden) cleanup(); }
+      document.addEventListener('visibilitychange', onVis);
+
+      function drawArrow(p){
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.color;
+        var s = p.size, d = p.up ? -1 : 1;
+        ctx.beginPath();
+        ctx.moveTo(0, d*s);
+        ctx.lineTo(s*0.6, -d*s*0.1);
+        ctx.lineTo(s*0.24, -d*s*0.1);
+        ctx.lineTo(s*0.24, -d*s);
+        ctx.lineTo(-s*0.24, -d*s);
+        ctx.lineTo(-s*0.24, -d*s*0.1);
+        ctx.lineTo(-s*0.6, -d*s*0.1);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function frame(){
+        if(document.hidden){ cleanup(); return; }
+        rafId = requestAnimationFrame(frame);
+        ctx.clearRect(0,0,W,H);
+        var elapsed = Date.now() - started;
+        var fade = elapsed > DURATION - 500 ? Math.max(0,(DURATION - elapsed)/500) : 1;
+        for(var i=0;i<parts.length;i++){
+          var p = parts[i];
+          p.vy += G;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vr;
+          p.life = fade;
+          drawArrow(p);
+        }
+        if(elapsed > DURATION){ cleanup(); }
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function flashHint(){ /* reduced-motion fallback: no-op visual, keeps it non-intrusive */ }
+
+    /* ---------- key listener ---------- */
+    document.addEventListener('keydown', function(e){
+      var key = e.key;
+
+      /* Konami: arrows global, letters/global ignored while typing */
+      if(!isTyping()){
+        var expected = KONAMI[konamiPos];
+        var match = (key === expected) ||
+                    (expected === 'b' && key.toLowerCase() === 'b') ||
+                    (expected === 'a' && key.toLowerCase() === 'a');
+        if(match){
+          konamiPos++;
+          if(konamiPos === KONAMI.length){
+            konamiPos = 0;
+            triggerKonami();
+          }
+        } else {
+          konamiPos = (key === KONAMI[0]) ? 1 : 0;
+        }
+
+        /* "quant" word tracker — only when NOT typing in a field */
+        if(key.length === 1 && /[a-zA-Z]/.test(key)){
+          recent = (recent + key.toLowerCase()).slice(-5);
+          if(recent === 'quant'){
+            recent = '';
+            triggerQuant();
+          }
+        } else if(key !== 'Shift' && key !== 'CapsLock'){
+          recent = '';
+        }
+      }
+    }, false);
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== EXPERIENCE MODULE: aura =====
+/* === aura: ambient aurora background layer === */
+(function () {
+  function init() {
+    if (document.getElementById('aura-layer')) return;
+
+    var reduce = false;
+    try {
+      reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) { reduce = false; }
+
+    // --- Build the fixed full-viewport layer as the FIRST child of <body> ---
+    var layer = document.createElement('div');
+    layer.id = 'aura-layer';
+
+    var canvas = document.createElement('canvas');
+    canvas.id = 'aura-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    layer.appendChild(canvas);
+
+    if (document.body.firstChild) {
+      document.body.insertBefore(layer, document.body.firstChild);
+    } else {
+      document.body.appendChild(layer);
+    }
+
+    // Reduced motion: static CSS gradient only, no canvas work at all.
+    if (reduce) {
+      layer.classList.add('aura-static');
+      return;
+    }
+
+    var ctx = canvas.getContext('2d');
+    if (!ctx) {
+      // Canvas unavailable — fall back to static gradient.
+      layer.classList.add('aura-static');
+      return;
+    }
+
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0;          // CSS pixels
+    var raf = null;
+    var running = false;
+    var lastT = 0;
+
+    // Pointer (target) in normalized 0..1, and smoothed actual position.
+    var pTargetX = 0.5, pTargetY = 0.42;
+    var pX = 0.5, pY = 0.42;
+    var hasPointer = false;
+
+    // Theme palettes. Values are [r,g,b,baseAlpha].
+    var PALETTE = {
+      light: {
+        base: '#F9FAFB',
+        blobs: [
+          [56, 189, 248, 0.18],   // cyan/blue
+          [99, 102, 241, 0.13],   // soft violet
+          [34, 211, 238, 0.15]    // accent cyan
+        ]
+      },
+      dark: {
+        base: '#0F172A',
+        blobs: [
+          [96, 165, 250, 0.20],   // primary blue
+          [129, 140, 248, 0.16],  // violet
+          [103, 232, 249, 0.18]   // accent cyan
+        ]
+      }
+    };
+
+    function isDark() {
+      return document.body.classList.contains('dark-mode');
+    }
+
+    // Each blob: home position (0..1), drift params, parallax depth, size.
+    var blobs = [
+      { hx: 0.20, hy: 0.16, r: 0.46, depth: 0.045, sx: 0.018, sy: 0.013, px: 0.0, py: 0.0 },
+      { hx: 0.82, hy: 0.26, r: 0.42, depth: 0.030, sx: 0.014, sy: 0.020, px: 1.7, py: 2.4 },
+      { hx: 0.58, hy: 0.90, r: 0.52, depth: 0.060, sx: 0.011, sy: 0.016, px: 4.1, py: 5.3 }
+    ];
+
+    function resize() {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(W * DPR));
+      canvas.height = Math.max(1, Math.round(H * DPR));
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+
+    function draw(t) {
+      var time = t * 0.001; // seconds
+      var pal = isDark() ? PALETTE.dark : PALETTE.light;
+
+      // Paint the opaque base background color first.
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = pal.base;
+      ctx.fillRect(0, 0, W, H);
+
+      // Smooth pointer toward target (very gentle lerp).
+      pX += (pTargetX - pX) * 0.04;
+      pY += (pTargetY - pY) * 0.04;
+
+      // Pointer offset from center, used for subtle parallax.
+      var offX = (pX - 0.5);
+      var offY = (pY - 0.5);
+
+      // Additive blending so overlapping glows blend like light.
+      ctx.globalCompositeOperation = 'lighter';
+
+      var minDim = Math.min(W, H);
+      var maxDim = Math.max(W, H);
+
+      for (var i = 0; i < blobs.length; i++) {
+        var b = blobs[i];
+
+        // Slow autonomous drift via sine waves.
+        var driftX = Math.sin(time * b.sx * 6.283 + b.px) * 0.06;
+        var driftY = Math.cos(time * b.sy * 6.283 + b.py) * 0.06;
+
+        // Parallax: blobs follow the cursor by depth (subtle).
+        var cx = (b.hx + driftX + offX * b.depth) * W;
+        var cy = (b.hy + driftY + offY * b.depth) * H;
+
+        var radius = b.r * maxDim;
+
+        var col = pal.blobs[i % pal.blobs.length];
+        // Gentle alpha breathing.
+        var breathe = 0.85 + 0.15 * Math.sin(time * 0.22 + i * 1.7);
+        var a = col[3] * breathe;
+
+        var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        var rgb = col[0] + ',' + col[1] + ',' + col[2];
+        grad.addColorStop(0, 'rgba(' + rgb + ',' + a.toFixed(3) + ')');
+        grad.addColorStop(0.45, 'rgba(' + rgb + ',' + (a * 0.4).toFixed(3) + ')');
+        grad.addColorStop(1, 'rgba(' + rgb + ',0)');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, 6.283185);
+        ctx.fill();
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function loop(t) {
+      if (!running) return;
+      if (!lastT) lastT = t;
+      lastT = t;
+      draw(t);
+      raf = window.requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running) return;
+      if (document.hidden) return;
+      running = true;
+      lastT = 0;
+      raf = window.requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      running = false;
+      if (raf) {
+        window.cancelAnimationFrame(raf);
+        raf = null;
+      }
+    }
+
+    // --- Pointer tracking (throttled via rAF target update only) ---
+    function onPointerMove(e) {
+      if (!W || !H) return;
+      pTargetX = Math.max(0, Math.min(1, e.clientX / W));
+      pTargetY = Math.max(0, Math.min(1, e.clientY / H));
+      if (!hasPointer) {
+        hasPointer = true;
+        if (!running) start();
+      }
+    }
+
+    // --- Visibility / lifecycle ---
+    function onVisibility() {
+      if (document.hidden) {
+        stop();
+      } else {
+        start();
+      }
+    }
+
+    var resizeTimer = null;
+    function onResize() {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        resize();
+        // Render one frame even if paused so it stays correct after resize.
+        if (!running) { draw(performance.now ? performance.now() : Date.now()); }
+      }, 120);
+    }
+
+    // React to DPR changes (zoom / monitor move) where supported.
+    try {
+      var dprQuery = window.matchMedia('(resolution: ' + DPR + 'dppx)');
+      if (dprQuery && dprQuery.addEventListener) {
+        dprQuery.addEventListener('change', onResize);
+      }
+    } catch (e) {}
+
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    document.addEventListener('visibilitychange', onVisibility);
+
+    resize();
+    start();
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== EXPERIENCE MODULE: tick =====
+/* ===== Ticker Tape Band (tick) ===== */
+(function () {
+  function init() {
+    var band = document.getElementById('tickertape');
+    if (!band) return;
+    var track = document.getElementById('tick-track');
+    if (!track) return;
+    var viewport = band.querySelector('.tick-viewport');
+    if (!viewport) return;
+
+    var reduce = false;
+    try {
+      reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {}
+
+    var duplicated = false;
+    var originalHTML = track.innerHTML;
+
+    // Pixels-per-second scroll speed (tasteful financial-ticker pace).
+    var SPEED = reduce ? 28 : 60;
+
+    function setup() {
+      // Reset to a single copy before measuring.
+      if (duplicated) {
+        track.innerHTML = originalHTML;
+        duplicated = false;
+      }
+
+      // Measure the width of one full pass of items.
+      var singleWidth = track.scrollWidth;
+      if (!singleWidth) return;
+
+      // Duplicate the list so the -50% keyframe wraps seamlessly.
+      track.innerHTML = originalHTML + originalHTML;
+      duplicated = true;
+
+      // Duration derived from content width => constant visual speed
+      // regardless of how many items or how wide the screen is.
+      var duration = singleWidth / SPEED;
+      if (!isFinite(duration) || duration < 8) duration = 8;
+      track.style.setProperty('--tick-duration', duration.toFixed(2) + 's');
+    }
+
+    setup();
+
+    // Recompute on resize (font reflow / breakpoint changes) — debounced.
+    var resizeTimer = null;
+    function onResize() {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setup, 200);
+    }
+    window.addEventListener('resize', onResize);
+
+    // Recompute once webfonts settle (symbol widths can shift).
+    if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
+      document.fonts.ready.then(function () { setup(); }).catch(function () {});
+    }
+
+    // Pause when off-screen to save cycles.
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            band.classList.remove('tick-paused');
+          } else {
+            band.classList.add('tick-paused');
+          }
+        }
+      }, { threshold: 0 });
+      io.observe(band);
+    }
+
+    // Pause when the tab is hidden.
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        band.classList.add('tick-paused');
+      } else {
+        band.classList.remove('tick-paused');
+      }
+    });
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== EXPERIENCE MODULE: boot =====
+/* === aryan.os BOOT SEQUENCE (prefix: boot) === */
+(function () {
+  function init() {
+    var loader = document.getElementById('loading-screen');
+
+    // Already booted this session: just hide the old loader, do nothing else.
+    var done = false;
+    try { done = !!sessionStorage.getItem('boot_done'); } catch (e) { done = false; }
+    if (done) {
+      if (loader) loader.style.display = 'none';
+      return;
+    }
+
+    // Immediately hide the old plain loader; our overlay takes over.
+    if (loader) loader.style.display = 'none';
+
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    function markDone() {
+      try { sessionStorage.setItem('boot_done', '1'); } catch (e) {}
+    }
+
+    // Reduced motion: skip the show entirely, no flashing.
+    if (reduce) {
+      markDone();
+      return;
+    }
+
+    // Build overlay.
+    var overlay = document.createElement('div');
+    overlay.className = 'boot-overlay';
+    overlay.setAttribute('role', 'status');
+    overlay.setAttribute('aria-label', 'aryan.os boot sequence');
+
+    var skip = document.createElement('button');
+    skip.type = 'button';
+    skip.className = 'boot-skip';
+    skip.innerHTML = 'skip <span aria-hidden="true">&#9655;</span>';
+    skip.setAttribute('aria-label', 'Skip boot sequence');
+
+    var console_ = document.createElement('div');
+    console_.className = 'boot-console';
+    console_.innerHTML =
+      '<div class="boot-titlebar">' +
+        '<span class="boot-dots"><span></span><span></span><span></span></span>' +
+        '<span>aryan.os terminal</span>' +
+        '<span class="boot-host">/dev/visitor</span>' +
+      '</div>' +
+      '<div class="boot-log" aria-hidden="true"></div>' +
+      '<div class="boot-progress-wrap">' +
+        '<div class="boot-progress"><div class="boot-progress-fill"></div></div>' +
+        '<div class="boot-progress-pct">0%</div>' +
+      '</div>';
+
+    overlay.appendChild(skip);
+    overlay.appendChild(console_);
+    document.body.appendChild(overlay);
+
+    var logEl = console_.querySelector('.boot-log');
+    var fillEl = console_.querySelector('.boot-progress-fill');
+    var pctEl = console_.querySelector('.boot-progress-pct');
+
+    // Boot log content. Each line: html string + optional flag.
+    var LINES = [
+      { html: 'aryan.os v2028.1 &mdash; booting', head: true },
+      { html: '<span class="boot-ok">[ ok ]</span> mounting <span class="boot-accent">/experience</span>   ::  <span class="boot-meta">Amazon &middot; BlackRock &middot; Timing</span>' },
+      { html: '<span class="boot-ok">[ ok ]</span> compiling <span class="boot-accent">/projects</span>     ::  <span class="boot-meta">FitMax &middot; Soccer-Betting &middot; RT-Risk</span>' },
+      { html: '<span class="boot-ok">[ ok ]</span> loading <span class="boot-accent">/playground</span>    ::  <span class="boot-meta">GBM &middot; MonteCarlo &middot; Black-Scholes</span>' },
+      { html: '<span class="boot-ok">[ ok ]</span> calibrating <span class="boot-accent">/skills</span>     ::  <span class="boot-meta">Python &middot; PyTorch &middot; OCaml</span>' },
+      { html: '<span class="boot-ok">[ ok ]</span> starting terminal daemon' },
+      { html: '<span class="boot-ok">[ ok ]</span> uplink <span class="boot-accent">github.com/aryan-jeena</span> established' },
+      { html: '<span class="boot-ok">[ ok ]</span> systems nominal &mdash; <span class="boot-accent">welcome, visitor</span>' }
+    ];
+
+    var TOTAL_BUDGET = 2350; // ms of typing before flourish; reveal ~2.6s total
+    var startTime = Date.now();
+    var finished = false;
+    var timers = [];
+
+    function clearTimers() {
+      for (var i = 0; i < timers.length; i++) clearTimeout(timers[i]);
+      timers = [];
+    }
+    function later(fn, ms) {
+      var t = setTimeout(fn, ms);
+      timers.push(t);
+      return t;
+    }
+
+    function setProgress(p) {
+      p = Math.max(0, Math.min(1, p));
+      if (fillEl) fillEl.style.right = (100 - p * 100) + '%';
+      if (pctEl) pctEl.textContent = Math.round(p * 100) + '%';
+    }
+
+    // Build all line nodes up front so layout is stable; reveal sequentially.
+    var lineNodes = [];
+    for (var i = 0; i < LINES.length; i++) {
+      var p = document.createElement('p');
+      p.className = 'boot-line' + (LINES[i].head ? ' boot-head' : '');
+      p.style.visibility = 'hidden';
+      logEl.appendChild(p);
+      lineNodes.push(p);
+    }
+    // Trailing cursor line.
+    var cursorLine = document.createElement('p');
+    cursorLine.className = 'boot-line';
+    cursorLine.innerHTML = '<span class="boot-dim">aryan@os</span> <span class="boot-accent">~%</span> <span class="boot-cursor"></span>';
+    logEl.appendChild(cursorLine);
+
+    // Distribute time across lines, faster after the header.
+    function lineDelay(idx) {
+      if (idx === 0) return 0;
+      return 180 + Math.random() * 90;
+    }
+
+    var idx = 0;
+    function showNext() {
+      if (finished) return;
+      if (idx >= lineNodes.length) {
+        flourish();
+        return;
+      }
+      var node = lineNodes[idx];
+      node.innerHTML = LINES[idx].html;
+      node.style.visibility = 'visible';
+      // keep cursor at bottom
+      logEl.appendChild(cursorLine);
+
+      setProgress((idx + 1) / lineNodes.length);
+      idx++;
+      // pace to fit within budget
+      var remainingLines = lineNodes.length - idx;
+      var elapsed = Date.now() - startTime;
+      var remainingTime = Math.max(120, TOTAL_BUDGET - elapsed);
+      var nextDelay = remainingLines > 0
+        ? Math.min(lineDelay(idx), remainingTime / (remainingLines + 1))
+        : 160;
+      later(showNext, nextDelay);
+    }
+
+    function flourish() {
+      if (finished) return;
+      setProgress(1);
+      cursorLine.innerHTML = '<span class="boot-dim">aryan@os</span> <span class="boot-accent">~%</span> <span class="boot-accent">launch portfolio</span> <span class="boot-cursor"></span>';
+      later(reveal, 260);
+    }
+
+    function reveal() {
+      if (finished) return;
+      finished = true;
+      clearTimers();
+      teardown();
+      overlay.classList.add('boot-fade-out');
+      markDone();
+      var removed = false;
+      function removeOverlay() {
+        if (removed) return;
+        removed = true;
+        if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      }
+      overlay.addEventListener('transitionend', removeOverlay, { once: true });
+      // Fallback removal in case transitionend doesn't fire.
+      setTimeout(removeOverlay, 650);
+    }
+
+    // Skip on: button, any key, click/tap anywhere.
+    function onKey(e) {
+      // Ignore pure modifier presses so Cmd+R etc. still feel natural-ish.
+      reveal();
+    }
+    function onPointer() { reveal(); }
+
+    function teardown() {
+      document.removeEventListener('keydown', onKey, true);
+      overlay.removeEventListener('click', onPointer);
+      skip.removeEventListener('click', onSkip);
+      document.removeEventListener('visibilitychange', onVis);
+    }
+    function onSkip(e) {
+      e.stopPropagation();
+      reveal();
+    }
+    function onVis() {
+      // If tab is hidden during boot, just finish instantly when it returns
+      // is jarring; instead, if hidden, fast-forward to reveal silently.
+      if (document.hidden) reveal();
+    }
+
+    skip.addEventListener('click', onSkip);
+    overlay.addEventListener('click', onPointer);
+    document.addEventListener('keydown', onKey, true);
+    document.addEventListener('visibilitychange', onVis);
+
+    // Kick off.
+    setProgress(0);
+    showNext();
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+
+// ===== EXPERIENCE MODULE: snd =====
+/* ===== MODULE: snd (Sound Design) ===== */
+(function () {
+  'use strict';
+
+  function init() {
+    if (document.getElementById('snd-toggle')) return; // guard double-init
+
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    var STORE_KEY = 'snd_on';
+    var soundOn = false;
+    try { soundOn = localStorage.getItem(STORE_KEY) === 'true'; } catch (e) {}
+
+    /* ---------- Audio engine (Web Audio, no files) ---------- */
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ctx = null;
+    var master = null;
+    var ready = false;
+
+    function ensureAudio() {
+      if (!AC) return false;
+      if (!ctx) {
+        try {
+          ctx = new AC();
+          master = ctx.createGain();
+          master.gain.value = 0.9;
+          master.connect(ctx.destination);
+          ready = true;
+        } catch (e) { ctx = null; return false; }
+      }
+      if (ctx && ctx.state === 'suspended') {
+        try { ctx.resume(); } catch (e) {}
+      }
+      return ready;
+    }
+
+    // smooth, short voice: type 'sine'|'triangle', freq Hz, dur s, peak gain, optional glide-to freq
+    function voice(freq, dur, peak, type, glideTo, delay) {
+      if (!soundOn || !ensureAudio() || !ctx) return;
+      var t0 = ctx.currentTime + (delay || 0);
+      var osc = ctx.createOscillator();
+      var g = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(freq, t0);
+      if (typeof glideTo === 'number') {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(40, glideTo), t0 + dur * 0.9);
+      }
+      // gentle attack / release envelope
+      var atk = Math.min(0.012, dur * 0.3);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t0 + atk);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      osc.connect(g);
+      g.connect(master);
+      osc.start(t0);
+      osc.stop(t0 + dur + 0.02);
+      osc.onended = function () { try { osc.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+
+    /* ---------- Sound presets ---------- */
+    function sBlip() {            // nav-link / button click + palette open
+      voice(660, 0.085, 0.09, 'sine', 760);
+    }
+    function sRise() {            // theme toggle / section-enter (two-note)
+      voice(523.25, 0.10, 0.085, 'sine', 587.33);     // C5
+      if (!reduce) voice(783.99, 0.13, 0.075, 'sine', 880, 0.075); // G5
+    }
+    function sHover() {           // very quiet hover tick
+      voice(1180, 0.05, 0.035, 'sine', 1180);
+    }
+    function sToggleClick() {     // confirmation when enabling sound
+      voice(700, 0.09, 0.10, 'sine', 820);
+      if (!reduce) voice(1046.5, 0.12, 0.07, 'sine', 1046.5, 0.07);
+    }
+
+    /* ---------- Build the toggle button ---------- */
+    var btn = document.createElement('button');
+    btn.id = 'snd-toggle';
+    btn.className = 'snd-toggle';
+    btn.type = 'button';
+
+    function renderBtn() {
+      btn.classList.toggle('snd-on', soundOn);
+      btn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+      btn.setAttribute('aria-label', soundOn ? 'Sound on' : 'Sound off');
+      btn.innerHTML =
+        '<i class="fas ' + (soundOn ? 'fa-volume-high' : 'fa-volume-xmark') + '" aria-hidden="true"></i>' +
+        '<span class="snd-tip" role="tooltip">Sound ' + (soundOn ? 'on' : 'off') + '</span>';
+    }
+    renderBtn();
+
+    btn.addEventListener('click', function () {
+      soundOn = !soundOn;
+      try { localStorage.setItem(STORE_KEY, soundOn ? 'true' : 'false'); } catch (e) {}
+      renderBtn();
+      if (soundOn) {
+        ensureAudio();          // first gesture: init + resume
+        sToggleClick();
+        if (!reduce) {
+          btn.classList.add('snd-pulse');
+          setTimeout(function () { btn.classList.remove('snd-pulse'); }, 600);
+        }
+      }
+    });
+
+    document.body.appendChild(btn);
+
+    /* ---------- Hover rate-limiting ---------- */
+    var lastHover = 0;
+    var HOVER_GAP = reduce ? 600 : 110;
+    function hoverInteractive(target) {
+      if (!soundOn) return;
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      if (now - lastHover < HOVER_GAP) return;
+      lastHover = now;
+      sHover();
+    }
+
+    var CLICK_SEL = '.nav-links a, .btn, .hero-btn, .game-tab, #darkModeToggle, .cmdk-item, .cmdk-pill, .project-card a, .social-link, button';
+    var HOVER_SEL = '.nav-links a, .btn, .hero-btn, .game-tab, #darkModeToggle, .cmdk-item';
+
+    function matchUp(node, selector) {
+      var el = node;
+      while (el && el !== document.body && el.nodeType === 1) {
+        if (el.matches && el.matches(selector)) return el;
+        el = el.parentElement;
+      }
+      return null;
+    }
+
+    /* ---------- Click delegation (capture so dynamic nodes work) ---------- */
+    document.addEventListener('click', function (e) {
+      if (!soundOn) return;
+      var t = e.target;
+      if (t && (t === btn || (t.closest && t.closest('#snd-toggle')))) return; // toggle handles itself
+      var hit = matchUp(t, CLICK_SEL);
+      if (!hit) return;
+      if (hit.id === 'darkModeToggle') { sRise(); return; }
+      sBlip();
+    }, true);
+
+    /* ---------- Hover delegation ---------- */
+    document.addEventListener('pointerover', function (e) {
+      if (!soundOn || reduce) return;
+      var t = e.target;
+      if (t && t.closest && t.closest('#snd-toggle')) return;
+      var hit = matchUp(t, HOVER_SEL);
+      if (!hit) return;
+      // ignore moves within the same element
+      if (e.relatedTarget && hit.contains && hit.contains(e.relatedTarget)) return;
+      hoverInteractive(hit);
+    }, true);
+
+    /* ---------- Command palette OPEN detection (no internals) ---------- */
+    (function watchPalette() {
+      var overlay = document.getElementById('cmdk-overlay');
+      if (!overlay || typeof MutationObserver === 'undefined') return;
+      var wasOpen = overlay.classList.contains('cmdk-open');
+      var mo = new MutationObserver(function () {
+        var nowOpen = overlay.classList.contains('cmdk-open');
+        if (nowOpen && !wasOpen && soundOn) sBlip();
+        wasOpen = nowOpen;
+      });
+      mo.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+    })();
+
+    /* ---------- Section-enter gentle rise ---------- */
+    (function watchSections() {
+      if (typeof IntersectionObserver === 'undefined') return;
+      var ids = ['about', 'projects', 'playground', 'github-stats', 'skills', 'contact'];
+      var settled = false;
+      // ignore the burst of initial intersections on load
+      setTimeout(function () { settled = true; }, 1200);
+      var io = new IntersectionObserver(function (entries) {
+        if (!settled || !soundOn || document.hidden) return;
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) { sRise(); break; }
+        }
+      }, { threshold: 0.55 });
+      ids.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) io.observe(el);
+      });
+    })();
+
+    /* ---------- Suspend audio context when tab hidden ---------- */
+    document.addEventListener('visibilitychange', function () {
+      if (!ctx) return;
+      try {
+        if (document.hidden) { ctx.suspend(); }
+        else if (soundOn) { ctx.resume(); }
+      } catch (e) {}
+    });
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();

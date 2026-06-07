@@ -3,7 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aryan Jeena | Portfolio</title>
+  <title>Aryan Jeena | CS + Math @ Penn · SWE & Quant</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Aryan Jeena — Computer Science & Mathematics student at the University of Pennsylvania. Incoming SWE intern at Amazon (Project Kuiper) & BlackRock (Aladdin). Software engineering, ML, and quantitative finance." />
+  <meta name="author" content="Aryan Jeena" />
+  <meta name="keywords" content="Aryan Jeena, UPenn, Computer Science, Mathematics, Software Engineer, Quant, Machine Learning, Amazon, BlackRock, portfolio" />
+  <meta name="theme-color" content="#3B82F6" />
+  <link rel="canonical" href="https://aryan-jeena.github.io/" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aryan-jeena.github.io/" />
+  <meta property="og:title" content="Aryan Jeena | CS + Math @ Penn · SWE & Quant" />
+  <meta property="og:description" content="Incoming SWE intern at Amazon (Project Kuiper) & BlackRock (Aladdin). Building at the intersection of software engineering, ML, and quantitative finance." />
+  <meta property="og:image" content="https://aryan-jeena.github.io/background.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aryan Jeena | CS + Math @ Penn · SWE & Quant" />
+  <meta name="twitter:description" content="Incoming SWE intern at Amazon (Project Kuiper) & BlackRock (Aladdin). Software engineering, ML, and quantitative finance." />
+  <meta name="twitter:image" content="https://aryan-jeena.github.io/background.jpg" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -16,12 +40,6 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Hero Animation -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-
-  <!-- Typed.js for terminal effect -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
 </head>
 
 <body>
@@ -42,9 +60,6 @@
         </div>
         <div class="game-tabs">
           <button class="game-tab active" data-tab="play"><i class="fas fa-play"></i> <span>Play</span></button>
-          <button class="game-tab" data-tab="practice"><i class="fas fa-dumbbell"></i> <span>Practice</span></button>
-          <button class="game-tab" data-tab="daily"><i class="fas fa-calendar-day"></i> <span>Daily</span></button>
-          <button class="game-tab" data-tab="leaderboard"><i class="fas fa-trophy"></i> <span>Board</span></button>
           <button class="game-tab" data-tab="stats"><i class="fas fa-chart-line"></i> <span>Stats</span></button>
         </div>
         <button class="close-game" id="close-game">×</button>
@@ -245,118 +260,6 @@
         </div>
 
         <!-- PRACTICE TAB -->
-        <div class="tab-panel" id="practice-panel">
-          <h2>Practice Mode</h2>
-          <p class="tab-desc">Focus on specific operations or number ranges</p>
-
-          <div class="practice-drills">
-            <div class="drill-card" data-drill="tables">
-              <div class="drill-icon">📋</div>
-              <h3>Multiplication Tables</h3>
-              <p>Master your times tables</p>
-              <button class="drill-btn">Start</button>
-            </div>
-            <div class="drill-card" data-drill="mental-add">
-              <div class="drill-icon">➕</div>
-              <h3>Mental Addition</h3>
-              <p>Practice addition strategies</p>
-              <button class="drill-btn">Start</button>
-            </div>
-            <div class="drill-card" data-drill="quick-subtract">
-              <div class="drill-icon">➖</div>
-              <h3>Quick Subtraction</h3>
-              <p>Speed subtraction drills</p>
-              <button class="drill-btn">Start</button>
-            </div>
-            <div class="drill-card" data-drill="division">
-              <div class="drill-icon">➗</div>
-              <h3>Division Facts</h3>
-              <p>Division fluency practice</p>
-              <button class="drill-btn">Start</button>
-            </div>
-            <div class="drill-card" data-drill="squares">
-              <div class="drill-icon">²</div>
-              <h3>Perfect Squares</h3>
-              <p>Learn square numbers</p>
-              <button class="drill-btn">Start</button>
-            </div>
-            <div class="drill-card" data-drill="percentages">
-              <div class="drill-icon">%</div>
-              <h3>Percentages</h3>
-              <p>Calculate percentages quickly</p>
-              <button class="drill-btn">Start</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- DAILY CHALLENGE TAB -->
-        <div class="tab-panel" id="daily-panel">
-          <h2>Daily Challenge</h2>
-          <p class="tab-desc">Complete today's unique challenge and compete with others!</p>
-
-          <div class="daily-challenge-card">
-            <div class="daily-header">
-              <div class="daily-date" id="daily-date">Today's Challenge</div>
-              <div class="daily-streak">🔥 <span id="daily-streak">0</span> day streak</div>
-            </div>
-            <div class="daily-info">
-              <div class="daily-stat">
-                <span class="daily-stat-label">Mode:</span>
-                <span class="daily-stat-value" id="daily-mode">-</span>
-              </div>
-              <div class="daily-stat">
-                <span class="daily-stat-label">Difficulty:</span>
-                <span class="daily-stat-value" id="daily-difficulty">-</span>
-              </div>
-              <div class="daily-stat">
-                <span class="daily-stat-label">Operations:</span>
-                <span class="daily-stat-value" id="daily-operations">-</span>
-              </div>
-            </div>
-            <div class="daily-completion" id="daily-completion" style="display: none;">
-              <div class="completion-badge">✅ Completed!</div>
-              <div class="completion-score">Score: <span id="daily-score">0</span></div>
-              <div class="completion-rank">Rank: <span id="daily-rank">#0</span></div>
-            </div>
-            <button class="daily-start-btn" id="daily-start">Start Daily Challenge</button>
-          </div>
-
-          <div class="daily-leaderboard">
-            <h3>Today's Top Scores</h3>
-            <div class="daily-leaders" id="daily-leaders">
-              <div class="leader-item">
-                <span class="leader-rank">1.</span>
-                <span class="leader-name">-</span>
-                <span class="leader-score">-</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEADERBOARD TAB -->
-        <div class="tab-panel" id="leaderboard-panel">
-          <h2>Leaderboard</h2>
-
-          <div class="leaderboard-filters">
-            <button class="lb-filter active" data-period="today">Today</button>
-            <button class="lb-filter" data-period="week">This Week</button>
-            <button class="lb-filter" data-period="month">This Month</button>
-            <button class="lb-filter" data-period="alltime">All Time</button>
-          </div>
-
-          <div class="leaderboard-list" id="leaderboard-list">
-            <div class="leaderboard-item your-score">
-              <div class="lb-rank">#-</div>
-              <div class="lb-player">
-                <div class="lb-name">You</div>
-                <div class="lb-details">0 games played</div>
-              </div>
-              <div class="lb-score">0</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- STATS TAB -->
         <div class="tab-panel" id="stats-panel">
           <h2>Your Statistics</h2>
 
@@ -383,25 +286,9 @@
             </div>
           </div>
 
-          <div class="stats-charts">
-            <div class="chart-container">
-              <h3>Score History</h3>
-              <canvas id="score-chart"></canvas>
-            </div>
-            <div class="chart-container">
-              <h3>Accuracy by Operation</h3>
-              <canvas id="accuracy-chart"></canvas>
-            </div>
-          </div>
-
-          <div class="detailed-stats">
-            <h3>Detailed Breakdown</h3>
-            <div class="stat-table" id="stat-table"></div>
-          </div>
-
+          <p class="stats-note">Your Math Arena stats are saved locally in your browser.</p>
           <div class="stats-actions">
-            <button class="action-btn" id="export-stats"><i class="fas fa-download"></i> Export Data</button>
-            <button class="action-btn danger" id="reset-all-stats">Reset All Stats</button>
+            <button class="action-btn danger" id="reset-all-stats"><i class="fas fa-trash"></i> Reset Stats</button>
           </div>
         </div>
 
@@ -416,20 +303,24 @@
   <nav class="navbar">
     <div class="nav-content">
       <a href="#" class="logo">AJ</a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#education">Education</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#github-stats">GitHub Stats</a></li>
-        <li><a href="#awards">Awards</a></li>
+        <li><a href="#playground">Playground</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#awards">Awards</a></li>
         <li><a href="#terminal">Terminal</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-      <button id="darkModeToggle" aria-label="Toggle dark mode">
-        <i class="fas fa-moon"></i>
-      </button>
+      <div class="nav-actions">
+        <button id="darkModeToggle" aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -440,12 +331,21 @@
 
   <!-- Foreground content overlay -->
   <div class="hero-overlay">
-    <!-- Glitchy + animated + bouncing name -->
+    <!-- Animated name -->
     <h1 id="hero-title" class="animated-name">Aryan Jeena</h1>
 
+    <!-- Static value proposition (front-loaded credibility) -->
+    <p class="hero-tagline">CS + Math @ Penn · Incoming SWE @ <strong>Amazon</strong> &amp; <strong>BlackRock</strong></p>
 
-    <!-- Typewriter subtitle -->
+    <!-- Typewriter subtitle (role rotation) -->
     <p id="intro-text"></p>
+
+    <!-- Quick-access CTAs for recruiters -->
+    <div class="hero-cta">
+      <a href="https://www.linkedin.com/in/aryan-jeena/" target="_blank" rel="noopener" class="hero-btn primary"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+      <a href="https://github.com/aryan-jeena" target="_blank" rel="noopener" class="hero-btn"><i class="fab fa-github"></i> GitHub</a>
+      <a href="mailto:aryanj@sas.upenn.edu" class="hero-btn"><i class="fas fa-envelope"></i> Email</a>
+    </div>
 
     <!-- Scroll arrow inside the overlay -->
     <a href="#about" class="scroll-down" aria-label="Scroll down">
@@ -454,23 +354,57 @@
   </div>
 </header>
 
+  <div id="tickertape" class="tick-band" aria-hidden="true">
+  <div class="tick-edge tick-edge-left"></div>
+  <div class="tick-edge tick-edge-right"></div>
+  <span class="tick-tag">LIVE</span>
+  <div class="tick-viewport">
+    <div class="tick-track" id="tick-track">
+      <span class="tick-item"><span class="tick-sym">AMZN</span><span class="tick-label">Incoming SWE · Project Kuiper</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">BLK</span><span class="tick-label">Incoming SWE · Aladdin</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">PENN</span><span class="tick-label">B.S.E CS + Math</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">USACO</span><span class="tick-label">Gold Division</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">AIME</span><span class="tick-label">&#215;4 Qualifier</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">CML</span><span class="tick-label">#1 / 719 Nationally</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">NJML</span><span class="tick-label">#1 in State</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">FITMAX</span><span class="tick-label">30% faster queries</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">SOCCR</span><span class="tick-label">18&#8211;20% ROI</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">RTRISK</span><span class="tick-label">sub-second latency</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">CS50</span><span class="tick-label">A+</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+      <span class="tick-item"><span class="tick-sym">MARTHN</span><span class="tick-label">PR 4:13:16</span><span class="tick-up">&#9650;</span></span>
+      <span class="tick-dot">&#183;</span>
+    </div>
+  </div>
+</div>
+
   <!-- Main Content -->
   <main>
     <!-- Example Section -->
     <section id="about" class="section">
       <h2><i class="fas fa-user"></i> About Me</h2>
-      <p>Hi! I'm Aryan Jeena, a passionate Computer Science and Mathematics major with a minor in Statistics at the University of Pennsylvania. I thrive at the intersection of artificial intelligence, quantitative analysis, and innovative technology solutions. Through my work at organizations like AI in Business Club's Proscia project and Yale's Center for Clinical Investigation, I've developed a deep understanding of how AI and data science can revolutionize healthcare and business operations. As a co-founder of IvyRise College Consulting, I've also demonstrated my entrepreneurial spirit by leveraging AI/ML tools to transform educational consulting. I'm driven by the challenge of translating complex mathematical concepts into practical solutions, whether in quantitative finance, machine learning, or software engineering. Currently, I'm focused on developing cutting-edge AI applications and exploring novel approaches to data-driven decision making.</p>
+      <p>Hi, I'm Aryan — a Computer Science &amp; Mathematics student at the University of Pennsylvania (minor in Statistics, concentration in Artificial Intelligence) building at the intersection of software engineering, machine learning, and quantitative finance. In 2026 I'll be joining <strong>BlackRock's Aladdin Engineering Group</strong> and <strong>Amazon's Project Kuiper</strong> as a software engineering intern.</p>
+      <p>I love turning hard math and systems problems into products people actually use — from a Transformer-powered health platform to real-time, event-driven trading infrastructure. Whether I'm training models on 100K+ pathology images, shipping low-latency distributed systems, or co-founding a venture, I'm happiest where rigorous mathematics meets clean, production-grade engineering. Outside of code, I'm a marathon runner, a lifelong competitive mathlete, and an incurably curious builder.</p>
     </section>
 
 <section id="education" class="section">
             <h2><i class="fas fa-graduation-cap"></i> Education</h2>
             <div class="education-item">
                 <h3>University of Pennsylvania</h3>
-                <p>B.S.E in Computer Science and Mathematics, Minor in Statistics (Expected May 2027)</p>
-                <p>Concentrations: Artificial Intelligence and Statistics</p>
-                <p><strong>Related Coursework:</strong> Programming Languages and Techniques I, Programming Languages and Techniques II, Mathematical Foundations of Computer Science, Honors Multivariable Calculus III (Parts I & II), Big Data Analytics, AI Lab: Data, Systems, and Decisions, Market and Social Systems on the Internet</p>
+                <p>B.S.E in Computer Science and Mathematics, Minor in Statistics (Expected May 2028)</p>
+                <p>Concentration in Artificial Intelligence</p>
+                <p><strong>Related Coursework:</strong> Programming Languages and Techniques I &amp; II, Mathematical Foundations of Computer Science, Honors Multivariable Calculus III (Parts I &amp; II), Probability, Real Analysis, Discrete Mathematics II, Numerical Optimization for Data Science &amp; Machine Learning, Big Data Analytics, AI Lab: Data, Systems, and Decisions, Intro to Python for Data Science, Statistical Computing with R, Market and Social Systems on the Internet</p>
                 <p><strong>Clubs & Activities:</strong> Wharton Investment and Trading Group, Wharton Undergraduate Finance Club, Wharton MUSE Consulting (Innovation Committee Lead), AI in Business Club (Consulting & Development Committee), Wharton Undergraduate Data Analytics Club, Wharton Undergraduate Statistics Society, Penn Undergraduate Math Society, South Asian Society - Board Member (Cultural Committee), Stouffer House Treasurer</p>
-            </div>
             </div>
             <div class="education-item">
                 <h3>Saint Joseph's High School</h3>
@@ -488,6 +422,36 @@
 
         <section id="experience" class="section">
             <h2><i class="fas fa-briefcase"></i> Experience</h2>
+
+            <div class="experience-item" data-company="amazon">
+                <div class="experience-header">
+                    <h3>Amazon <span class="company-tag">Project Kuiper</span> <span class="incoming-badge">Incoming</span></h3>
+                    <div class="experience-meta">
+                        Redmond, WA<br>
+                        Sept 2026 - Dec 2026
+                    </div>
+                </div>
+                <p class="experience-role">Software Development Engineer Intern</p>
+                <ul>
+                    <li>Incoming SDE Intern on <strong>Project Kuiper</strong>, Amazon's low-Earth-orbit satellite constellation delivering high-speed broadband internet across the globe.</li>
+                    <li>Will contribute to large-scale distributed systems and software powering satellite ground infrastructure and network services.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item" data-company="blackrock">
+                <div class="experience-header">
+                    <h3>BlackRock <span class="company-tag">Aladdin</span> <span class="incoming-badge">Incoming</span></h3>
+                    <div class="experience-meta">
+                        New York, NY<br>
+                        Jun 2026 - Aug 2026
+                    </div>
+                </div>
+                <p class="experience-role">Software Engineering Analyst Intern, Aladdin Engineering Group</p>
+                <ul>
+                    <li>Incoming SWE Analyst Intern with the <strong>Aladdin Engineering Group</strong>, BlackRock's end-to-end investment management and risk analytics platform that oversees trillions in assets.</li>
+                    <li>Will build software at the intersection of finance and engineering, developing tools used by portfolio managers, risk analysts, and institutional clients worldwide.</li>
+                </ul>
+            </div>
 
             <div class="experience-item">
                 <div class="experience-header">
@@ -617,13 +581,15 @@
                 <h3>Featured Work</h3>
                 <div class="project-grid">
                     <div class="project-card featured" data-category="ml">
-                        <div class="project-image">
-                            <img src="https://via.placeholder.com/400x250?text=FitMax" alt="FitMax thumbnail">
+                        <div class="project-image project-cover cover-fitmax">
+                            <div class="cover-icon"><i class="fas fa-heart-pulse"></i></div>
+                            <span class="cover-tag">AI · Health</span>
                             <div class="project-overlay">
                                 <span class="project-status">Featured</span>
                             </div>
                         </div>
                         <h3>FitMax</h3>
+                        <p class="project-date"><i class="far fa-calendar"></i> Sept 2025 – Oct 2025</p>
                         <p class="project-description">Full-stack AI web application with FastAPI microservices, Next.js/TypeScript frontend, and PostgreSQL (pgvector) for personalized health recommendations. Implemented Transformer-based NLP engine using PyTorch and Hugging Face for semantic search over PubMed data, reducing query time by ~30%.</p>
                         <div class="tech-stack">
                             <span>FastAPI</span>
@@ -644,19 +610,20 @@
                             </div>
                         </div>
                         <div class="project-links">
-                            <a href="#" target="_blank" class="btn"><i class="fas fa-link"></i> Live Demo</a>
-                            <a href="#" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+                            <span class="project-link-note"><i class="fas fa-lock"></i> Private repo · available on request</span>
                         </div>
                     </div>
 
                     <div class="project-card featured" data-category="data">
-                        <div class="project-image">
-                            <img src="https://via.placeholder.com/400x250?text=Soccer+Betting" alt="Soccer Injury Betting thumbnail">
+                        <div class="project-image project-cover cover-soccer">
+                            <div class="cover-icon"><i class="fas fa-futbol"></i></div>
+                            <span class="cover-tag">Data · ML</span>
                             <div class="project-overlay">
                                 <span class="project-status">Featured</span>
                             </div>
                         </div>
                         <h3>Soccer Injury Betting</h3>
+                        <p class="project-date"><i class="far fa-calendar"></i> Jul 2025 – Aug 2025</p>
                         <p class="project-description">Scalable ML pipeline with modular Python architecture automating ETL workflows via API integration (API-Football). Built predictive regression models using CatBoost and Scikit-learn with feature engineering (ELO, rolling averages), achieving 18-20% ROI.</p>
                         <div class="tech-stack">
                             <span>Python</span>
@@ -677,19 +644,20 @@
                             </div>
                         </div>
                         <div class="project-links">
-                            <a href="#" target="_blank" class="btn"><i class="fas fa-link"></i> Live Demo</a>
-                            <a href="#" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="https://github.com/aryan-jeena/soccer-injury-betting" target="_blank" rel="noopener" class="btn"><i class="fab fa-github"></i> GitHub</a>
                         </div>
                     </div>
 
                     <div class="project-card featured" data-category="web">
-                        <div class="project-image">
-                            <img src="https://via.placeholder.com/400x250?text=Portfolio+Platform" alt="Portfolio Platform thumbnail">
+                        <div class="project-image project-cover cover-portfolio">
+                            <div class="cover-icon"><i class="fas fa-bolt"></i></div>
+                            <span class="cover-tag">Systems · Quant</span>
                             <div class="project-overlay">
                                 <span class="project-status">Featured</span>
                             </div>
                         </div>
-                        <h3>Real-Time Portfolio & Risk Management Platform</h3>
+                        <h3>Real-Time Portfolio &amp; Risk Management Platform</h3>
+                        <p class="project-date"><i class="far fa-calendar"></i> Aug 2025 – Sept 2025</p>
                         <p class="project-description">Distributed, event-driven system using FastAPI microservices, Kafka message streaming, and asynchronous I/O for real-time market data ingestion and portfolio tracking. Implemented production-grade DevOps stack with Docker, Prometheus-Grafana metrics, and CI/CD automation.</p>
                         <div class="tech-stack">
                             <span>FastAPI</span>
@@ -710,8 +678,7 @@
                             </div>
                         </div>
                         <div class="project-links">
-                            <a href="#" target="_blank" class="btn"><i class="fas fa-link"></i> Live Demo</a>
-                            <a href="#" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+                            <span class="project-link-note"><i class="fas fa-lock"></i> Private repo · available on request</span>
                         </div>
                     </div>
                 </div>
@@ -725,6 +692,124 @@
                 </div>
             </div>
         </section>
+
+<section id="playground" class="section qp-section">
+  <h2><i class="fas fa-flask"></i> Quant Playground</h2>
+  <p class="qp-intro">Three live quant micro-tools, all running in your browser — simulate markets, estimate &pi;, and price options in real time.</p>
+
+  <div class="qp-grid">
+
+    <!-- 1. GBM Simulator -->
+    <article class="qp-card qp-card--wide" id="qp-gbm-card">
+      <header class="qp-card-head">
+        <span class="qp-card-icon"><i class="fas fa-chart-line"></i></span>
+        <div>
+          <h3 class="qp-card-title">Geometric Brownian Motion</h3>
+          <p class="qp-card-sub">Simulate stock price paths from S<sub>0</sub> = 100.</p>
+        </div>
+      </header>
+
+      <div class="qp-controls qp-controls--gbm">
+        <label class="qp-field">
+          <span>Drift &mu; <em id="qp-gbm-mu-val">0.08</em></span>
+          <input type="range" id="qp-gbm-mu" min="-0.2" max="0.4" step="0.01" value="0.08">
+        </label>
+        <label class="qp-field">
+          <span>Volatility &sigma; <em id="qp-gbm-sigma-val">0.20</em></span>
+          <input type="range" id="qp-gbm-sigma" min="0.05" max="0.8" step="0.01" value="0.20">
+        </label>
+        <label class="qp-field">
+          <span>Paths <em id="qp-gbm-paths-val">12</em></span>
+          <input type="range" id="qp-gbm-paths" min="1" max="50" step="1" value="12">
+        </label>
+        <label class="qp-field">
+          <span>Horizon (yrs) <em id="qp-gbm-years-val">1.00</em></span>
+          <input type="range" id="qp-gbm-years" min="0.25" max="5" step="0.25" value="1">
+        </label>
+        <button type="button" class="qp-btn" id="qp-gbm-run"><i class="fas fa-play"></i> Run</button>
+      </div>
+
+      <div class="qp-canvas-wrap">
+        <canvas id="qp-gbm-canvas" role="img" aria-label="Simulated Geometric Brownian Motion price paths"></canvas>
+      </div>
+      <div class="qp-readout">
+        <span>Mean ending price: <strong id="qp-gbm-mean">—</strong></span>
+        <span class="qp-readout-sep">·</span>
+        <span>Theoretical E[S<sub>T</sub>]: <strong id="qp-gbm-theory">—</strong></span>
+      </div>
+    </article>
+
+    <!-- 2. Monte Carlo Pi -->
+    <article class="qp-card" id="qp-mc-card">
+      <header class="qp-card-head">
+        <span class="qp-card-icon"><i class="fas fa-circle-notch"></i></span>
+        <div>
+          <h3 class="qp-card-title">Monte Carlo &pi;</h3>
+          <p class="qp-card-sub">Random darts estimate &pi; via geometry.</p>
+        </div>
+      </header>
+
+      <div class="qp-canvas-wrap qp-canvas-wrap--square">
+        <canvas id="qp-mc-canvas" role="img" aria-label="Monte Carlo pi estimation scatter"></canvas>
+      </div>
+
+      <div class="qp-mc-stats">
+        <div class="qp-stat">
+          <span class="qp-stat-label">&pi; estimate</span>
+          <span class="qp-stat-value" id="qp-mc-pi">—</span>
+        </div>
+        <div class="qp-stat">
+          <span class="qp-stat-label">Samples</span>
+          <span class="qp-stat-value" id="qp-mc-n">0</span>
+        </div>
+        <div class="qp-stat">
+          <span class="qp-stat-label">Inside</span>
+          <span class="qp-stat-value" id="qp-mc-in">0</span>
+        </div>
+      </div>
+      <button type="button" class="qp-btn qp-btn--block" id="qp-mc-reset"><i class="fas fa-rotate-left"></i> Reset</button>
+    </article>
+
+    <!-- 3. Black-Scholes -->
+    <article class="qp-card" id="qp-bs-card">
+      <header class="qp-card-head">
+        <span class="qp-card-icon"><i class="fas fa-scale-balanced"></i></span>
+        <div>
+          <h3 class="qp-card-title">Black&ndash;Scholes Pricer</h3>
+          <p class="qp-card-sub">European option price &amp; Greeks, live.</p>
+        </div>
+      </header>
+
+      <div class="qp-bs-toggle" id="qp-bs-toggle">
+        <button type="button" class="qp-toggle-btn qp-active" data-type="call">Call</button>
+        <button type="button" class="qp-toggle-btn" data-type="put">Put</button>
+      </div>
+
+      <div class="qp-bs-inputs">
+        <label class="qp-num"><span>Spot S</span><input type="number" id="qp-bs-S" value="100" step="1" min="0.01"></label>
+        <label class="qp-num"><span>Strike K</span><input type="number" id="qp-bs-K" value="100" step="1" min="0.01"></label>
+        <label class="qp-num"><span>Time T (yrs)</span><input type="number" id="qp-bs-T" value="1" step="0.05" min="0.001"></label>
+        <label class="qp-num"><span>Rate r</span><input type="number" id="qp-bs-r" value="0.05" step="0.005"></label>
+        <label class="qp-num"><span>Vol &sigma;</span><input type="number" id="qp-bs-sigma" value="0.20" step="0.01" min="0.001"></label>
+      </div>
+
+      <div class="qp-bs-price">
+        <span class="qp-stat-label">Option price</span>
+        <span class="qp-bs-price-value" id="qp-bs-price">—</span>
+      </div>
+
+      <div class="qp-greeks">
+        <div class="qp-greek"><span class="qp-stat-label">Delta</span><span id="qp-bs-delta">—</span></div>
+        <div class="qp-greek"><span class="qp-stat-label">Gamma</span><span id="qp-bs-gamma">—</span></div>
+        <div class="qp-greek"><span class="qp-stat-label">Vega</span><span id="qp-bs-vega">—</span></div>
+        <div class="qp-greek"><span class="qp-stat-label">Theta</span><span id="qp-bs-theta">—</span></div>
+        <div class="qp-greek"><span class="qp-stat-label">Rho</span><span id="qp-bs-rho">—</span></div>
+      </div>
+      <p class="qp-bs-note">Vega/Rho per 1% move &middot; Theta per day.</p>
+    </article>
+
+  </div>
+</section>
 
         <!-- GitHub Stats Section -->
         <section id="github-stats" class="section">
@@ -741,9 +826,9 @@
                     <p>Total Stars</p>
                 </div>
                 <div class="stat-card">
-                    <i class="fas fa-code-commit"></i>
-                    <h3 id="total-commits">--</h3>
-                    <p>Total Contributions</p>
+                    <i class="fas fa-calendar-check"></i>
+                    <h3 id="years-active">--</h3>
+                    <p>Years on GitHub</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-project-diagram"></i>
@@ -766,261 +851,120 @@
         </section>
 
         <section id="awards" class="section">
-            <h2><i class="fas fa-trophy"></i> Awards & Honors</h2>
-            <ul>
-                <li>USACO Gold Division - USA Computing Olympiad</li>
+            <h2><i class="fas fa-trophy"></i> Awards &amp; Honors</h2>
+            <ul class="awards-list collapsed" id="awards-list">
+                <li>Valedictorian — Saint Joseph High School (2024)</li>
+                <li>USACO Gold Division — USA Computing Olympiad</li>
+                <li>4&times; AIME Qualifier (2020–2023)</li>
                 <li>National Merit Scholarship Semi-Finalist</li>
-                <li>ACTFL English and Spanish Global Seal of Biliteracy - Professional Working Fluency (A1 in all 4 Categories)</li>
-                <li>Catholic Math League Top Scorer 2022-2023 - #1 out of 719 Students Nationally</li>
-                <li>2023 United Nations U.S.A National Community Service Awards: Gold Ambassador Award, Zero Hunger Award, Zero Waste Award</li>
-                <li>International Bebras Computing Challenge - Distinction Roll & Best of School Awards (100th Percentile)</li>
-                <li>American Computer Science League - Qualified for National Finals and Leading Scorer For My Team</li>
-                <li>New Jersey Math League - 1st in the State Individually</li>
-                <li>Hispanic Scholarship Fund Finalist</li>
-                <li>The Rensselaer Medal Award for Mathematics and Science</li>
-                <li>The University of Rochester Xerox Award for Innovation and Information Technology</li>
-                <li>Harvard University's CS50x Course A+</li>
-                <li>AP Scholar With Distinction Award</li>
-                <li>CyberStart America Bronze Award 2022-23</li>
-                <li>Valedictorian - Saint Joseph High School (2024)</li>
-                <li>American Scholastic Mathematics Association Annual Mathematics Contest League - Top Scorer (6 perfect contests, 42/42 total)</li>
-                <li>Catholic Math League Top Scorer 2023-2024 - #3 out of 678 Students Nationally</li>
-                <li>NJML Top Scorer - #1 in New Jersey (Perfect score 36/36)</li>
-                <li>Young Scholar 2024 - High School Navigator</li>
-                <li>4x AIME Qualifier (2020-2023)</li>
-                <li>2023 AmeriHealth Atlantic City Marathon - 6th Place Nationally & 3rd Place in NJ (Ages 15-19)</li>
-                <li>Half Marathon - 4th Place for Ages 14-19</li>
-                <li>Edison Rotary Senior of the Month</li>
-                <li>Teen Think Tank Project 2024 Winter Cohort (1/15 Students)</li>
-                <li>President's Award for Educational Excellence</li>
-                <li>Certified Youth Investment Analyst Exam - Perfect Score 50/50</li>
+                <li>Catholic Math League — #1 Nationally out of 719 students (2022–2023)</li>
+                <li>New Jersey Math League — 1st in the State Individually (Perfect 36/36)</li>
+                <li>American Scholastic Mathematics Association — Top Scorer, 6 perfect contests (42/42)</li>
+                <li>Harvard University's CS50x — A+</li>
+                <li>American Computer Science League — National Finals Qualifier &amp; team-leading scorer</li>
+                <li>International Bebras Computing Challenge — 100th Percentile (Distinction Roll &amp; Best of School)</li>
+                <li class="award-extra">Catholic Math League — #3 Nationally out of 678 students (2023–2024)</li>
+                <li class="award-extra">The Rensselaer Medal Award for Mathematics and Science</li>
+                <li class="award-extra">University of Rochester Xerox Award for Innovation and Information Technology</li>
+                <li class="award-extra">AP Scholar with Distinction Award</li>
+                <li class="award-extra">ACTFL English &amp; Spanish Global Seal of Biliteracy — Professional Working Fluency</li>
+                <li class="award-extra">Certified Youth Investment Analyst Exam — Perfect Score (50/50)</li>
+                <li class="award-extra">2023 United Nations U.S.A. Community Service Awards — Gold Ambassador, Zero Hunger &amp; Zero Waste</li>
+                <li class="award-extra">Hispanic Scholarship Fund Finalist</li>
+                <li class="award-extra">President's Award for Educational Excellence</li>
+                <li class="award-extra">Teen Think Tank Project — 2024 Winter Cohort (1 of 15 students)</li>
+                <li class="award-extra">CyberStart America Bronze Award (2022–23)</li>
+                <li class="award-extra">Young Scholar 2024 — High School Navigator</li>
+                <li class="award-extra">2023 AmeriHealth Atlantic City Marathon — 6th Nationally &amp; 3rd in NJ (Ages 15–19)</li>
+                <li class="award-extra">Half Marathon — 4th Place (Ages 14–19)</li>
+                <li class="award-extra">Edison Rotary Senior of the Month</li>
             </ul>
+            <button class="show-more-btn" id="awards-toggle" aria-expanded="false" aria-controls="awards-list">
+                <span>Show all 25 awards</span> <i class="fas fa-chevron-down"></i>
+            </button>
         </section>
 
         <section id="skills" class="section">
             <h2><i class="fas fa-chart-bar"></i> Skills</h2>
-            <div class="skills-visualization">
-                <canvas id="skillsChart"></canvas>
-            </div>
-            <div class="skills-categories">
-                <div class="skills-category">
-                    <h3>Programming Languages</h3>
-                    <div class="skill-bars">
-                        <div class="skill">
-                            <div class="skill-name">Python</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">Java</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">TypeScript</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">OCaml</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">SQL</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="75"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">JavaScript</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="75"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <div class="skill-name">HTML/CSS</div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-width="75"></div>
-                            </div>
-                        </div>
-                    </div>
+            <p class="skills-intro">A working toolkit spanning software engineering, machine learning, and quantitative finance.</p>
+            <div class="skill-groups">
+                <div class="skill-group">
+                  <h3><i class="fas fa-code"></i> Languages</h3>
+                  <div class="chips">
+                    <span class="skill-chip core">Python</span>
+                    <span class="skill-chip">Java</span>
+                    <span class="skill-chip">TypeScript</span>
+                    <span class="skill-chip">JavaScript</span>
+                    <span class="skill-chip">OCaml</span>
+                    <span class="skill-chip">SQL</span>
+                    <span class="skill-chip">HTML</span>
+                    <span class="skill-chip">CSS</span>
+                  </div>
                 </div>
-                <div class="skills-category">
-                    <h3>Technologies & Tools</h3>
-                    
-                    <!-- Web Frameworks & Backend -->
-                    <div class="tools-category">
-                        <h4>Web Frameworks & Backend</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fas fa-bolt"></i>
-                                <span>FastAPI</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fab fa-react"></i>
-                                <span>React</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-n"></i>
-                                <span>Next.js</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-stream"></i>
-                                <span>Streamlit</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data Science & ML Tools -->
-                    <div class="tools-category">
-                        <h4>Data Science & ML</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fas fa-fire"></i>
-                                <span>PyTorch</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-robot"></i>
-                                <span>Hugging Face</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-brain"></i>
-                                <span>TensorFlow</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-chart-area"></i>
-                                <span>Scikit-learn</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-cat"></i>
-                                <span>CatBoost</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-table"></i>
-                                <span>Pandas</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-calculator"></i>
-                                <span>NumPy</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- DevOps & Infrastructure -->
-                    <div class="tools-category">
-                        <h4>DevOps & Infrastructure</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fab fa-docker"></i>
-                                <span>Docker</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-database"></i>
-                                <span>Redis</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-stream"></i>
-                                <span>Kafka</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-database"></i>
-                                <span>PostgreSQL</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-chart-line"></i>
-                                <span>Prometheus</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>Grafana</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Analytics & Business Intelligence -->
-                    <div class="tools-category">
-                        <h4>Analytics & Business Intelligence</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fas fa-chart-line"></i>
-                                <span>Tableau</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>Google Analytics</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-search"></i>
-                                <span>SEMrush</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Productivity Suites -->
-                    <div class="tools-category">
-                        <h4>Productivity Suites</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fas fa-file-excel"></i>
-                                <span>Excel</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-file-powerpoint"></i>
-                                <span>PowerPoint</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-file-word"></i>
-                                <span>Word</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fab fa-google-drive"></i>
-                                <span>Google Suite</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- IDEs & Development Environments -->
-                    <div class="tools-category">
-                        <h4>Development Environments</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fas fa-code"></i>
-                                <span>VS Code</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-code"></i>
-                                <span>Eclipse</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-code"></i>
-                                <span>IntelliJ</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-code"></i>
-                                <span>Codio</span>
-                            </div>
-                            <div class="tech-icon">
-                                <i class="fas fa-code"></i>
-                                <span>Jupyter</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Version Control -->
-                    <div class="tools-category">
-                        <h4>Version Control</h4>
-                        <div class="tech-icons">
-                            <div class="tech-icon">
-                                <i class="fab fa-git-alt"></i>
-                                <span>Git</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="skill-group">
+                  <h3><i class="fas fa-brain"></i> Machine Learning &amp; AI</h3>
+                  <div class="chips">
+                    <span class="skill-chip core">PyTorch</span>
+                    <span class="skill-chip">Hugging Face</span>
+                    <span class="skill-chip">TensorFlow</span>
+                    <span class="skill-chip">Scikit-learn</span>
+                    <span class="skill-chip">CatBoost</span>
+                    <span class="skill-chip">Transformers</span>
+                    <span class="skill-chip">NLP</span>
+                  </div>
+                </div>
+                <div class="skill-group">
+                  <h3><i class="fas fa-square-root-variable"></i> Quant &amp; Math</h3>
+                  <div class="chips">
+                    <span class="skill-chip core">NumPy</span>
+                    <span class="skill-chip">pandas</span>
+                    <span class="skill-chip">R</span>
+                    <span class="skill-chip">Probability</span>
+                    <span class="skill-chip">Real Analysis</span>
+                    <span class="skill-chip">Numerical Optimization</span>
+                    <span class="skill-chip">Linear Algebra</span>
+                  </div>
+                </div>
+                <div class="skill-group">
+                  <h3><i class="fas fa-server"></i> Web &amp; Backend</h3>
+                  <div class="chips">
+                    <span class="skill-chip core">FastAPI</span>
+                    <span class="skill-chip core">React</span>
+                    <span class="skill-chip">Next.js</span>
+                    <span class="skill-chip">Streamlit</span>
+                    <span class="skill-chip">REST / OpenAPI</span>
+                    <span class="skill-chip">WebSockets</span>
+                    <span class="skill-chip">JWT</span>
+                    <span class="skill-chip">TailwindCSS</span>
+                  </div>
+                </div>
+                <div class="skill-group">
+                  <h3><i class="fas fa-database"></i> Data &amp; Infrastructure</h3>
+                  <div class="chips">
+                    <span class="skill-chip">PostgreSQL</span>
+                    <span class="skill-chip">Redis</span>
+                    <span class="skill-chip">Kafka</span>
+                    <span class="skill-chip">SQLModel</span>
+                    <span class="skill-chip">Docker</span>
+                    <span class="skill-chip">GitHub Actions</span>
+                    <span class="skill-chip">CI/CD</span>
+                    <span class="skill-chip">Prometheus</span>
+                    <span class="skill-chip">Grafana</span>
+                    <span class="skill-chip">Git</span>
+                  </div>
+                </div>
+                <div class="skill-group">
+                  <h3><i class="fas fa-chart-line"></i> Analytics &amp; Tools</h3>
+                  <div class="chips">
+                    <span class="skill-chip">Tableau</span>
+                    <span class="skill-chip">Power BI</span>
+                    <span class="skill-chip">Google Analytics</span>
+                    <span class="skill-chip">SEMrush</span>
+                    <span class="skill-chip">Jupyter</span>
+                    <span class="skill-chip">VS Code</span>
+                    <span class="skill-chip">IntelliJ</span>
+                    <span class="skill-chip">Microsoft Office</span>
+                  </div>
                 </div>
             </div>
         </section>
@@ -1048,7 +992,7 @@
                     </div>
                     <div class="fact-content">
                         <p class="fact-category" id="fact-category">Running</p>
-                        <p class="fact-text" id="fact-text">Marathon PR: 3:10:67</p>
+                        <p class="fact-text" id="fact-text">Marathon PR: 4:13:16</p>
                     </div>
                 </div>
                 <div class="fact-controls">
@@ -1092,7 +1036,7 @@
                 </div>
             </div>
             <div class="terminal-info">
-                <p><i class="fas fa-lightbulb"></i> Try commands like: <code>help</code>, <code>about</code>, <code>skills</code>, <code>projects</code>, <code>contact</code>, <code>resume</code>, <code>clear</code></p>
+                <p><i class="fas fa-lightbulb"></i> Try commands like: <code>help</code>, <code>about</code>, <code>skills</code>, <code>projects</code>, <code>goto projects</code>, <code>theme</code>, <code>social</code>, <code>clear</code> &nbsp;·&nbsp; use <code>↑</code>/<code>↓</code> for history</p>
             </div>
         </section>
 
@@ -1120,11 +1064,6 @@
                             <i class="fab fa-github"></i>
                             <a href="https://github.com/aryan-jeena" target="_blank">GitHub</a>
                         </div>
-                    </div>
-                    <div class="resume-download">
-                        <a href="#" id="download-resume" class="download-btn">
-                            <i class="fas fa-download"></i> Download Resume
-                        </a>
                     </div>
                 </div>
                 <div class="contact-form-container">
@@ -1158,12 +1097,27 @@
 
   <!-- Footer -->
   <footer id="footer">
-    <h2 class="footer-heading">Connect with Me</h2>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/aryan-jeena/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/aryan-jeena" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="mailto:aryanj@sas.upenn.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      <a href="tel:+19086365723" aria-label="Phone"><i class="fas fa-phone"></i></a>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">Aryan Jeena</a>
+        <p class="footer-tagline">CS + Math @ Penn · Software Engineering &amp; Quant</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/aryan-jeena/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/aryan-jeena" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="mailto:aryanj@sas.upenn.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#terminal">Terminal</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Aryan Jeena · Designed &amp; built from scratch with HTML, CSS &amp; JavaScript.</p>
     </div>
   </footer>
 
